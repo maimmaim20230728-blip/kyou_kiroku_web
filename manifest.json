@@ -1,0 +1,15 @@
+{
+  "name": "きょうの記録帳(仮)",
+  "short_name": "きょうの記録帳",
+  "description": "朝の距離・のこり元気・できたこと1行を、数タップで。比べない・判定しない。端末内のみ・オフライン・登録なし。",
+  "lang": "ja",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f2f7f3",
+  "theme_color": "#2e9e6b",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
