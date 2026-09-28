@@ -5,7 +5,7 @@
    ・「家で過ごす」を選んだら連絡文づくりを開く(それ以外でもボタンで開ける)
      あいて(学校/職場)・書く人(本人/家族)・ようけん(遅れる/きょう休む/数日/しばらく)を選ぶだけで文ができ、
      コピー(navigator.clipboard → だめなら execCommand → それでもだめなら欄を全部選んで長押しを案内)と
-     共有(navigator.share がある端末だけボタンを出す。Play版の WebView には無いので出さない)
+     共有(Play版=ネイティブの共有プラグイン @capacitor/share / Web版=navigator.share がある端末だけ。どちらも無ければボタンを出さない)
    ・これまでの記録は日付ごとの一覧だけ(数える・比べる表示はしない) */
 (function(){
   var KEY = 'kyori.v1';
@@ -82,11 +82,31 @@
     }catch(_){}
     done(legacyCopy(text));
   }
+  /* Play版(Capacitor の WebView)の共有: ネイティブが注入する window.Capacitor.Plugins.Share を使う。
+     🔴 Capacitor.registerPlugin は @capacitor/core(JS)の関数で、WebView の注入には入っていないので使わない(点検 kiroku-15・2026-09-29) */
+  function nativeShare(){
+    try{
+      var c = window.Capacitor;
+      if(c && typeof c.isNativePlatform === 'function' && c.isNativePlatform() &&
+         typeof c.isPluginAvailable === 'function' && c.isPluginAvailable('Share') &&
+         c.Plugins && c.Plugins.Share && typeof c.Plugins.Share.share === 'function') return c.Plugins.Share;
+    }catch(_){}
+    return null;
+  }
+  function canShare(){ return !!nativeShare() || (typeof navigator !== 'undefined' && typeof navigator.share === 'function'); }
+  /* 利用者が共有を閉じた(Web=AbortError / ネイティブ="Share canceled")・共有の画面がもう出ている("...in progress")ときは何も出さない */
+  function shareQuiet(err){
+    var m = String((err && (err.message || err.errorMessage)) || err || '');
+    return !!err && (err.name === 'AbortError' || /cancel|in progress/i.test(m));
+  }
   function shareText(api, text){
     var T = api.T;
+    function failed(err){ if(!shareQuiet(err)) api.toast(T('screen.kyori.shareFail')); }
     try{
-      if(navigator.share){ navigator.share({ text:text }).catch(function(){}); return; }
-    }catch(_){}
+      var ns = nativeShare();
+      if(ns){ Promise.resolve(ns.share({ text:text, dialogTitle:T('screen.kyori.share') })).catch(failed); return; }
+      if(typeof navigator !== 'undefined' && typeof navigator.share === 'function'){ navigator.share({ text:text }).catch(failed); return; }
+    }catch(err){ failed(err); return; }
     api.toast(T('screen.kyori.shareNone'));
   }
 
@@ -215,8 +235,8 @@
         cp.setAttribute('type', 'button'); cp.setAttribute('id', 'kyori-copy');
         api.Tap.bind(cp, function(){ copyText(api, out, help); });
         row.appendChild(cp);
-        /* 共有は navigator.share がある端末だけ(無い端末ではコピーが横いっぱいになる) */
-        if(typeof navigator !== 'undefined' && typeof navigator.share === 'function'){
+        /* 共有は ネイティブの共有プラグインか navigator.share がある端末だけ(無い端末ではコピーが横いっぱいになる) */
+        if(canShare()){
           var sh = api.el('button', 'btn', T('screen.kyori.share'));
           sh.setAttribute('type', 'button'); sh.setAttribute('id', 'kyori-share');
           api.Tap.bind(sh, function(){ shareText(api, out.value); });

@@ -5,6 +5,7 @@
    ・targetSdk36(エッジtoエッジ)のため上下左右に env(safe-area-inset-*)。画面の上下端に余白を持つ */
 :root{
   --brand:#2e9e6b;
+  --brand-ink:#237a52;   /* 文字用の緑(白い字を載せる地・緑の文字)。枠・線・飾りは --brand のまま */
   --bg:#f2f7f3;
   --ink:#1a1a1a;
   --card:#ffffff;
@@ -13,10 +14,10 @@
   --alert:#d43f3f;
   --ok:#2e9e6b;
 }
-body[data-theme="aqua"]{ --brand:#2b8fb5; --bg:#eff7fa; --line:#cfe5ee; }
-body[data-theme="white"]{ --brand:#3d8a63; --bg:#ffffff; --card:#f7f9f8; --line:#e2e6e4; }
+body[data-theme="aqua"]{ --brand:#2b8fb5; --brand-ink:#1f6f8f; --bg:#eff7fa; --line:#cfe5ee; }
+body[data-theme="white"]{ --brand:#3d8a63; --brand-ink:#237a52; --bg:#ffffff; --card:#f7f9f8; --line:#e2e6e4; }
 body[data-theme="dark"]{
-  --brand:#43c08a; --bg:#191d1b; --card:#242a27; --ink:#f2f2f2; --line:#3a423e; --sub:#b5bdb8;
+  --brand:#43c08a; --brand-ink:var(--brand); --bg:#191d1b; --card:#242a27; --ink:#f2f2f2; --line:#3a423e; --sub:#b5bdb8;
 }
 
 *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
@@ -206,6 +207,15 @@ a.btn{ text-decoration:none; }
 .plan .plan-t{ font-weight:700; overflow-wrap:anywhere; }
 .plan .field{ margin:8px 0 0; }
 .plan .field label{ font-size:.9em; }
+/* のこり元気: きのうの よてい(読むだけ・小さく。点検 kiroku-13) */
+.genki-prev{ margin-top:24px; font-size:.92em; }
+.genki-prev .prev-h{ font-size:1em; margin:0; }
+.genki-prev .prev-date{ margin:0 0 8px; }
+.batt.small{ gap:4px; padding:5px; border-width:2px; border-radius:9px; }
+.batt.small .seg{ width:24px; height:28px; border-radius:4px; }
+.batt.small .cap{ right:-9px; width:6px; height:14px; }
+.prev-list{ margin:8px 0 0; padding-inline-start:1.3em; }
+.prev-list li{ overflow-wrap:anywhere; margin:2px 0; }
 /* dark: 明るい緑(#43c08a)の上の白い文字は 2.3:1 で読みにくいので、緑の背景の上の文字だけ濃い色にする(約7.4:1) */
 body[data-theme="dark"] header#hd,
 body[data-theme="dark"] .lang-label,
@@ -278,3 +288,16 @@ input[type="file"].hidden{ display:none; }
 .photo-zoom-row input[type="range"]{ flex:1; min-height:44px; accent-color:var(--brand); }
 .photo-row{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; width:100%; max-width:420px; margin-top:12px; }
 .photo-file{ display:none; }
+
+/* ======== 文字用の緑(--brand-ink)の上書き(今日の記録帳・2026-09-29) ========
+   明るい3テーマは --brand の上の白い字が 3.1〜4.2:1 だったので、白い字を載せる地と、緑を文字色に使う所だけ濃い緑にする
+   (みどり・しろ #237a52 / みずいろ #1f6f8f = 白と 5.3〜5.6:1)。くろは --brand-ink=--brand のまま、字は上の #0f1f17。
+   枠・線・電池の目盛りなどの飾りは --brand のまま。下ナビの .nav-btn.active・.credit a より後に置くため、ファイルの最後に置く */
+header#hd{ background:var(--brand-ink); }
+.btn.primary{ border-color:var(--brand-ink); background:var(--brand-ink); }
+.big-btn.primary, .big-btn.on, .chip.on{ border-color:var(--brand-ink); background:var(--brand-ink); }
+.ov-close{ background:var(--brand-ink); }
+.nav-btn.active{ color:var(--brand-ink); }
+.tag, .care-link, .credit a{ color:var(--brand-ink); }
+/* 入力欄の見本の文字(placeholder): 端末まかせの灰色は しろ 4.4:1・くろ 3.2:1 だったので、ヒントと同じ色にする */
+input::placeholder, textarea::placeholder{ color:var(--sub); opacity:1; }

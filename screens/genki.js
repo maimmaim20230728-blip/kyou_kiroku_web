@@ -2,8 +2,10 @@
 /* 画面: のこり元気
    ・きょうの予定を1行ずつ足し、それぞれの消耗を3段階×3(ひと/さわがしさ/「ふつう」を演じた)で選ぶ
    ・電池の目盛り(5段階の絵)が減る。数字・点数は一切出さない
-   ・保存: api.save('genki.v1', { 'YYYY-MM-DD': [ { t:'予定', f:[0,0,0] } ] })
-   ・「登録したサインが重なっています」の判定は作らない。「手順を開く」のリンクだけ置く(新1「ひとつずつ・そよぎ」の公開Web版へ) */
+   ・保存: api.save('genki.v1', { 'YYYY-MM-DD': [ { t:'予定', f:[0,0,0] } ] })(日付ごとに残る。きょうの分だけを書き換える)
+   ・「登録したサインが重なっています」の判定は作らない。「手順を開く」のリンクだけ置く(新1「ひとつずつ・そよぎ」の公開Web版へ)
+   ・画面の下に「きのうの よてい」を読むだけで小さく出す(0時を過ぎても前の日の予定と電池が見える・書き換えない・無ければ出さない。
+     点検 kiroku-13 案a・2026-09-29。日付の切り替えは今までどおり0時) */
 (function(){
   var KEY = 'genki.v1';
   var STEPS_URL = 'https://maimmaim20230728-blip.github.io/soyogi_anshin_web/';   // 新1「ひとつずつ・そよぎ」の公開Web版(2026-09-28 HTTP 200 確認)
@@ -32,6 +34,37 @@
     return Math.max(0, SEG - Math.round(total / 3));
   }
 
+  /* 電池の目盛りを描く(数字は出さない) */
+  function fillBatt(api, batt, plans){
+    batt.textContent = '';
+    var r = remainSegments(plans);
+    batt.setAttribute('data-remain', String(r));
+    for(var i = 0; i < SEG; i++) batt.appendChild(api.el('span', 'seg' + (i < r ? ' on' : '')));
+    batt.appendChild(api.el('span', 'cap'));
+  }
+
+  /* きのうの よてい(読むだけ): 予定の1行と小さな電池。ボタンも入力欄も置かない */
+  function drawPrev(c, api, K, all){
+    var d = new Date(); d.setDate(d.getDate() - 1);
+    var key = K.dateKey(d);
+    var plans = Array.isArray(all[key]) ? all[key] : [];
+    if(!plans.length) return;
+    var T = api.T;
+    var box = api.el('div', 'card genki-prev');
+    box.setAttribute('id', 'genki-prev');
+    box.appendChild(api.el('h2', 'prev-h', T('screen.genki.prevTitle')));
+    box.appendChild(api.el('p', 'hint prev-date', K.dateLabel(key, api.lang)));
+    box.appendChild(api.el('div', 'batt-label', T('screen.genki.prevBatt')));
+    var batt = api.el('div', 'batt small');
+    batt.setAttribute('id', 'genki-prev-batt');
+    fillBatt(api, batt, plans);
+    box.appendChild(batt);
+    var ul = api.el('ul', 'prev-list');
+    plans.forEach(function(p){ ul.appendChild(api.el('li', 'prev-item', p.t)); });
+    box.appendChild(ul);
+    c.appendChild(box);
+  }
+
   window.SCREENS.register('genki', {
     render: function(c, api){
       var K = window.KIROKU_KINDS;   // 読み込み順に依らないよう描くときに参照
@@ -57,13 +90,7 @@
       batt.setAttribute('id', 'genki-batt');
       battWrap.appendChild(batt);
       c.appendChild(battWrap);
-      function drawBatt(){
-        batt.textContent = '';
-        var r = remainSegments(plans);
-        batt.setAttribute('data-remain', String(r));
-        for(var i = 0; i < SEG; i++) batt.appendChild(api.el('span', 'seg' + (i < r ? ' on' : '')));
-        batt.appendChild(api.el('span', 'cap'));
-      }
+      function drawBatt(){ fillBatt(api, batt, plans); }
 
       /* 予定を足す */
       var addRow = api.el('div', 'row add-row');
@@ -137,6 +164,8 @@
       st.setAttribute('target', '_blank');
       st.setAttribute('rel', 'noopener');
       c.appendChild(st);
+
+      drawPrev(c, api, K, all);
     }
   });
 })();

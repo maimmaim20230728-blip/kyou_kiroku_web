@@ -38,6 +38,7 @@ var ja = {
     bkHint:'あたらしい スマホに うつるときは、「かきだす」で ファイルを ほぞんして、あたらしい スマホで「よみこむ」を おしてください。',
     bkExport:'かきだす', bkImport:'よみこむ',
     exported:'かきだしました ✓', imported:'よみこみました ✓', importFail:'よみこめませんでした',
+    importConfirm:'いまの ないようは、ファイルの ないように おきかわります。よみこみますか?',
     note:'書いたことは すべて この端末の中だけに ほぞんされます。どこにも 送られません。',
     privacy:'プライバシーポリシー',
     credit:'アプリ開発：介護と支援の相談どころ そよぎ'
@@ -72,7 +73,7 @@ var ja = {
       name:'なまえ(空でも よい)', namePh:'例: 山田',
       result:'できた 文',
       copy:'コピー', share:'きょうゆう(共有)',
-      copied:'コピーしました ✓', copyFail:'コピーできませんでした', shareNone:'この端末では 共有が つかえません',
+      copied:'コピーしました ✓', copyFail:'コピーできませんでした', shareNone:'この端末では 共有が つかえません', shareFail:'共有できませんでした',
       copyHelp:'文を えらんで おきました。ながおしで コピーできます。',
       histTitle:'これまでの きろく',
       histEmpty:'まだ きろくは ありません。',
@@ -107,7 +108,10 @@ var ja = {
       f3:'「ふつう」を えんじた', f3v:['あまり','すこし','ずっと'],
       del:'けす',
       stepsHint:'つかれが かさなった ときの 手じゅんは、べつの アプリ「ひとつずつ・そよぎ」で ひらきます。',
-      steps:'手順を開く'
+      steps:'手順を開く',
+      /* 画面の下に読むだけで出す、前の日の分 */
+      prevTitle:'きのうの よてい',
+      prevBatt:'きのうの 電池'
     },
     dekita: {
       title:'できたこと',
@@ -157,6 +161,7 @@ var en = {
     bkHint:'When you move to a new phone, tap "Export" to save a file, then tap "Import" on the new phone.',
     bkExport:'Export', bkImport:'Import',
     exported:'Exported ✓', imported:'Imported ✓', importFail:'Could not import',
+    importConfirm:'Your current entries will be replaced with the file\'s contents. Import it?',
     note:'Everything you write is stored only on this device. Nothing is sent anywhere.',
     privacy:'Privacy policy',
     credit:'Developed by SOYOGI, a care and support consultation service'
@@ -191,7 +196,7 @@ var en = {
       name:'Name (may be empty)', namePh:'e.g. Yamada',
       result:'Message',
       copy:'Copy', share:'Share',
-      copied:'Copied ✓', copyFail:'Could not copy', shareNone:'Sharing is not available on this device',
+      copied:'Copied ✓', copyFail:'Could not copy', shareNone:'Sharing is not available on this device', shareFail:'Could not share',
       copyHelp:'The message is selected. You can copy it with a long press.',
       histTitle:'Past days',
       histEmpty:'No records yet.',
@@ -224,7 +229,9 @@ var en = {
       f3:'Acting "normal"', f3v:['Little','Some','All the time'],
       del:'Delete',
       stepsHint:'The steps for when tiredness piles up open in a separate app, "One by One - SOYOGI".',
-      steps:'Open the steps'
+      steps:'Open the steps',
+      prevTitle:'Yesterday\'s plans',
+      prevBatt:'Yesterday\'s battery'
     },
     dekita: {
       title:'Things done',
@@ -331,6 +338,7 @@ TBL.de = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "exported": "Exportiert ✓",
     "imported": "Importiert ✓",
     "importFail": "Konnte nicht importiert werden",
+    "importConfirm": "Ihre aktuellen Einträge werden durch den Inhalt der Datei ersetzt. Datei importieren?",
     "note": "Alles, was Sie schreiben, wird nur auf diesem Gerät gespeichert. Nichts wird irgendwohin gesendet.",
     "privacy": "Datenschutzerklärung",
     "credit": "Entwickelt von SOYOGI, Beratungsstelle für Pflege und Unterstützung"
@@ -392,6 +400,7 @@ TBL.de = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "copied": "Kopiert ✓",
       "copyFail": "Konnte nicht kopiert werden",
       "shareNone": "Teilen ist auf diesem Gerät nicht verfügbar",
+      "shareFail": "Konnte nicht geteilt werden",
       "copyHelp": "Der Text ist markiert. Er lässt sich durch langes Drücken kopieren.",
       "histTitle": "Bisherige Einträge",
       "histEmpty": "Noch keine Einträge.",
@@ -450,7 +459,9 @@ TBL.de = mergeDeep(JSON.parse(JSON.stringify(en)), {
       ],
       "del": "Löschen",
       "stepsHint": "Die Schritte für den Fall, dass sich Müdigkeit anhäuft, öffnen sich in einer eigenen App: „Eins nach dem anderen - SOYOGI“.",
-      "steps": "Schritte öffnen"
+      "steps": "Schritte öffnen",
+      "prevTitle": "Pläne von gestern",
+      "prevBatt": "Batterie gestern"
     },
     "dekita": {
       "title": "Geschafftes",
@@ -567,6 +578,7 @@ TBL.fr = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "exported": "Exporté ✓",
     "imported": "Importé ✓",
     "importFail": "Importation impossible",
+    "importConfirm": "Le contenu actuel sera remplacé par celui du fichier. Importer le fichier ?",
     "note": "Tout ce que vous écrivez reste uniquement sur cet appareil. Rien n'est envoyé nulle part.",
     "privacy": "Politique de confidentialité",
     "credit": "Développé par SOYOGI, service de conseil en soins et accompagnement"
@@ -628,6 +640,7 @@ TBL.fr = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "copied": "Copié ✓",
       "copyFail": "Copie impossible",
       "shareNone": "Le partage n'est pas disponible sur cet appareil",
+      "shareFail": "Partage impossible",
       "copyHelp": "Le texte est sélectionné. Un appui long permet de le copier.",
       "histTitle": "Notes précédentes",
       "histEmpty": "Aucune note pour le moment.",
@@ -686,7 +699,9 @@ TBL.fr = mergeDeep(JSON.parse(JSON.stringify(en)), {
       ],
       "del": "Supprimer",
       "stepsHint": "Les étapes à suivre quand la fatigue s'accumule s'ouvrent dans une autre application : « Un par un - SOYOGI ».",
-      "steps": "Ouvrir les étapes"
+      "steps": "Ouvrir les étapes",
+      "prevTitle": "Activités d'hier",
+      "prevBatt": "Batterie d'hier"
     },
     "dekita": {
       "title": "Réussites du jour",
@@ -803,6 +818,7 @@ TBL.es = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "exported": "Exportado ✓",
     "imported": "Importado ✓",
     "importFail": "No se pudo importar",
+    "importConfirm": "El contenido actual se sustituirá por el del archivo. ¿Importar el archivo?",
     "note": "Todo lo escrito se guarda solo en este dispositivo. No se envía a ningún sitio.",
     "privacy": "Política de privacidad",
     "credit": "Desarrollo de la app: SOYOGI, espacio de consulta sobre cuidados y apoyo"
@@ -864,6 +880,7 @@ TBL.es = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "copied": "Copiado ✓",
       "copyFail": "No se pudo copiar",
       "shareNone": "No se puede compartir en este dispositivo",
+      "shareFail": "No se pudo compartir",
       "copyHelp": "El texto está seleccionado. Se puede copiar con una pulsación larga.",
       "histTitle": "Registros anteriores",
       "histEmpty": "Todavía no hay registros.",
@@ -922,7 +939,9 @@ TBL.es = mergeDeep(JSON.parse(JSON.stringify(en)), {
       ],
       "del": "Borrar",
       "stepsHint": "Los pasos para cuando el cansancio se acumula se abren en otra aplicación: «Uno a uno - SOYOGI».",
-      "steps": "Abrir los pasos"
+      "steps": "Abrir los pasos",
+      "prevTitle": "Planes de ayer",
+      "prevBatt": "Batería de ayer"
     },
     "dekita": {
       "title": "Cosas hechas",
@@ -1039,6 +1058,7 @@ TBL.it = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "exported": "Esportato ✓",
     "imported": "Importato ✓",
     "importFail": "Non è stato possibile importare",
+    "importConfirm": "Il contenuto attuale verrà sostituito da quello del file. Importare il file?",
     "note": "Tutto ciò che scrive resta soltanto in questo dispositivo. Non viene inviato da nessuna parte.",
     "privacy": "Informativa sulla privacy",
     "credit": "Sviluppo dell'app: SOYOGI, sportello di consulenza per assistenza e sostegno"
@@ -1100,6 +1120,7 @@ TBL.it = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "copied": "Copiato ✓",
       "copyFail": "Non è stato possibile copiare",
       "shareNone": "La condivisione non è disponibile su questo dispositivo",
+      "shareFail": "Non è stato possibile condividere",
       "copyHelp": "Il testo è selezionato. Si può copiare con una pressione prolungata.",
       "histTitle": "Annotazioni precedenti",
       "histEmpty": "Ancora nessuna annotazione.",
@@ -1158,7 +1179,9 @@ TBL.it = mergeDeep(JSON.parse(JSON.stringify(en)), {
       ],
       "del": "Elimina",
       "stepsHint": "I passi da seguire quando la stanchezza si accumula si aprono in un'altra app: «Uno alla volta - SOYOGI».",
-      "steps": "Apri i passi"
+      "steps": "Apri i passi",
+      "prevTitle": "Programmi di ieri",
+      "prevBatt": "Batteria di ieri"
     },
     "dekita": {
       "title": "Cose fatte",
@@ -1275,6 +1298,7 @@ TBL.pt = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "exported": "Exportado ✓",
     "imported": "Importado ✓",
     "importFail": "Não foi possível importar",
+    "importConfirm": "Os dados atuais serão substituídos pelos dados da cópia. Importar?",
     "note": "Tudo o que se escreve fica guardado apenas neste dispositivo. Nada é enviado para fora dele.",
     "privacy": "Política de privacidade",
     "credit": "Desenvolvido por SOYOGI, espaço de aconselhamento sobre cuidados e apoio"
@@ -1336,6 +1360,7 @@ TBL.pt = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "copied": "Copiado ✓",
       "copyFail": "Não foi possível copiar",
       "shareNone": "Não é possível compartilhar neste dispositivo",
+      "shareFail": "Não foi possível compartilhar",
       "copyHelp": "O texto está selecionado. Pode copiá-lo com um toque longo.",
       "histTitle": "Anotações anteriores",
       "histEmpty": "Ainda não há anotações.",
@@ -1394,7 +1419,9 @@ TBL.pt = mergeDeep(JSON.parse(JSON.stringify(en)), {
       ],
       "del": "Apagar",
       "stepsHint": "Os passos para quando o cansaço se acumula abrem-se em outra ferramenta: «Um de cada vez - SOYOGI».",
-      "steps": "Abrir os passos"
+      "steps": "Abrir os passos",
+      "prevTitle": "Planos de ontem",
+      "prevBatt": "Bateria de ontem"
     },
     "dekita": {
       "title": "Coisas feitas",
@@ -1511,6 +1538,7 @@ TBL.nl = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "exported": "Geëxporteerd ✓",
     "imported": "Geïmporteerd ✓",
     "importFail": "Importeren is niet gelukt",
+    "importConfirm": "De huidige inhoud wordt vervangen door de inhoud van het bestand. Wilt u importeren?",
     "note": "Alles wat u schrijft, blijft alleen op dit apparaat. Er wordt niets verstuurd.",
     "privacy": "Privacybeleid",
     "credit": "App-ontwikkeling: SOYOGI, adviespunt voor zorg en ondersteuning"
@@ -1572,6 +1600,7 @@ TBL.nl = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "copied": "Gekopieerd ✓",
       "copyFail": "Kopiëren is niet gelukt",
       "shareNone": "Delen is op dit apparaat niet mogelijk",
+      "shareFail": "Delen is niet gelukt",
       "copyHelp": "De tekst is geselecteerd. Houd hem lang ingedrukt om te kopiëren.",
       "histTitle": "Eerdere aantekeningen",
       "histEmpty": "Nog geen aantekeningen.",
@@ -1630,7 +1659,9 @@ TBL.nl = mergeDeep(JSON.parse(JSON.stringify(en)), {
       ],
       "del": "Wissen",
       "stepsHint": "De stappen voor als vermoeidheid zich opstapelt, openen in een aparte app: “Eén voor één - SOYOGI”.",
-      "steps": "Stappen openen"
+      "steps": "Stappen openen",
+      "prevTitle": "Plannen van gisteren",
+      "prevBatt": "Batterij gisteren"
     },
     "dekita": {
       "title": "Wat is gelukt",
@@ -1747,6 +1778,7 @@ TBL.sv = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "exported": "Exporterat ✓",
     "imported": "Importerat ✓",
     "importFail": "Det gick inte att importera",
+    "importConfirm": "Det du har nu ersätts med innehållet i filen. Vill du importera?",
     "note": "Allt du skriver sparas bara på den här enheten. Inget skickas någonstans.",
     "privacy": "Integritetspolicy",
     "credit": "Utvecklad av SOYOGI, en rådgivningstjänst för omsorg och stöd"
@@ -1808,6 +1840,7 @@ TBL.sv = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "copied": "Kopierat ✓",
       "copyFail": "Det gick inte att kopiera",
       "shareNone": "Delning fungerar inte på den här enheten",
+      "shareFail": "Det gick inte att dela",
       "copyHelp": "Texten är markerad. Håll fingret på den för att kopiera.",
       "histTitle": "Tidigare anteckningar",
       "histEmpty": "Inga anteckningar ännu.",
@@ -1866,7 +1899,9 @@ TBL.sv = mergeDeep(JSON.parse(JSON.stringify(en)), {
       ],
       "del": "Ta bort",
       "stepsHint": "Stegen för när tröttheten har hopat sig öppnas i en egen app: ”En i taget - SOYOGI”.",
-      "steps": "Öppna stegen"
+      "steps": "Öppna stegen",
+      "prevTitle": "Gårdagens planer",
+      "prevBatt": "Batteriet i går"
     },
     "dekita": {
       "title": "Det jag klarat",
@@ -1983,6 +2018,7 @@ TBL.ko = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "exported": "내보냈어요 ✓",
     "imported": "가져왔어요 ✓",
     "importFail": "가져오지 못했어요",
+    "importConfirm": "지금 내용이 파일의 내용으로 바뀌어요. 가져올까요?",
     "note": "쓴 내용은 모두 이 기기 안에만 저장돼요. 어디에도 보내지 않아요.",
     "privacy": "개인정보 처리방침",
     "credit": "앱 개발: 돌봄과 지원 상담소 SOYOGI"
@@ -2044,6 +2080,7 @@ TBL.ko = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "copied": "복사했어요 ✓",
       "copyFail": "복사하지 못했어요",
       "shareNone": "이 기기에서는 공유를 쓸 수 없어요",
+      "shareFail": "공유하지 못했어요",
       "copyHelp": "글을 선택해 두었어요. 길게 눌러서 복사할 수 있어요.",
       "histTitle": "지금까지의 기록",
       "histEmpty": "아직 기록이 없어요.",
@@ -2102,7 +2139,9 @@ TBL.ko = mergeDeep(JSON.parse(JSON.stringify(en)), {
       ],
       "del": "지우기",
       "stepsHint": "피로가 쌓였을 때의 순서는 다른 앱 “하나씩 - SOYOGI”에서 열려요.",
-      "steps": "순서 열기"
+      "steps": "순서 열기",
+      "prevTitle": "어제 일정",
+      "prevBatt": "어제 배터리"
     },
     "dekita": {
       "title": "해낸 일",
@@ -2219,6 +2258,7 @@ TBL.zh = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "exported": "已导出 ✓",
     "imported": "已导入 ✓",
     "importFail": "无法导入",
+    "importConfirm": "现在的内容会被替换为文件里的内容。要导入吗？",
     "note": "写下的内容全部只保存在这台设备里，不会发送到任何地方。",
     "privacy": "隐私政策",
     "credit": "应用开发：照护与支援咨询处 SOYOGI"
@@ -2280,6 +2320,7 @@ TBL.zh = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "copied": "已复制 ✓",
       "copyFail": "无法复制",
       "shareNone": "这台设备不能使用分享功能",
+      "shareFail": "无法分享",
       "copyHelp": "已选中这段文字。长按即可复制。",
       "histTitle": "以往的记录",
       "histEmpty": "还没有记录。",
@@ -2338,7 +2379,9 @@ TBL.zh = mergeDeep(JSON.parse(JSON.stringify(en)), {
       ],
       "del": "删除",
       "stepsHint": "疲劳累积时的步骤，会在另一个应用“一个一个来 - SOYOGI”中打开。",
-      "steps": "打开步骤"
+      "steps": "打开步骤",
+      "prevTitle": "昨天的安排",
+      "prevBatt": "昨天的电量"
     },
     "dekita": {
       "title": "做到的事",
@@ -2455,6 +2498,7 @@ TBL.ar = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "exported": "تمّ التصدير ✓",
     "imported": "تمّ الاستيراد ✓",
     "importFail": "تعذّر الاستيراد",
+    "importConfirm": "سيُستبدل المحتوى الحالي بمحتوى الملف. هل تريد الاستيراد؟",
     "note": "كل ما تكتبه يُحفظ في هذا الجهاز فقط، ولا يُرسل إلى أي مكان.",
     "privacy": "سياسة الخصوصية",
     "credit": "تطوير التطبيق: SOYOGI، مركز استشارات الرعاية والدعم"
@@ -2516,6 +2560,7 @@ TBL.ar = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "copied": "تمّ النسخ ✓",
       "copyFail": "تعذّر النسخ",
       "shareNone": "المشاركة غير متاحة على هذا الجهاز",
+      "shareFail": "تعذّرت المشاركة",
       "copyHelp": "تم تحديد النص. يمكنك نسخه بالضغط المطوّل عليه.",
       "histTitle": "السجلات السابقة",
       "histEmpty": "لا توجد سجلات بعد.",
@@ -2574,7 +2619,9 @@ TBL.ar = mergeDeep(JSON.parse(JSON.stringify(en)), {
       ],
       "del": "حذف",
       "stepsHint": "خطوات ما يمكن فعله عندما يتراكم التعب تُفتح في تطبيق آخر: «واحدة تلو الأخرى - SOYOGI».",
-      "steps": "فتح الخطوات"
+      "steps": "فتح الخطوات",
+      "prevTitle": "خطط الأمس",
+      "prevBatt": "بطارية الأمس"
     },
     "dekita": {
       "title": "ما أنجزته",
