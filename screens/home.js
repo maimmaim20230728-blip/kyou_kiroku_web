@@ -2,9 +2,15 @@
 /* 画面: ホーム
    ・ON になっている記録の種類だけを大ボタンで並べる(api.go)。全部 OFF なら「せってい」への案内
    ・下部に免責と相談先を常時表示(医療の代わりではない・危ないときは119/110や窓口へ)
+     窓口は10代の情報室、制度は困りごと制度ガイドへつなぐ(SPEC。URL は soyogi_homepage/apps.html の Web版・2026-09-28 HTTP 200 確認)
    ・文言は api.T('screen.home.*')。操作は api.Tap.bind(click禁止) */
 (function(){
   var ICONS = { kyori:'🌤', genki:'🔋', dekita:'🌱' };
+  var CARE_LINKS = [
+    { id:'home-care-teen',   key:'careTeen',  href:'https://maimmaim20230728-blip.github.io/teen_info_room_web/' },
+    { id:'home-care-seido',  key:'careSeido', href:'https://seido-guide-web.vercel.app/' },
+    { id:'home-care-soyogi', key:'careLink',  href:'https://soudansoyogi.com/' }
+  ];
 
   window.SCREENS.register('home', {
     render: function(c, api){
@@ -45,11 +51,14 @@
       care.setAttribute('id', 'home-care');
       care.appendChild(api.el('div', 'care-h', T('screen.home.careTitle')));
       care.appendChild(api.el('p', 'care-p', T('screen.home.care')));
-      var a = api.el('a', 'care-link', T('screen.home.careLink'));
-      a.setAttribute('href', 'https://soudansoyogi.com/');
-      a.setAttribute('target', '_blank');
-      a.setAttribute('rel', 'noopener');
-      care.appendChild(a);
+      CARE_LINKS.forEach(function(L){
+        var a = api.el('a', 'care-link', T('screen.home.' + L.key));
+        a.setAttribute('id', L.id);
+        a.setAttribute('href', L.href);
+        a.setAttribute('target', '_blank');
+        a.setAttribute('rel', 'noopener');
+        care.appendChild(a);
+      });
       c.appendChild(care);
     }
   });

@@ -6,7 +6,13 @@
 (function(){
   var KEY = 'dekita.v1';
 
-  function loadAll(api){ var d = api.load(KEY, []); return Array.isArray(d) ? d : []; }
+  /* 正しい形のものだけ残す(壊れたバックアップを読んでも画面が落ちないように)。d が日付の形で t が文字列のものだけ */
+  function loadAll(api){
+    var K = window.KIROKU_KINDS;
+    var d = api.load(KEY, []);
+    if(!Array.isArray(d)) return [];
+    return d.filter(function(it){ return it && typeof it === 'object' && K.isDateKey(it.d) && typeof it.t === 'string'; });
+  }
 
   window.SCREENS.register('dekita', {
     render: function(c, api){
@@ -29,7 +35,7 @@
       var addBtn = api.el('button', 'btn primary', T('screen.dekita.add'));
       addBtn.setAttribute('type', 'button');
       addBtn.setAttribute('id', 'dekita-add');
-      api.Tap.bind(addBtn, function(){
+      function addItem(){
         var t = String(inp.value || '').trim();
         if(!t) return;
         var it = { id: Date.now(), d: today, t: t };
@@ -38,7 +44,9 @@
         inp.value = '';
         drawList();
         api.toast(T('common.saved'));
-      });
+      }
+      api.Tap.bind(addBtn, addItem);
+      K.onEnter(inp, addItem);   // 完了キーでも のこせる(変換の確定では のこさない)
       addRow.appendChild(inp); addRow.appendChild(addBtn);
       c.appendChild(addRow);
 

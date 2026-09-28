@@ -53,6 +53,8 @@ var ja = {
       toSet:'せっていを ひらく',
       careTitle:'たいせつな おしらせ',
       care:'このアプリは 医療の代わりではありません。危ないときは 119(救急)や 110(警察)、相談窓口へ 連絡してください。',
+      careTeen:'相談窓口を さがす(10代の情報室)',
+      careSeido:'つかえる 制度を しらべる(困りごと制度ガイド)',
       careLink:'そよぎの ページを ひらく'
     },
     kyori: {
@@ -71,6 +73,7 @@ var ja = {
       result:'できた 文',
       copy:'コピー', share:'きょうゆう(共有)',
       copied:'コピーしました ✓', copyFail:'コピーできませんでした', shareNone:'この端末では 共有が つかえません',
+      copyHelp:'文を えらんで おきました。ながおしで コピーできます。',
       histTitle:'これまでの きろく',
       histEmpty:'まだ きろくは ありません。',
       /* 相手に見せる文(漢字) */
@@ -103,9 +106,8 @@ var ja = {
       f2:'さわがしさ', f2v:['しずか','ふつう','うるさい'],
       f3:'「ふつう」を えんじた', f3v:['あまり','すこし','ずっと'],
       del:'けす',
-      stepsHint:'つかれが かさなった ときの 手じゅんは、べつの ページに あります。',
-      steps:'手順を開く',
-      stepsNone:'手じゅんの ページは じゅんびちゅうです。'
+      stepsHint:'つかれが かさなった ときの 手じゅんは、べつの アプリ「ひとつずつ・そよぎ」で ひらきます。',
+      steps:'手順を開く'
     },
     dekita: {
       title:'できたこと',
@@ -170,6 +172,8 @@ var en = {
       toSet:'Open settings',
       careTitle:'Important note',
       care:'This app is not a substitute for medical care. In an emergency, call 119 (ambulance), 110 (police) or a helpline.',
+      careTeen:'Find a helpline in Japan (Teen Info Room)',
+      careSeido:'Look up support programs in Japan (Japan Support Guide)',
       careLink:'Open the SOYOGI page'
     },
     kyori: {
@@ -188,6 +192,7 @@ var en = {
       result:'Message',
       copy:'Copy', share:'Share',
       copied:'Copied ✓', copyFail:'Could not copy', shareNone:'Sharing is not available on this device',
+      copyHelp:'The message is selected. You can copy it with a long press.',
       histTitle:'Past days',
       histEmpty:'No records yet.',
       tpl: {
@@ -218,9 +223,8 @@ var en = {
       f2:'Noise', f2v:['Quiet','Normal','Loud'],
       f3:'Acting "normal"', f3v:['Little','Some','All the time'],
       del:'Delete',
-      stepsHint:'The steps for when tiredness piles up are on a separate page.',
-      steps:'Open the steps',
-      stepsNone:'The steps page is being prepared.'
+      stepsHint:'The steps for when tiredness piles up open in a separate app, "One by One - SOYOGI".',
+      steps:'Open the steps'
     },
     dekita: {
       title:'Things done',
@@ -345,6 +349,8 @@ TBL.de = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "toSet": "Einstellungen öffnen",
       "careTitle": "Wichtiger Hinweis",
       "care": "Diese App ersetzt keine medizinische Versorgung. In einer gefährlichen Situation wenden Sie sich bitte an 119 (Rettungsdienst, Japan), 110 (Polizei, Japan) oder an eine Beratungsstelle.",
+      "careTeen": "Beratungsstellen in Japan finden (Teen Info Room)",
+      "careSeido": "Unterstützungsangebote in Japan nachschlagen (Japan Support Guide)",
       "careLink": "SOYOGI-Seite öffnen"
     },
     "kyori": {
@@ -386,6 +392,7 @@ TBL.de = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "copied": "Kopiert ✓",
       "copyFail": "Konnte nicht kopiert werden",
       "shareNone": "Teilen ist auf diesem Gerät nicht verfügbar",
+      "copyHelp": "Der Text ist markiert. Er lässt sich durch langes Drücken kopieren.",
       "histTitle": "Bisherige Einträge",
       "histEmpty": "Noch keine Einträge.",
       "tpl": {
@@ -442,9 +449,8 @@ TBL.de = mergeDeep(JSON.parse(JSON.stringify(en)), {
         "Die ganze Zeit"
       ],
       "del": "Löschen",
-      "stepsHint": "Die Schritte für den Fall, dass sich Müdigkeit anhäuft, stehen auf einer eigenen Seite.",
-      "steps": "Schritte öffnen",
-      "stepsNone": "Die Seite mit den Schritten wird noch vorbereitet."
+      "stepsHint": "Die Schritte für den Fall, dass sich Müdigkeit anhäuft, öffnen sich in einer eigenen App: „Eins nach dem anderen - SOYOGI“.",
+      "steps": "Schritte öffnen"
     },
     "dekita": {
       "title": "Geschafftes",
@@ -579,6 +585,8 @@ TBL.fr = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "toSet": "Ouvrir les réglages",
       "careTitle": "Information importante",
       "care": "Cette application ne remplace pas les soins médicaux. En cas de danger, appelez le 119 (urgences, Japon), le 110 (police, Japon) ou une ligne d'écoute.",
+      "careTeen": "Trouver une ligne d'écoute au Japon (Teen Info Room)",
+      "careSeido": "Consulter les aides disponibles au Japon (Japan Support Guide)",
       "careLink": "Ouvrir la page de SOYOGI"
     },
     "kyori": {
@@ -620,6 +628,7 @@ TBL.fr = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "copied": "Copié ✓",
       "copyFail": "Copie impossible",
       "shareNone": "Le partage n'est pas disponible sur cet appareil",
+      "copyHelp": "Le texte est sélectionné. Un appui long permet de le copier.",
       "histTitle": "Notes précédentes",
       "histEmpty": "Aucune note pour le moment.",
       "tpl": {
@@ -676,9 +685,8 @@ TBL.fr = mergeDeep(JSON.parse(JSON.stringify(en)), {
         "Tout le temps"
       ],
       "del": "Supprimer",
-      "stepsHint": "Les étapes à suivre quand la fatigue s'accumule sont sur une autre page.",
-      "steps": "Ouvrir les étapes",
-      "stepsNone": "La page des étapes est en préparation."
+      "stepsHint": "Les étapes à suivre quand la fatigue s'accumule s'ouvrent dans une autre application : « Un par un - SOYOGI ».",
+      "steps": "Ouvrir les étapes"
     },
     "dekita": {
       "title": "Réussites du jour",
@@ -813,6 +821,8 @@ TBL.es = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "toSet": "Abrir ajustes",
       "careTitle": "Aviso importante",
       "care": "Esta app no sustituye la atención médica. En caso de peligro, contactar con el 119 (ambulancia) o el 110 (policía) de Japón, o con un servicio de consulta.",
+      "careTeen": "Buscar un servicio de consulta en Japón (Teen Info Room)",
+      "careSeido": "Consultar las ayudas disponibles en Japón (Japan Support Guide)",
       "careLink": "Abrir la página de SOYOGI"
     },
     "kyori": {
@@ -854,6 +864,7 @@ TBL.es = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "copied": "Copiado ✓",
       "copyFail": "No se pudo copiar",
       "shareNone": "No se puede compartir en este dispositivo",
+      "copyHelp": "El texto está seleccionado. Se puede copiar con una pulsación larga.",
       "histTitle": "Registros anteriores",
       "histEmpty": "Todavía no hay registros.",
       "tpl": {
@@ -910,9 +921,8 @@ TBL.es = mergeDeep(JSON.parse(JSON.stringify(en)), {
         "Todo el tiempo"
       ],
       "del": "Borrar",
-      "stepsHint": "Los pasos para cuando el cansancio se acumula están en otra página.",
-      "steps": "Abrir los pasos",
-      "stepsNone": "La página de pasos está en preparación."
+      "stepsHint": "Los pasos para cuando el cansancio se acumula se abren en otra aplicación: «Uno a uno - SOYOGI».",
+      "steps": "Abrir los pasos"
     },
     "dekita": {
       "title": "Cosas hechas",
@@ -1047,6 +1057,8 @@ TBL.it = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "toSet": "Apri le impostazioni",
       "careTitle": "Avviso importante",
       "care": "Questa app non sostituisce le cure mediche. In caso di pericolo, chiami il 119 (ambulanza, Giappone), il 110 (polizia, Giappone) o uno sportello di ascolto.",
+      "careTeen": "Trova uno sportello di ascolto in Giappone (Teen Info Room)",
+      "careSeido": "Consulta gli aiuti disponibili in Giappone (Japan Support Guide)",
       "careLink": "Apri la pagina di SOYOGI"
     },
     "kyori": {
@@ -1088,6 +1100,7 @@ TBL.it = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "copied": "Copiato ✓",
       "copyFail": "Non è stato possibile copiare",
       "shareNone": "La condivisione non è disponibile su questo dispositivo",
+      "copyHelp": "Il testo è selezionato. Si può copiare con una pressione prolungata.",
       "histTitle": "Annotazioni precedenti",
       "histEmpty": "Ancora nessuna annotazione.",
       "tpl": {
@@ -1144,9 +1157,8 @@ TBL.it = mergeDeep(JSON.parse(JSON.stringify(en)), {
         "Tutto il tempo"
       ],
       "del": "Elimina",
-      "stepsHint": "I passi da seguire quando la stanchezza si accumula sono in una pagina a parte.",
-      "steps": "Apri i passi",
-      "stepsNone": "La pagina dei passi è in preparazione."
+      "stepsHint": "I passi da seguire quando la stanchezza si accumula si aprono in un'altra app: «Uno alla volta - SOYOGI».",
+      "steps": "Apri i passi"
     },
     "dekita": {
       "title": "Cose fatte",
@@ -1281,6 +1293,8 @@ TBL.pt = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "toSet": "Abrir ajustes",
       "careTitle": "Aviso importante",
       "care": "Esta ferramenta não substitui cuidados médicos. Em caso de perigo, ligar para o 119 (ambulância) ou o 110 (polícia) no Japão, ou para um serviço de apoio.",
+      "careTeen": "Encontrar um serviço de apoio no Japão (Teen Info Room)",
+      "careSeido": "Consultar os apoios disponíveis no Japão (Japan Support Guide)",
       "careLink": "Abrir a página de SOYOGI"
     },
     "kyori": {
@@ -1322,6 +1336,7 @@ TBL.pt = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "copied": "Copiado ✓",
       "copyFail": "Não foi possível copiar",
       "shareNone": "Não é possível compartilhar neste dispositivo",
+      "copyHelp": "O texto está selecionado. Pode copiá-lo com um toque longo.",
       "histTitle": "Anotações anteriores",
       "histEmpty": "Ainda não há anotações.",
       "tpl": {
@@ -1378,9 +1393,8 @@ TBL.pt = mergeDeep(JSON.parse(JSON.stringify(en)), {
         "O tempo todo"
       ],
       "del": "Apagar",
-      "stepsHint": "Há uma página separada com os passos para quando o cansaço se acumula.",
-      "steps": "Abrir os passos",
-      "stepsNone": "A página dos passos está em preparação."
+      "stepsHint": "Os passos para quando o cansaço se acumula abrem-se em outra ferramenta: «Um de cada vez - SOYOGI».",
+      "steps": "Abrir os passos"
     },
     "dekita": {
       "title": "Coisas feitas",
@@ -1515,6 +1529,8 @@ TBL.nl = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "toSet": "Instellingen openen",
       "careTitle": "Belangrijke mededeling",
       "care": "Deze app vervangt geen medische zorg. Bel bij gevaar 119 (ambulance, Japan), 110 (politie, Japan) of een hulplijn.",
+      "careTeen": "Een hulplijn in Japan zoeken (Teen Info Room)",
+      "careSeido": "Ondersteuning in Japan opzoeken (Japan Support Guide)",
       "careLink": "De pagina van SOYOGI openen"
     },
     "kyori": {
@@ -1556,6 +1572,7 @@ TBL.nl = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "copied": "Gekopieerd ✓",
       "copyFail": "Kopiëren is niet gelukt",
       "shareNone": "Delen is op dit apparaat niet mogelijk",
+      "copyHelp": "De tekst is geselecteerd. Houd hem lang ingedrukt om te kopiëren.",
       "histTitle": "Eerdere aantekeningen",
       "histEmpty": "Nog geen aantekeningen.",
       "tpl": {
@@ -1612,9 +1629,8 @@ TBL.nl = mergeDeep(JSON.parse(JSON.stringify(en)), {
         "De hele tijd"
       ],
       "del": "Wissen",
-      "stepsHint": "De stappen voor als vermoeidheid zich opstapelt, staan op een aparte pagina.",
-      "steps": "Stappen openen",
-      "stepsNone": "De pagina met stappen is nog in voorbereiding."
+      "stepsHint": "De stappen voor als vermoeidheid zich opstapelt, openen in een aparte app: “Eén voor één - SOYOGI”.",
+      "steps": "Stappen openen"
     },
     "dekita": {
       "title": "Wat is gelukt",
@@ -1749,6 +1765,8 @@ TBL.sv = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "toSet": "Öppna inställningar",
       "careTitle": "Viktigt att veta",
       "care": "Den här appen ersätter inte sjukvård. Om det är farligt, kontakta 119 (ambulans) eller 110 (polis) i Japan, eller en stödlinje.",
+      "careTeen": "Hitta en stödlinje i Japan (Teen Info Room)",
+      "careSeido": "Se vilket stöd som finns i Japan (Japan Support Guide)",
       "careLink": "Öppna SOYOGI-sidan"
     },
     "kyori": {
@@ -1790,6 +1808,7 @@ TBL.sv = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "copied": "Kopierat ✓",
       "copyFail": "Det gick inte att kopiera",
       "shareNone": "Delning fungerar inte på den här enheten",
+      "copyHelp": "Texten är markerad. Håll fingret på den för att kopiera.",
       "histTitle": "Tidigare anteckningar",
       "histEmpty": "Inga anteckningar ännu.",
       "tpl": {
@@ -1846,9 +1865,8 @@ TBL.sv = mergeDeep(JSON.parse(JSON.stringify(en)), {
         "Hela tiden"
       ],
       "del": "Ta bort",
-      "stepsHint": "Stegen för när tröttheten har hopat sig finns på en egen sida.",
-      "steps": "Öppna stegen",
-      "stepsNone": "Sidan med stegen är inte klar än."
+      "stepsHint": "Stegen för när tröttheten har hopat sig öppnas i en egen app: ”En i taget - SOYOGI”.",
+      "steps": "Öppna stegen"
     },
     "dekita": {
       "title": "Det jag klarat",
@@ -1983,6 +2001,8 @@ TBL.ko = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "toSet": "설정 열기",
       "careTitle": "중요한 안내",
       "care": "이 앱은 의료를 대신하지 않아요. 위급할 때는 일본의 119(구급)나 110(경찰), 또는 상담 창구로 연락해 주세요.",
+      "careTeen": "일본의 상담 창구 찾기 (Teen Info Room)",
+      "careSeido": "일본에서 쓸 수 있는 제도 알아보기 (Japan Support Guide)",
       "careLink": "SOYOGI 페이지 열기"
     },
     "kyori": {
@@ -2024,6 +2044,7 @@ TBL.ko = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "copied": "복사했어요 ✓",
       "copyFail": "복사하지 못했어요",
       "shareNone": "이 기기에서는 공유를 쓸 수 없어요",
+      "copyHelp": "글을 선택해 두었어요. 길게 눌러서 복사할 수 있어요.",
       "histTitle": "지금까지의 기록",
       "histEmpty": "아직 기록이 없어요.",
       "tpl": {
@@ -2080,9 +2101,8 @@ TBL.ko = mergeDeep(JSON.parse(JSON.stringify(en)), {
         "계속"
       ],
       "del": "지우기",
-      "stepsHint": "피로가 쌓였을 때의 순서는 다른 페이지에 있어요.",
-      "steps": "순서 열기",
-      "stepsNone": "순서 페이지는 준비 중이에요."
+      "stepsHint": "피로가 쌓였을 때의 순서는 다른 앱 “하나씩 - SOYOGI”에서 열려요.",
+      "steps": "순서 열기"
     },
     "dekita": {
       "title": "해낸 일",
@@ -2217,6 +2237,8 @@ TBL.zh = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "toSet": "打开设置",
       "careTitle": "重要提示",
       "care": "这个应用不能代替医疗。遇到危险时，请联系119(日本急救)、110(日本警察)或咨询窗口。",
+      "careTeen": "查找日本的咨询窗口(Teen Info Room)",
+      "careSeido": "查询在日本可以使用的制度(Japan Support Guide)",
       "careLink": "打开 SOYOGI 的页面"
     },
     "kyori": {
@@ -2258,6 +2280,7 @@ TBL.zh = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "copied": "已复制 ✓",
       "copyFail": "无法复制",
       "shareNone": "这台设备不能使用分享功能",
+      "copyHelp": "已选中这段文字。长按即可复制。",
       "histTitle": "以往的记录",
       "histEmpty": "还没有记录。",
       "tpl": {
@@ -2314,9 +2337,8 @@ TBL.zh = mergeDeep(JSON.parse(JSON.stringify(en)), {
         "一直"
       ],
       "del": "删除",
-      "stepsHint": "疲劳累积时的步骤，放在另外的页面。",
-      "steps": "打开步骤",
-      "stepsNone": "步骤页面正在准备中。"
+      "stepsHint": "疲劳累积时的步骤，会在另一个应用“一个一个来 - SOYOGI”中打开。",
+      "steps": "打开步骤"
     },
     "dekita": {
       "title": "做到的事",
@@ -2451,6 +2473,8 @@ TBL.ar = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "toSet": "فتح الإعدادات",
       "careTitle": "تنبيه مهم",
       "care": "هذا التطبيق ليس بديلًا عن الرعاية الطبية. في حالات الخطر، اتصل بالرقم 119 (الإسعاف) أو 110 (الشرطة) في اليابان، أو بأحد مراكز الاستشارة.",
+      "careTeen": "البحث عن جهة استشارة في اليابان (Teen Info Room)",
+      "careSeido": "معرفة أنظمة الدعم المتاحة في اليابان (Japan Support Guide)",
       "careLink": "فتح صفحة SOYOGI"
     },
     "kyori": {
@@ -2492,6 +2516,7 @@ TBL.ar = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "copied": "تمّ النسخ ✓",
       "copyFail": "تعذّر النسخ",
       "shareNone": "المشاركة غير متاحة على هذا الجهاز",
+      "copyHelp": "تم تحديد النص. يمكنك نسخه بالضغط المطوّل عليه.",
       "histTitle": "السجلات السابقة",
       "histEmpty": "لا توجد سجلات بعد.",
       "tpl": {
@@ -2548,9 +2573,8 @@ TBL.ar = mergeDeep(JSON.parse(JSON.stringify(en)), {
         "طوال الوقت"
       ],
       "del": "حذف",
-      "stepsHint": "خطوات ما يمكن فعله عندما يتراكم التعب موجودة في صفحة منفصلة.",
-      "steps": "فتح الخطوات",
-      "stepsNone": "صفحة الخطوات قيد الإعداد."
+      "stepsHint": "خطوات ما يمكن فعله عندما يتراكم التعب تُفتح في تطبيق آخر: «واحدة تلو الأخرى - SOYOGI».",
+      "steps": "فتح الخطوات"
     },
     "dekita": {
       "title": "ما أنجزته",

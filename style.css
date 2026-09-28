@@ -107,7 +107,7 @@ header#hd{
 body[data-theme="dark"] .btn.danger{ border-color:#ef9a9a; color:#ef9a9a; }
 .btn.wide{ width:100%; }
 .btn-row{ display:flex; gap:10px; flex-wrap:wrap; margin:10px 0; }
-.btn-row .btn{ flex:1; }
+.btn-row .btn{ flex:1 1 0; min-width:fit-content; padding:0 12px; }   /* 入るときは同じ幅。長い訳(pt Compartilhar・360px・とても大きい)はその幅まで広がり、入らなければ折り返す */
 .field{ margin:12px 0; }
 .field label{ display:block; font-weight:700; margin:0 0 4px; }
 .field input[type="text"], .field input[type="number"], .field input[type="date"], .field input[type="time"], .field textarea, .field select{
@@ -182,7 +182,9 @@ body[data-theme="dark"] .btn.danger{ border-color:#ef9a9a; color:#ef9a9a; }
 .card.care{ border-color:var(--line); margin-top:24px; }
 .care-h{ font-weight:700; margin:0 0 4px; }
 .care-p{ margin:0 0 8px; font-size:.95em; }
-.care-link{ display:inline-block; padding:10px 4px; color:var(--brand); text-decoration:underline; min-height:44px; }
+.care-link{ display:block; padding:10px 4px; color:var(--brand); text-decoration:underline; min-height:44px; }   /* 3つ(10代の情報室・制度ガイド・そよぎ)を1行ずつ */
+/* ボタンの形のリンク(のこり元気の「手順を開く」) */
+a.btn{ text-decoration:none; }
 /* あさの きょり: 4択は同じ大きさ・同じ色 */
 .kyori-grid{ margin:0 0 12px; }
 .kyori-grid .big-btn .lbl{ font-size:1.1em; }
@@ -204,6 +206,15 @@ body[data-theme="dark"] .btn.danger{ border-color:#ef9a9a; color:#ef9a9a; }
 .plan .plan-t{ font-weight:700; overflow-wrap:anywhere; }
 .plan .field{ margin:8px 0 0; }
 .plan .field label{ font-size:.9em; }
+/* dark: 明るい緑(#43c08a)の上の白い文字は 2.3:1 で読みにくいので、緑の背景の上の文字だけ濃い色にする(約7.4:1) */
+body[data-theme="dark"] header#hd,
+body[data-theme="dark"] .lang-label,
+body[data-theme="dark"] .chip.on,
+body[data-theme="dark"] .btn.primary,
+body[data-theme="dark"] .big-btn.primary,
+body[data-theme="dark"] .big-btn.on,
+body[data-theme="dark"] .big-btn.on .sub,
+body[data-theme="dark"] .ov-close{ color:#0f1f17; }
 
 /* ======== せってい ======== */
 .set-row{

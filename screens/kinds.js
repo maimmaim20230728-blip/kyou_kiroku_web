@@ -22,6 +22,16 @@
     d = d || new Date();
     return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
   }
+  /* 'YYYY-MM-DD' の形か(壊れたバックアップを読んでも画面が落ちないよう、各画面の loadAll で使う) */
+  function isDateKey(k){ return typeof k === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(k); }
+  /* 1行入力で Enter(スマホの完了キー)を押したら fn。日本語の変換を確定する Enter(isComposing / keyCode 229)では何もしない */
+  function onEnter(input, fn){
+    input.addEventListener('keydown', function(e){
+      if(!e || e.key !== 'Enter' || e.isComposing || e.keyCode === 229) return;
+      if(e.preventDefault) e.preventDefault();
+      fn();
+    });
+  }
   /* 'YYYY-MM-DD' → 見せる形(言語ごと) */
   function dateLabel(key, lang){
     var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(key || '');
@@ -41,11 +51,12 @@
     labels.forEach(function(lb, i){
       var c = api.el('button', 'chip' + (i === selected ? ' on' : ''), lb);
       c.setAttribute('type', 'button');
+      c.setAttribute('aria-pressed', i === selected ? 'true' : 'false');   // 選んだ状態を読み上げに伝える
       api.Tap.bind(c, function(){ onPick(i); });
       wrap.appendChild(c);
     });
     return wrap;
   }
 
-  window.KIROKU_KINDS = { list: KINDS, isOn: isOn, setOn: setOn, applyNav: applyNav, dateKey: dateKey, dateLabel: dateLabel, fill: fill, chipRow: chipRow };
+  window.KIROKU_KINDS = { list: KINDS, isOn: isOn, setOn: setOn, applyNav: applyNav, dateKey: dateKey, isDateKey: isDateKey, onEnter: onEnter, dateLabel: dateLabel, fill: fill, chipRow: chipRow };
 })();

@@ -8,6 +8,7 @@
     render: function(c, api){
       var K = window.KIROKU_KINDS;   // 読み込み順に依らないよう描くときに参照
       var T = api.T;
+      K.applyNav(api);   // よみこむ のあと(せっていを描き直す)も、下ナビを いまの ON/OFF に合わせる
       c.appendChild(api.el('h2', 'sec-h', T('screen.set.h')));
       var labels = T('screen.set.kinds');
       K.list.forEach(function(id, i){
@@ -16,10 +17,12 @@
         var b = api.el('button', 'set-btn', K.isOn(api, id) ? T('set.on') : T('set.off'));
         b.setAttribute('type', 'button');
         b.setAttribute('id', 'set-app-kind-' + id);
+        b.setAttribute('aria-pressed', K.isOn(api, id) ? 'true' : 'false');   // ON/OFF を読み上げに伝える
         api.Tap.bind(b, function(){
           var on = !K.isOn(api, id);
           K.setOn(api, id, on);
           b.textContent = on ? T('set.on') : T('set.off');
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
           K.applyNav(api);
         });
         row.appendChild(b);

@@ -3,13 +3,27 @@
    ・きょうの予定を1行ずつ足し、それぞれの消耗を3段階×3(ひと/さわがしさ/「ふつう」を演じた)で選ぶ
    ・電池の目盛り(5段階の絵)が減る。数字・点数は一切出さない
    ・保存: api.save('genki.v1', { 'YYYY-MM-DD': [ { t:'予定', f:[0,0,0] } ] })
-   ・「登録したサインが重なっています」の判定は作らない。「手順を開く」ボタンだけ置く(リンク先は後で) */
+   ・「登録したサインが重なっています」の判定は作らない。「手順を開く」のリンクだけ置く(新1「ひとつずつ・そよぎ」の公開Web版へ) */
 (function(){
   var KEY = 'genki.v1';
-  var STEPS_URL = '';   // 🔴 後で「手順」のアプリのURLを入れる(空なら案内トーストだけ)
+  var STEPS_URL = 'https://maimmaim20230728-blip.github.io/soyogi_anshin_web/';   // 新1「ひとつずつ・そよぎ」の公開Web版(2026-09-28 HTTP 200 確認)
   var SEG = 5;
 
-  function loadAll(api){ var d = api.load(KEY, {}); return (d && typeof d === 'object' && !Array.isArray(d)) ? d : {}; }
+  /* 正しい形のものだけ残す(壊れたバックアップを読んでも画面が落ちないように)。
+     日付キーの配列で、t が文字列の予定だけ。f は 0〜2 の整数3つにそろえる */
+  function loadAll(api){
+    var K = window.KIROKU_KINDS;
+    var d = api.load(KEY, {}), out = {};
+    if(!d || typeof d !== 'object' || Array.isArray(d)) return out;
+    Object.keys(d).forEach(function(k){
+      if(!K.isDateKey(k) || !Array.isArray(d[k])) return;
+      out[k] = d[k].filter(function(p){ return p && typeof p === 'object' && typeof p.t === 'string'; }).map(function(p){
+        var f = Array.isArray(p.f) ? p.f : [];
+        return { t:p.t, f:[0, 1, 2].map(function(i){ var v = f[i]; return (v === 0 || v === 1 || v === 2) ? v : 0; }) };
+      });
+    });
+    return out;
+  }
 
   /* 目盛り: 消耗の合計から残りの段数(数字は表示しない) */
   function remainSegments(plans){
@@ -60,14 +74,16 @@
       var addBtn = api.el('button', 'btn primary', T('screen.genki.add'));
       addBtn.setAttribute('type', 'button');
       addBtn.setAttribute('id', 'genki-add');
-      api.Tap.bind(addBtn, function(){
+      function addPlan(){
         var t = String(inp.value || '').trim();
         if(!t) return;
         plans.push({ t:t, f:[0,0,0] });
         if(!persist()){ plans.pop(); return; }
         inp.value = '';
         drawList(); drawBatt();
-      });
+      }
+      api.Tap.bind(addBtn, addPlan);
+      K.onEnter(inp, addPlan);   // 完了キーでも足せる(変換の確定では足さない)
       addRow.appendChild(inp); addRow.appendChild(addBtn);
       c.appendChild(addRow);
 
@@ -78,15 +94,20 @@
       function drawList(){
         list.textContent = '';
         if(!plans.length){ list.appendChild(api.el('p', 'empty', T('screen.genki.empty'))); return; }
-        plans.forEach(function(p, idx){
+        plans.forEach(function(p){
           var card = api.el('div', 'card plan');
           var head = api.el('div', 'row between');
           head.appendChild(api.el('div', 'plan-t grow', p.t));
+          /* けすは2回タップ(できたことと同じ。1回目は「ほんとうに けす」を出すだけ) */
           var del = api.el('button', 'btn small', T('screen.genki.del'));
           del.setAttribute('type', 'button');
+          var armed = false;
           api.Tap.bind(del, function(){
-            plans.splice(idx, 1);
+            if(!armed){ armed = true; del.textContent = T('screen.dekita.delSure'); del.classList.add('danger'); return; }
+            var i = plans.indexOf(p);
+            if(i >= 0) plans.splice(i, 1);
             persist(); drawList(); drawBatt();
+            api.toast(T('common.deleted'));
           });
           head.appendChild(del);
           card.appendChild(head);
@@ -108,15 +129,13 @@
       drawList();
       drawBatt();
 
-      /* 手順を開く(判定はしない・リンクだけ) */
+      /* 手順を開く(判定はしない・リンクだけ。ホームの相談先リンクと同じ <a target=_blank rel=noopener>) */
       c.appendChild(api.el('p', 'hint', T('screen.genki.stepsHint')));
-      var st = api.el('button', 'btn wide', T('screen.genki.steps'));
-      st.setAttribute('type', 'button');
+      var st = api.el('a', 'btn wide', T('screen.genki.steps'));
       st.setAttribute('id', 'genki-steps');
-      api.Tap.bind(st, function(){
-        if(!STEPS_URL){ api.toast(T('screen.genki.stepsNone')); return; }
-        try{ window.open(STEPS_URL, '_blank', 'noopener'); }catch(_){}
-      });
+      st.setAttribute('href', STEPS_URL);
+      st.setAttribute('target', '_blank');
+      st.setAttribute('rel', 'noopener');
       c.appendChild(st);
     }
   });

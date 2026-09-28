@@ -9,10 +9,11 @@
      変えたら README の「シェルの変更点」に書く */
 (function(){
 
-var VER = '0.4.0';              // 🔴 更新のたびに上げる(build.gradle の versionName / sw.js の CACHE と一緒に)
+var VER = '0.4.1';              // 🔴 更新のたびに上げる(build.gradle の versionName / sw.js の CACHE と一緒に)
 var APP_KEY = 'kyou_kiroku';        // バックアップの識別(別アプリのファイルを読まない)
 var LS = 'kiroku.';
 var LS_PREF = LS + 'pref.v1';
+var DATA_KEYS = ['kyori.v1', 'genki.v1', 'dekita.v1'];   // バックアップから受け取る保存キー(このアプリで追加。画面の保存キーを足したらここにも足す)
 var LANGS = ['ja','en','de','fr','es','it','pt','nl','sv','ko','zh','ar'];
 var RTL_LANGS = ['ar'];
 var THEMES = ['green','aqua','white','dark'];
@@ -271,7 +272,7 @@ function importBackup(e){
     try{
       var d = JSON.parse(r.result);
       if(d.app !== APP_KEY) throw new Error('different app');
-      if(d.data && typeof d.data === 'object'){ for(var k in d.data){ saveJSON(LS + k, d.data[k]); } }
+      if(d.data && typeof d.data === 'object'){ for(var k in d.data){ if(DATA_KEYS.indexOf(k) >= 0) saveJSON(LS + k, d.data[k]); } }   // 知らないキーは入れない(中身の形は各画面の loadAll が確かめる)
       pref = sanitizePref(d.pref);
       savePref();
       applyAll(true);

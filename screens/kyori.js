@@ -4,14 +4,22 @@
    ・保存: api.save('kyori.v1', { 'YYYY-MM-DD': 0..3 })
    ・「家で過ごす」を選んだら連絡文づくりを開く(それ以外でもボタンで開ける)
      あいて(学校/職場)・書く人(本人/家族)・ようけん(遅れる/きょう休む/数日/しばらく)を選ぶだけで文ができ、
-     コピー(navigator.clipboard)と共有(navigator.share があれば)
+     コピー(navigator.clipboard → だめなら execCommand → それでもだめなら欄を全部選んで長押しを案内)と
+     共有(navigator.share がある端末だけボタンを出す。Play版の WebView には無いので出さない)
    ・これまでの記録は日付ごとの一覧だけ(数える・比べる表示はしない) */
 (function(){
   var KEY = 'kyori.v1';
   var HOME = 3;   // 「家で過ごす」の添字
   var KIND_ID = ['late', 'today', 'days', 'long'];
 
-  function loadAll(api){ var d = api.load(KEY, {}); return (d && typeof d === 'object' && !Array.isArray(d)) ? d : {}; }
+  /* 正しい形のものだけ残す(壊れたバックアップを読んでも画面が落ちないように)。日付キーで値が 0〜3 のものだけ */
+  function loadAll(api){
+    var K = window.KIROKU_KINDS;
+    var d = api.load(KEY, {}), out = {};
+    if(!d || typeof d !== 'object' || Array.isArray(d)) return out;
+    Object.keys(d).forEach(function(k){ var v = d[k]; if(K.isDateKey(k) && (v === 0 || v === 1 || v === 2 || v === 3)) out[k] = v; });
+    return out;
+  }
 
   /* 韓国語の主題の助詞(은/는)。ハングルで終わる名前は最後の字のパッチムで決め、それ以外は 은(는) と両方書く */
   function koTopic(n){
@@ -43,15 +51,36 @@
     return lines.join('\n');
   }
 
-  function copyText(api, text){
-    var T = api.T;
+  /* navigator.clipboard が使えない/断られた端末は、見えない textarea + execCommand('copy') で試す(10代の情報室と同じ) */
+  function legacyCopy(text){
+    try{
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed'; ta.style.top = '0'; ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      var ok = document.execCommand('copy');
+      ta.remove();
+      return !!ok;
+    }catch(_){ return false; }
+  }
+  /* それでもだめなら、連絡文の欄を全部選んでおき、長押しでコピーできることを欄の下に出す(トーストは消えるので残る文で) */
+  function copyText(api, out, help){
+    var T = api.T, text = out.value;
+    function done(ok){
+      help.classList.toggle('hidden', ok);
+      if(ok){ api.toast(T('screen.kyori.copied')); return; }
+      try{ out.focus(); out.select(); }catch(_){}
+      api.toast(T('screen.kyori.copyFail'));
+    }
     try{
       if(navigator.clipboard && navigator.clipboard.writeText){
-        navigator.clipboard.writeText(text).then(function(){ api.toast(T('screen.kyori.copied')); }, function(){ api.toast(T('screen.kyori.copyFail')); });
+        navigator.clipboard.writeText(text).then(function(){ done(true); }, function(){ done(legacyCopy(text)); });
         return;
       }
     }catch(_){}
-    api.toast(T('screen.kyori.copyFail'));
+    done(legacyCopy(text));
   }
   function shareText(api, text){
     var T = api.T;
@@ -99,12 +128,13 @@
         var b = api.el('button', 'big-btn kyori-opt' + (all[today] === i ? ' on' : ''));
         b.setAttribute('type', 'button');
         b.setAttribute('id', 'kyori-opt-' + i);
+        b.setAttribute('aria-pressed', all[today] === i ? 'true' : 'false');
         b.appendChild(api.el('span', 'lbl', lb));
         api.Tap.bind(b, function(){
           all[today] = i;
           if(!api.save(KEY, all)){ api.toast(T('common.storageFull')); delete all[today]; return; }
           var btns = grid.querySelectorAll('.kyori-opt');
-          for(var k = 0; k < btns.length; k++) btns[k].classList.toggle('on', k === i);
+          for(var k = 0; k < btns.length; k++){ btns[k].classList.toggle('on', k === i); btns[k].setAttribute('aria-pressed', k === i ? 'true' : 'false'); }
           drawState();
           if(i === HOME) openLetter();
           api.toast(T('common.saved'));
@@ -158,7 +188,9 @@
         letterBox.appendChild(chipField(T('screen.kyori.kind'), T('screen.kyori.kinds'), 'kind'));
 
         var nf = api.el('div', 'field');
-        nf.appendChild(api.el('label', null, T('screen.kyori.name')));
+        var nl = api.el('label', null, T('screen.kyori.name'));
+        nl.setAttribute('for', 'kyori-name');
+        nf.appendChild(nl);
         var ni = api.el('input');
         ni.setAttribute('type', 'text');
         ni.setAttribute('id', 'kyori-name');
@@ -169,20 +201,29 @@
         letterBox.appendChild(nf);
 
         var rf = api.el('div', 'field');
-        rf.appendChild(api.el('label', null, T('screen.kyori.result')));
+        var rl = api.el('label', null, T('screen.kyori.result'));
+        rl.setAttribute('for', 'kyori-letter-out');
+        rf.appendChild(rl);
         rf.appendChild(out);
         letterBox.appendChild(rf);
         refresh();
 
         var row = api.el('div', 'btn-row');
+        var help = api.el('p', 'hint hidden', T('screen.kyori.copyHelp'));   // コピーできなかったときだけ出す
+        help.setAttribute('id', 'kyori-copy-help');
         var cp = api.el('button', 'btn primary', T('screen.kyori.copy'));
         cp.setAttribute('type', 'button'); cp.setAttribute('id', 'kyori-copy');
-        api.Tap.bind(cp, function(){ copyText(api, out.value); });
-        var sh = api.el('button', 'btn', T('screen.kyori.share'));
-        sh.setAttribute('type', 'button'); sh.setAttribute('id', 'kyori-share');
-        api.Tap.bind(sh, function(){ shareText(api, out.value); });
-        row.appendChild(cp); row.appendChild(sh);
+        api.Tap.bind(cp, function(){ copyText(api, out, help); });
+        row.appendChild(cp);
+        /* 共有は navigator.share がある端末だけ(無い端末ではコピーが横いっぱいになる) */
+        if(typeof navigator !== 'undefined' && typeof navigator.share === 'function'){
+          var sh = api.el('button', 'btn', T('screen.kyori.share'));
+          sh.setAttribute('type', 'button'); sh.setAttribute('id', 'kyori-share');
+          api.Tap.bind(sh, function(){ shareText(api, out.value); });
+          row.appendChild(sh);
+        }
         letterBox.appendChild(row);
+        letterBox.appendChild(help);
       }
       if(all[today] === HOME) openLetter();
 
