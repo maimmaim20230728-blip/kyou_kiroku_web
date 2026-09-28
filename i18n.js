@@ -1,4 +1,4 @@
-/* きょうの記録帳(仮) 多言語テーブル(そよぎアプリ・キット v1・12言語)
+/* 今日の記録帳・そよぎ 多言語テーブル(そよぎアプリ・キット v1・12言語)
    ・window.KIROKU_I18N = { ja, en, de, fr, es, it, pt, nl, sv, ko, zh, ar }
    ・キー構造は全言語で完全一致(_check.js が ja を正として構造・配列要素数を機械照合)
    ・🔴 BUILDER: 文言は ja と en の両方に同じキーで足す。画面固有は screen.<画面id>.* に置く。
@@ -12,7 +12,7 @@
 
 /* ============ ja(正) ============ */
 var ja = {
-  app: { name:'きょうの記録帳(仮)', tagline:'比べない、判定しない、きょうの記録。' },
+  app: { name:'今日の記録帳・そよぎ', short:'今日の記録帳', tagline:'比べない、判定しない、きょうの記録。' },
   nav: { home:'ホーム', kyori:'あさの きょり', genki:'のこり元気', dekita:'できたこと', set:'せってい' },
   common: {
     ok:'OK', cancel:'やめる', save:'ほぞんする', del:'けす', back:'もどる', close:'とじる',
@@ -44,7 +44,7 @@ var ja = {
   },
   screen: {
     home: {
-      title:'きょうの記録帳(仮)',
+      title:'今日の記録帳',
       intro:'きょうのことを、すこしだけ 書きとめる 帳面です。書かない日が あっても だいじょうぶ。',
       kyori:'あさの きょり', kyoriSub:'きょう 行ける ところを えらぶ',
       genki:'のこり元気', genkiSub:'よていと、つかれの 目もり',
@@ -129,7 +129,7 @@ var ja = {
 
 /* ============ en ============ */
 var en = {
-  app: { name:'Today Log - SOYOGI (draft)', tagline:'A daily log that never compares or judges.' },
+  app: { name:'Today Log - SOYOGI', short:'Today Log', tagline:'A daily log that never compares or judges.' },
   nav: { home:'Home', kyori:'Morning', genki:'Energy', dekita:'Done', set:'Settings' },
   common: {
     ok:'OK', cancel:'Cancel', save:'Save', del:'Delete', back:'Back', close:'Close',
@@ -161,7 +161,7 @@ var en = {
   },
   screen: {
     home: {
-      title:'Today Log - SOYOGI (draft)',
+      title:'Today Log',
       intro:'A small notebook for today. Days with no entry are fine too.',
       kyori:'Morning distance', kyoriSub:'Choose how far you can go today',
       genki:'Energy left', genkiSub:'Plans and a battery gauge',
@@ -248,7 +248,8 @@ function mergeDeep(t, s){ for(var k in s){ if(s[k] && typeof s[k] === 'object' &
 /* ---- de: 翻訳 ---- */
 TBL.de = mergeDeep(JSON.parse(JSON.stringify(en)), {
   "app": {
-    "name": "Tagesheft - SOYOGI (Entwurf)",
+    "name": "Tagesnotizen - SOYOGI",
+    "short": "Tagesnotizen",
     "tagline": "Aufzeichnung von heute. Ohne Vergleich, ohne Urteil."
   },
   "nav": {
@@ -332,7 +333,7 @@ TBL.de = mergeDeep(JSON.parse(JSON.stringify(en)), {
   },
   "screen": {
     "home": {
-      "title": "Tagesheft - SOYOGI (Entwurf)",
+      "title": "Tagesnotizen",
       "intro": "Ein Heft, um ein wenig von heute festzuhalten. Tage, an denen Sie nichts schreiben, sind auch in Ordnung.",
       "kyori": "Weg am Morgen",
       "kyoriSub": "Wählen, wohin Sie heute gehen können",
@@ -481,7 +482,8 @@ TBL.de = mergeDeep(JSON.parse(JSON.stringify(en)), {
 /* ---- fr: 翻訳 ---- */
 TBL.fr = mergeDeep(JSON.parse(JSON.stringify(en)), {
   "app": {
-    "name": "Carnet du jour - SOYOGI (provisoire)",
+    "name": "Carnet du jour - SOYOGI",
+    "short": "Carnet du jour",
     "tagline": "Le carnet du jour, sans comparer ni juger."
   },
   "nav": {
@@ -565,7 +567,7 @@ TBL.fr = mergeDeep(JSON.parse(JSON.stringify(en)), {
   },
   "screen": {
     "home": {
-      "title": "Carnet du jour - SOYOGI (provisoire)",
+      "title": "Carnet du jour",
       "intro": "Un petit carnet pour noter un peu de votre journée. Les jours sans rien écrire, c'est très bien aussi.",
       "kyori": "Distance du matin",
       "kyoriSub": "Choisir jusqu'où vous pouvez aller aujourd'hui",
@@ -714,7 +716,8 @@ TBL.fr = mergeDeep(JSON.parse(JSON.stringify(en)), {
 /* ---- es: 翻訳 ---- */
 TBL.es = mergeDeep(JSON.parse(JSON.stringify(en)), {
   "app": {
-    "name": "Registro de hoy - SOYOGI (provisional)",
+    "name": "Registro de hoy - SOYOGI",
+    "short": "Registro de hoy",
     "tagline": "Un registro del día, sin comparar ni juzgar."
   },
   "nav": {
@@ -798,7 +801,7 @@ TBL.es = mergeDeep(JSON.parse(JSON.stringify(en)), {
   },
   "screen": {
     "home": {
-      "title": "Registro de hoy - SOYOGI (provisional)",
+      "title": "Registro de hoy",
       "intro": "Un cuaderno para anotar un poco sobre el día de hoy. No pasa nada si hay días sin escribir.",
       "kyori": "Distancia de la mañana",
       "kyoriSub": "Elegir hasta dónde se puede ir hoy",
@@ -947,7 +950,8 @@ TBL.es = mergeDeep(JSON.parse(JSON.stringify(en)), {
 /* ---- it: 翻訳 ---- */
 TBL.it = mergeDeep(JSON.parse(JSON.stringify(en)), {
   "app": {
-    "name": "Diario di oggi - SOYOGI (bozza)",
+    "name": "Diario di oggi - SOYOGI",
+    "short": "Diario di oggi",
     "tagline": "Un diario di oggi che non confronta e non giudica."
   },
   "nav": {
@@ -1031,7 +1035,7 @@ TBL.it = mergeDeep(JSON.parse(JSON.stringify(en)), {
   },
   "screen": {
     "home": {
-      "title": "Diario di oggi - SOYOGI (bozza)",
+      "title": "Diario di oggi",
       "intro": "Un piccolo quaderno per annotare qualcosa di oggi. Va bene anche se ci sono giorni in cui non scrive.",
       "kyori": "Distanza del mattino",
       "kyoriSub": "Scelga dove può andare oggi",
@@ -1180,7 +1184,8 @@ TBL.it = mergeDeep(JSON.parse(JSON.stringify(en)), {
 /* ---- pt: 翻訳 ---- */
 TBL.pt = mergeDeep(JSON.parse(JSON.stringify(en)), {
   "app": {
-    "name": "Caderno de Hoje - SOYOGI (provisório)",
+    "name": "Caderno de hoje - SOYOGI",
+    "short": "Caderno de hoje",
     "tagline": "Sem comparar, sem julgar. As anotações de hoje."
   },
   "nav": {
@@ -1264,7 +1269,7 @@ TBL.pt = mergeDeep(JSON.parse(JSON.stringify(en)), {
   },
   "screen": {
     "home": {
-      "title": "Caderno de Hoje - SOYOGI (provisório)",
+      "title": "Caderno de hoje",
       "intro": "Um caderno para anotar um pouco do dia de hoje. Não faz mal haver dias sem nada escrito.",
       "kyori": "Distância da manhã",
       "kyoriSub": "Escolher até onde é possível ir hoje",
@@ -1413,7 +1418,8 @@ TBL.pt = mergeDeep(JSON.parse(JSON.stringify(en)), {
 /* ---- nl: 翻訳 ---- */
 TBL.nl = mergeDeep(JSON.parse(JSON.stringify(en)), {
   "app": {
-    "name": "Logboek van vandaag - SOYOGI (concept)",
+    "name": "Logboek van vandaag - SOYOGI",
+    "short": "Logboek van vandaag",
     "tagline": "Niet vergelijken, niet beoordelen. Gewoon vandaag vastleggen."
   },
   "nav": {
@@ -1497,7 +1503,7 @@ TBL.nl = mergeDeep(JSON.parse(JSON.stringify(en)), {
   },
   "screen": {
     "home": {
-      "title": "Logboek van vandaag - SOYOGI (concept)",
+      "title": "Logboek van vandaag",
       "intro": "Een klein boekje om iets over vandaag op te schrijven. Dagen waarop u niets schrijft, zijn ook prima.",
       "kyori": "Afstand vanochtend",
       "kyoriSub": "Kies waar u vandaag naartoe kunt",
@@ -1646,7 +1652,8 @@ TBL.nl = mergeDeep(JSON.parse(JSON.stringify(en)), {
 /* ---- sv: 翻訳 ---- */
 TBL.sv = mergeDeep(JSON.parse(JSON.stringify(en)), {
   "app": {
-    "name": "Dagens logg - SOYOGI (utkast)",
+    "name": "Dagens logg - SOYOGI",
+    "short": "Dagens logg",
     "tagline": "En logg för i dag som inte jämför och inte bedömer."
   },
   "nav": {
@@ -1730,7 +1737,7 @@ TBL.sv = mergeDeep(JSON.parse(JSON.stringify(en)), {
   },
   "screen": {
     "home": {
-      "title": "Dagens logg - SOYOGI (utkast)",
+      "title": "Dagens logg",
       "intro": "En liten anteckningsbok där du skriver ner lite om dagen. Det är okej att inte skriva vissa dagar.",
       "kyori": "Morgonens avstånd",
       "kyoriSub": "Välj vart du kan ta dig i dag",
@@ -1879,7 +1886,8 @@ TBL.sv = mergeDeep(JSON.parse(JSON.stringify(en)), {
 /* ---- ko: 翻訳 ---- */
 TBL.ko = mergeDeep(JSON.parse(JSON.stringify(en)), {
   "app": {
-    "name": "오늘의 기록장 - SOYOGI (가칭)",
+    "name": "오늘의 기록장 - SOYOGI",
+    "short": "오늘의 기록장",
     "tagline": "비교하지 않고, 판정하지 않는, 오늘의 기록."
   },
   "nav": {
@@ -1963,7 +1971,7 @@ TBL.ko = mergeDeep(JSON.parse(JSON.stringify(en)), {
   },
   "screen": {
     "home": {
-      "title": "오늘의 기록장 - SOYOGI (가칭)",
+      "title": "오늘의 기록장",
       "intro": "오늘 있었던 일을 조금만 적어 두는 공책이에요. 쓰지 않는 날이 있어도 괜찮아요.",
       "kyori": "아침의 거리",
       "kyoriSub": "오늘 갈 수 있는 곳을 고르기",
@@ -2112,7 +2120,8 @@ TBL.ko = mergeDeep(JSON.parse(JSON.stringify(en)), {
 /* ---- zh: 翻訳 ---- */
 TBL.zh = mergeDeep(JSON.parse(JSON.stringify(en)), {
   "app": {
-    "name": "今日记录本 - SOYOGI(暂定)",
+    "name": "今日记录本 - SOYOGI",
+    "short": "今日记录本",
     "tagline": "不比较、不评判，只记下今天。"
   },
   "nav": {
@@ -2196,7 +2205,7 @@ TBL.zh = mergeDeep(JSON.parse(JSON.stringify(en)), {
   },
   "screen": {
     "home": {
-      "title": "今日记录本 - SOYOGI(暂定)",
+      "title": "今日记录本",
       "intro": "这是一本把今天的事稍微记一下的小本子。有不写的日子，也没关系。",
       "kyori": "早上的距离",
       "kyoriSub": "选一个今天能去的地方",
@@ -2345,7 +2354,8 @@ TBL.zh = mergeDeep(JSON.parse(JSON.stringify(en)), {
 /* ---- ar: 翻訳 ---- */
 TBL.ar = mergeDeep(JSON.parse(JSON.stringify(en)), {
   "app": {
-    "name": "دفتر اليوم - SOYOGI (مسودة)",
+    "name": "سجل اليوم - SOYOGI",
+    "short": "سجل اليوم",
     "tagline": "سجلّ اليوم، بلا مقارنة ولا حكم."
   },
   "nav": {
@@ -2429,7 +2439,7 @@ TBL.ar = mergeDeep(JSON.parse(JSON.stringify(en)), {
   },
   "screen": {
     "home": {
-      "title": "دفتر اليوم - SOYOGI (مسودة)",
+      "title": "سجل اليوم",
       "intro": "دفتر صغير لتدوين شيء بسيط عن يومك. ولا بأس إن مرّت أيام دون كتابة.",
       "kyori": "مسافة الصباح",
       "kyoriSub": "اختر إلى أين يمكنك الذهاب اليوم",
