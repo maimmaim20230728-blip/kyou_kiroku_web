@@ -44,6 +44,31 @@ var ja = {
     privacy:'プライバシーポリシー',
     credit:'アプリ開発：介護と支援の相談どころ そよぎ'
   },
+  /* はじめての つかいかた(app.js openGuide・初回に必ず出す・2026-09-30)。heads と bodies は同じ数。
+     ボタンの名前は画面の文字と同じにする(画面の文言を変えたら ここも直す) */
+  guide: {
+    title:'つかいかた', step:'{n} / {m}', start:'はじめる', again:'もういちど 見る',
+    heads:[
+      '今日の記録帳へ ようこそ',
+      'さいしょに すること',
+      'あさの きょり',
+      'れんらくぶんを つくる',
+      'のこり元気',
+      'できたこと',
+      '書いたことは この端末の中だけ',
+      '見やすさと、こまったとき'
+    ],
+    bodies:[
+      'あさの きょり・のこり元気・できたこと を、すこしだけ 書きとめる 帳面です。\n学校や 仕事に 行きにくい 時期や、つかれやすい 日の ための 道具です。\n点数や グラフは 出しません。くらべたり、よい わるいを 決めたりも しません。\n書かない 日が あっても だいじょうぶです。',
+      'とくに ありません。ホームの 大きな ボタンか、下の ならびを おすと、すぐ 書けます。\nつかわない きろくは、「せってい」の「つかう きろく」で OFF に できます。ホームと 下の ならびから きえます。\nれんらくぶんを つかう ときは、「せってい」で「れんらくの あいて」と「だれのことを 書く」を えらんで おくと、毎回 えらばずに すみます。',
+      'きょう 行ける ところを、「行ける」「途中まで」「別室」「家で過ごす」から ひとつ えらびます。\nどれを えらんでも、おなじ 大きさで きろくします。かえる ときは「えらびなおす」を おします。\n下の「これまでの きろく」に、日づけ ごとに ならびます。数えたり くらべたりは しません。',
+      '「家で過ごす」を えらぶか、「れんらくぶんを つくる」を おすと、学校や 職場への 文が できます。\n「あいて」「書く人」「ようけん」を えらぶだけで 文が かわります。なまえは 空でも だいじょうぶです。\nできた 文は なおして つかえます。「コピー」を おして、メールや メッセージに はりつけて ください。\n「きょうゆう(共有)」が 出る 端末では、そこから 送る アプリも えらべます。',
+      'きょうの よていを 1行 書いて「ついか」を おします。\nよてい ごとに、ひと・さわがしさ・「ふつう」を えんじた の 3つを それぞれ えらぶと、「いまの 電池」の 目もりが へります。数字は 出しません。\nけす ときは「けす」、つぎに「ほんとうに けす」を おします。\n「手順を開く」を おすと、つかれが かさなった ときの 手じゅんを、べつの アプリ「ひとつずつ・そよぎ」で ひらきます。',
+      '小さな「できた」を 1行 書いて「のこす」を おします。日づけ ごとに ならびます。\n「ひとつ 見かえす」を おすと、のこした 中から ひとつが 大きく 出ます。「べつの ひとつ」で かわり、「とじる」で もどります。\nけす ときは「けす」、つぎに「ほんとうに けす」を おします。',
+      '書いたことは すべて この端末の中だけに ほぞんされます。どこにも 送られません。登録も いりません。\nあたらしい スマホに うつるときは、「せってい」の「かきだす」で ファイルを ほぞんして、あたらしい スマホで「よみこむ」を おしてください。',
+      '「せってい」の「もじの大きさ」で 文字を 大きく、「いろ」で 画面の 色を かえられます。ことばは 画面の いちばん上の「Language」で えらべます。\nこのアプリは 医療の代わりではありません。危ないときは 119(救急)や 110(警察)、相談窓口へ 連絡してください。相談窓口は、ホームの いちばん下の「たいせつな おしらせ」から さがせます。\nこの 案内は、「せってい」の「つかいかた」の「もういちど 見る」で また 見られます。'
+    ]
+  },
   screen: {
     home: {
       title:'今日の記録帳',
@@ -167,6 +192,29 @@ var en = {
     note:'Everything you write is stored only on this device. Nothing is sent anywhere.',
     privacy:'Privacy policy',
     credit:'Developed by SOYOGI, a care and support consultation service'
+  },
+  guide: {
+    title:'How to use', step:'{n} / {m}', start:'Start', again:'Show again',
+    heads:[
+      'Welcome to Today Log',
+      'What to do first',
+      'Morning distance',
+      'Write a message',
+      'Energy left',
+      'Things done',
+      'Stored only on this device',
+      'Easier to see, and when you need help'
+    ],
+    bodies:[
+      'A small notebook for writing down a little about today: your morning distance, the energy you have left, and things you did.\nIt is a tool for times when going to school or work is hard, and for days when you tire easily.\nThere are no scores or graphs. Nothing is compared or judged.\nDays with no entry are fine too.',
+      'Nothing special. Tap a big button on Home, or a tab at the bottom, and you can start writing.\nLogs you do not use can be turned OFF under "Logs to use" in "Settings". They disappear from Home and from the tabs at the bottom.\nIf you will use the message, choose "Message goes to" and "Writing about" in "Settings" first, so you do not have to choose them every time.',
+      'Choose one place you can go today: "I can go", "Part way", "Separate room" or "Stay home".\nEvery choice is recorded with the same weight. To change it, tap "Choose again".\nYour days are listed by date under "Past days". Nothing is counted or compared.',
+      'Choose "Stay home", or tap "Write a message", and a message for your school or workplace is made.\nJust choose "To", "Written by" and "What to say", and the message changes. The name can be left empty.\nYou can edit the message. Tap "Copy" and paste it into an email or a chat.\nOn devices that show "Share", you can also pick an app to send it with.',
+      'Write one of today\'s plans and tap "Add".\nFor each plan, choose a level for People, Noise and Acting "normal", and the "Battery now" gauge goes down. No numbers are shown.\nTo delete a plan, tap "Delete" and then "Really delete".\n"Open the steps" opens the steps for when tiredness piles up, in a separate app, "One by One - SOYOGI".',
+      'Write one small thing you did and tap "Keep". Entries are listed by date.\nTap "Look back at one" to show one of them in large text. "Another one" shows a different one, and "Close" takes you back.\nTo delete, tap "Delete" and then "Really delete".',
+      'Everything you write is stored only on this device. Nothing is sent anywhere, and no account is needed.\nWhen you move to a new phone, tap "Export" in "Settings" to save a file, then tap "Import" on the new phone.',
+      'In "Settings", "Text size" makes the text larger and "Color" changes the colors of the screen. Choose a language with "Language" at the top of the screen.\nThis app is not a substitute for medical care. In an emergency, call 119 (ambulance), 110 (police) or a helpline. You can find helplines under "Important note" at the bottom of Home.\nYou can see this guide again with "Show again" next to "How to use" in "Settings".'
+    ]
   },
   screen: {
     home: {
@@ -345,6 +393,32 @@ TBL.de = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "note": "Alles, was Sie schreiben, wird nur auf diesem Gerät gespeichert. Nichts wird irgendwohin gesendet.",
     "privacy": "Datenschutzerklärung",
     "credit": "Entwickelt von SOYOGI, Beratungsstelle für Pflege und Unterstützung"
+  },
+  "guide": {
+    "title": "Anleitung",
+    "step": "{n} / {m}",
+    "start": "Starten",
+    "again": "Noch einmal ansehen",
+    "heads": [
+      "Willkommen bei Tagesnotizen",
+      "Was Sie zuerst tun",
+      "Weg am Morgen",
+      "Nachricht erstellen",
+      "Restenergie",
+      "Geschafftes",
+      "Nur auf diesem Gerät",
+      "Gut lesbar, und wenn es schwer wird"
+    ],
+    "bodies": [
+      "Ein kleines Heft, um ein wenig von heute festzuhalten: den Weg am Morgen, die Restenergie und das, was Sie geschafft haben.\nEs ist ein Werkzeug für Zeiten, in denen Schule oder Arbeit schwerfallen, und für Tage, an denen Sie schnell müde werden.\nEs gibt keine Punkte und keine Diagramme. Nichts wird verglichen oder beurteilt.\nTage, an denen Sie nichts schreiben, sind auch in Ordnung.",
+      "Nichts Besonderes. Tippen Sie bei „Start“ auf einen großen Knopf oder unten auf einen Reiter, dann können Sie gleich schreiben.\nAufzeichnungen, die Sie nicht nutzen, stellen Sie in „Optionen“ unter „Genutzte Aufzeichnungen“ auf „Aus“. Sie verschwinden dann von „Start“ und aus der unteren Leiste.\nWenn Sie die Nachricht nutzen möchten, wählen Sie vorher in „Optionen“ den „Empfänger der Nachricht“ und „Schreiben als“. Dann müssen Sie das nicht jedes Mal wählen.",
+      "Wählen Sie einen Ort, zu dem Sie heute gehen können: „Hingehen möglich“, „Ein Stück weit“, „Separater Raum“ oder „Zu Hause bleiben“.\nJede Wahl wird mit dem gleichen Gewicht festgehalten. Zum Ändern tippen Sie auf „Neu wählen“.\nUnter „Bisherige Einträge“ stehen Ihre Tage nach Datum. Nichts wird gezählt oder verglichen.",
+      "Wenn Sie „Zu Hause bleiben“ wählen oder auf „Nachricht erstellen“ tippen, entsteht ein Text für die Schule oder den Arbeitsplatz.\nWählen Sie einfach „Empfänger“, „Verfasst von“ und „Anliegen“, dann ändert sich der Text. Der Name darf leer bleiben.\nSie können den Text anpassen. Tippen Sie auf „Kopieren“ und fügen Sie ihn in eine E-Mail oder einen Chat ein.\nAuf Geräten, die „Teilen“ zeigen, können Sie dort auch eine App zum Senden wählen.",
+      "Schreiben Sie einen Plan für heute und tippen Sie auf „Hinzufügen“.\nWählen Sie für jeden Plan eine Stufe bei Menschen, Lautstärke und „Normal“ gespielt. Dann sinkt die Anzeige „Batterie jetzt“. Zahlen werden nicht angezeigt.\nZum Löschen tippen Sie auf „Löschen“ und dann auf „Wirklich löschen“.\n„Schritte öffnen“ öffnet die Schritte für den Fall, dass sich Müdigkeit anhäuft, in einer eigenen App: „Eins nach dem anderen - SOYOGI“.",
+      "Schreiben Sie eine kleine Sache, die Sie geschafft haben, in eine Zeile und tippen Sie auf „Festhalten“. Die Einträge stehen nach Datum.\nMit „Eines ansehen“ erscheint einer davon groß. „Ein anderes“ zeigt einen anderen, „Schließen“ bringt Sie zurück.\nZum Löschen tippen Sie auf „Löschen“ und dann auf „Wirklich löschen“.",
+      "Alles, was Sie schreiben, wird nur auf diesem Gerät gespeichert. Nichts wird irgendwohin gesendet, und Sie brauchen kein Konto.\nWenn Sie auf ein neues Smartphone wechseln, tippen Sie in „Optionen“ auf „Exportieren“, um eine Datei zu speichern, und dann auf dem neuen Smartphone auf „Importieren“.",
+      "In „Optionen“ macht „Schriftgröße“ die Schrift größer, und „Farbe“ ändert die Farben. Die Sprache wählen Sie ganz oben bei „Language“.\nDiese App ersetzt keine medizinische Versorgung. Im Notfall wenden Sie sich an 119 (Rettungsdienst) oder 110 (Polizei) in Japan oder an eine Beratungsstelle. Beratungsstellen finden Sie ganz unten auf „Start“ unter „Wichtiger Hinweis“.\nDiese Anleitung öffnen Sie in „Optionen“ bei „Anleitung“ mit „Noch einmal ansehen“ wieder."
+    ]
   },
   "screen": {
     "home": {
@@ -587,6 +661,32 @@ TBL.fr = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "privacy": "Politique de confidentialité",
     "credit": "Développé par SOYOGI, service de conseil en soins et accompagnement"
   },
+  "guide": {
+    "title": "Mode d'emploi",
+    "step": "{n} / {m}",
+    "start": "Commencer",
+    "again": "Revoir",
+    "heads": [
+      "Bienvenue dans Carnet du jour",
+      "Pour commencer",
+      "Distance du matin",
+      "Rédiger un message",
+      "Énergie restante",
+      "Réussites du jour",
+      "Uniquement sur cet appareil",
+      "Lire plus facilement, et en cas de difficulté"
+    ],
+    "bodies": [
+      "Un petit carnet pour noter un peu de votre journée : la distance du matin, l'énergie qui vous reste et vos réussites.\nC'est un outil pour les périodes où aller à l'école ou au travail est difficile, et pour les jours où vous vous fatiguez vite.\nIl n'y a ni score ni graphique. Rien n'est comparé ni jugé.\nLes jours sans rien écrire, c'est très bien aussi.",
+      "Rien de particulier. Touchez un grand bouton sur \"Accueil\" ou un onglet en bas, et vous pouvez écrire tout de suite.\nLes carnets que vous n'utilisez pas peuvent être mis sur OFF dans \"Réglages\", sous \"Carnets à utiliser\". Ils disparaissent alors de l'accueil et des onglets du bas.\nSi vous utilisez le message, choisissez d'abord \"Destinataire du message\" et \"À propos de qui ?\" dans \"Réglages\". Vous n'aurez pas à les choisir à chaque fois.",
+      "Choisissez un seul endroit où vous pouvez aller aujourd'hui : \"Je peux y aller\", \"Jusqu'à mi-chemin\", \"Salle à part\" ou \"Rester à la maison\".\nChaque choix est noté avec la même valeur. Pour changer, touchez \"Choisir à nouveau\".\nVos jours sont listés par date sous \"Notes précédentes\". Rien n'est compté ni comparé.",
+      "Choisissez \"Rester à la maison\" ou touchez \"Rédiger un message\" : un message pour l'école ou le travail est rédigé.\nIl suffit de choisir \"Destinataire\", \"Rédigé par\" et \"Motif\" pour que le message change. Le nom peut rester vide.\nVous pouvez modifier le message. Touchez \"Copier\", puis collez-le dans un e-mail ou une messagerie.\nSur les appareils qui affichent \"Partager\", vous pouvez aussi choisir une application pour l'envoyer.",
+      "Écrivez une activité prévue aujourd'hui et touchez \"Ajouter\".\nPour chaque activité, choisissez un niveau pour Personnes, Bruit et Faire comme si de rien n'était : la jauge \"Batterie actuelle\" descend. Aucun chiffre n'est affiché.\nPour supprimer, touchez \"Supprimer\", puis \"Supprimer vraiment\".\n\"Ouvrir les étapes\" ouvre les étapes à suivre quand la fatigue s'accumule, dans une autre application : « Un par un - SOYOGI ».",
+      "Écrivez une petite réussite en une ligne et touchez \"Garder\". Les notes sont listées par date.\nTouchez \"En relire une\" pour en afficher une en grand. \"Une autre\" en montre une différente, et \"Fermer\" vous ramène en arrière.\nPour supprimer, touchez \"Supprimer\", puis \"Supprimer vraiment\".",
+      "Tout ce que vous écrivez reste uniquement sur cet appareil. Rien n'est envoyé nulle part, et aucun compte n'est nécessaire.\nPour passer à un nouveau téléphone, touchez \"Exporter\" dans \"Réglages\" pour enregistrer un fichier, puis touchez \"Importer\" sur le nouveau téléphone.",
+      "Dans \"Réglages\", \"Taille du texte\" agrandit le texte et \"Couleur\" change les couleurs. La langue se choisit tout en haut, avec \"Language\".\nCette application ne remplace pas les soins médicaux. En cas de danger, appelez le 119 (urgences) ou le 110 (police) au Japon, ou une ligne d'écoute. Vous trouverez des lignes d'écoute tout en bas de l'accueil, sous \"Information importante\".\nVous pouvez revoir ce guide dans \"Réglages\", avec \"Revoir\" à la ligne \"Mode d'emploi\"."
+    ]
+  },
   "screen": {
     "home": {
       "title": "Carnet du jour",
@@ -827,6 +927,32 @@ TBL.es = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "note": "Todo lo escrito se guarda solo en este dispositivo. No se envía a ningún sitio.",
     "privacy": "Política de privacidad",
     "credit": "Desarrollo de la app: SOYOGI, espacio de consulta sobre cuidados y apoyo"
+  },
+  "guide": {
+    "title": "Cómo usar",
+    "step": "{n} / {m}",
+    "start": "Empezar",
+    "again": "Ver de nuevo",
+    "heads": [
+      "Qué es Registro de hoy",
+      "Lo primero",
+      "Distancia de la mañana",
+      "Crear un mensaje",
+      "Energía restante",
+      "Cosas hechas",
+      "Solo en este dispositivo",
+      "Para ver mejor, y en caso de apuro"
+    ],
+    "bodies": [
+      "Un cuaderno para anotar un poco sobre el día de hoy: la distancia de la mañana, la energía que queda y las cosas hechas.\nEs una herramienta para épocas en que cuesta ir a estudiar o a trabajar, y para días de mucho cansancio.\nNo hay puntuaciones ni gráficos. Nada se compara ni se juzga.\nNo pasa nada si hay días sin escribir.",
+      "Nada en especial. Al pulsar un botón grande en «Inicio» o una pestaña de abajo, ya se puede escribir.\nLos registros que no se usen se pueden poner en OFF en «Ajustes», en «Registros que se usan». Así desaparecen del inicio y de las pestañas de abajo.\nPara usar el mensaje, conviene elegir antes «Destinatario del mensaje» y «Sobre quién se escribe» en «Ajustes». Así no hace falta elegirlos cada vez.",
+      "Elegir un lugar al que se pueda ir hoy: «Ir», «A medio camino», «Sala aparte» o «Pasar el día en casa».\nTodas las opciones se registran por igual. Para cambiarla, pulsar «Elegir de nuevo».\nLos días aparecen por fecha en «Registros anteriores». No se cuenta ni se compara nada.",
+      "Al elegir «Pasar el día en casa» o pulsar «Crear un mensaje», se crea un texto para el centro de estudios o el trabajo.\nBasta con elegir «Destinatario», «Quién escribe» y «Asunto» para que el texto cambie. El nombre puede quedar vacío.\nEl texto se puede cambiar. Pulsar «Copiar» y pegarlo en un correo o un chat.\nEn los dispositivos que muestran «Compartir», también se puede elegir desde ahí la app para enviarlo.",
+      "Escribir un plan de hoy y pulsar «Añadir».\nEn cada plan, elegir un nivel en Gente, Ruido y Aparentar «normalidad»: baja la «Batería actual». No se muestran números.\nPara borrar, pulsar «Borrar» y después «Borrar de verdad».\n«Abrir los pasos» abre, en otra aplicación («Uno a uno - SOYOGI»), los pasos para cuando el cansancio se acumula.",
+      "Escribir en una línea una cosa pequeña que se haya hecho y pulsar «Anotar». Se ordenan por fecha.\nCon «Repasar una» aparece una de ellas en grande. «Otra» muestra una distinta y «Cerrar» vuelve atrás.\nPara borrar, pulsar «Borrar» y después «Borrar de verdad».",
+      "Todo lo escrito se guarda solo en este dispositivo. No se envía a ningún sitio y no hace falta crear una cuenta.\nPara pasar a un teléfono nuevo: en «Ajustes», guardar un archivo con «Exportar» y, en el teléfono nuevo, pulsar «Importar».",
+      "En «Ajustes», «Tamaño del texto» agranda las letras y «Color» cambia los colores. El idioma se elige arriba del todo, en «Language».\nEsta app no sustituye la atención médica. En caso de peligro, contactar con el 119 (ambulancia) o el 110 (policía) de Japón, o con un servicio de consulta. Los servicios de consulta se pueden buscar al final de «Inicio», en «Aviso importante».\nEsta guía se puede volver a ver en «Ajustes», con «Ver de nuevo» en la fila «Cómo usar»."
+    ]
   },
   "screen": {
     "home": {
@@ -1069,6 +1195,32 @@ TBL.it = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "privacy": "Informativa sulla privacy",
     "credit": "Sviluppo dell'app: SOYOGI, sportello di consulenza per assistenza e sostegno"
   },
+  "guide": {
+    "title": "Come si usa",
+    "step": "{n} / {m}",
+    "start": "Inizia",
+    "again": "Rivedi",
+    "heads": [
+      "Che cos'è Diario di oggi",
+      "Per cominciare",
+      "Distanza del mattino",
+      "Crea un messaggio",
+      "Energia rimasta",
+      "Cose fatte",
+      "Solo su questo dispositivo",
+      "Leggere meglio, e nei momenti difficili"
+    ],
+    "bodies": [
+      "Un piccolo quaderno per annotare qualcosa di oggi: la distanza del mattino, l'energia rimasta e le cose fatte.\nÈ uno strumento per i periodi in cui andare a scuola o al lavoro è difficile, e per i giorni in cui ci si stanca facilmente.\nNon ci sono punteggi né grafici. Niente viene confrontato o giudicato.\nVa bene anche se ci sono giorni in cui non scrive.",
+      "Niente di particolare. Tocchi un pulsante grande in \"Home\" o una scheda in basso e può scrivere subito.\nI registri che non usa si possono mettere su OFF in \"Opzioni\", alla voce \"Registri da usare\". Spariscono dalla Home e dalle schede in basso.\nSe userà il messaggio, scelga prima \"Destinatario dei messaggi\" e \"Di chi si scrive\" in \"Opzioni\". Così non dovrà sceglierli ogni volta.",
+      "Scelga un solo posto in cui può andare oggi: \"Posso andare\", \"Fino a metà strada\", \"In una stanza a parte\" o \"A casa\".\nQualunque scelta viene annotata con lo stesso peso. Per cambiarla, tocchi \"Scegli di nuovo\".\nI giorni compaiono per data in \"Annotazioni precedenti\". Niente viene contato o confrontato.",
+      "Se sceglie \"A casa\" o tocca \"Crea un messaggio\", viene composto un testo per la scuola o il lavoro.\nBasta scegliere \"Destinatario\", \"Chi scrive\" e \"Motivo\" e il testo cambia. Il nome può restare vuoto.\nPuò modificare il testo. Tocchi \"Copia\" e lo incolli in un'e-mail o in una chat.\nSui dispositivi che mostrano \"Condividi\", può anche scegliere da lì un'app per inviarlo.",
+      "Scriva un programma di oggi e tocchi \"Aggiungi\".\nPer ogni programma scelga un livello per Persone, Rumore e Fingere che sia \"tutto normale\": l'indicatore \"Batteria adesso\" scende. Non compaiono numeri.\nPer eliminare, tocchi \"Elimina\" e poi \"Elimina davvero\".\n\"Apri i passi\" apre i passi da seguire quando la stanchezza si accumula, in un'altra app: «Uno alla volta - SOYOGI».",
+      "Scriva in una riga una piccola cosa fatta e tocchi \"Conserva\". Le annotazioni sono ordinate per data.\nCon \"Rileggine una\" ne compare una in grande. \"Un'altra\" ne mostra una diversa e \"Chiudi\" la riporta indietro.\nPer eliminare, tocchi \"Elimina\" e poi \"Elimina davvero\".",
+      "Tutto ciò che scrive resta soltanto in questo dispositivo. Non viene inviato da nessuna parte e non serve un account.\nQuando passa a un nuovo telefono, in \"Opzioni\" tocchi \"Esporta\" per salvare un file, poi tocchi \"Importa\" sul nuovo telefono.",
+      "In \"Opzioni\", \"Dimensione del testo\" ingrandisce le lettere e \"Colore\" cambia i colori. La lingua si sceglie in alto, con \"Language\".\nQuesta app non sostituisce le cure mediche. In caso di pericolo, chiami il 119 (ambulanza) o il 110 (polizia) in Giappone, o uno sportello di ascolto. Può cercare uno sportello di ascolto in fondo alla \"Home\", in \"Avviso importante\".\nPuò rivedere questa guida in \"Opzioni\", con \"Rivedi\" alla voce \"Come si usa\"."
+    ]
+  },
   "screen": {
     "home": {
       "title": "Diario di oggi",
@@ -1309,6 +1461,32 @@ TBL.pt = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "note": "Tudo o que se escreve fica guardado apenas neste dispositivo. Nada é enviado para fora dele.",
     "privacy": "Política de privacidade",
     "credit": "Desenvolvido por SOYOGI, espaço de aconselhamento sobre cuidados e apoio"
+  },
+  "guide": {
+    "title": "Como usar",
+    "step": "{n} / {m}",
+    "start": "Começar",
+    "again": "Ver de novo",
+    "heads": [
+      "O que é o Caderno de hoje",
+      "Para começar",
+      "Distância da manhã",
+      "Criar mensagem",
+      "Energia restante",
+      "Coisas feitas",
+      "Só neste dispositivo",
+      "Leitura mais fácil, e em caso de perigo"
+    ],
+    "bodies": [
+      "Um caderno para anotar um pouco do dia de hoje: a distância da manhã, a energia restante e as coisas feitas.\nÉ uma ferramenta para fases em que é difícil ir à escola ou ao trabalho, e para dias de muito cansaço.\nNão há pontuações nem gráficos. Nada é comparado nem julgado.\nNão faz mal haver dias sem nada escrito.",
+      "Nada de especial. Ao tocar em um botão grande em \"Início\" ou em uma aba na parte de baixo, já é possível escrever.\nAs anotações que não forem usadas podem ficar em OFF em \"Ajustes\", em \"Anotações a usar\". Assim, somem do início e das abas de baixo.\nPara usar a mensagem, convém escolher antes \"Destinatário da mensagem\" e \"Sobre quem se escreve\" em \"Ajustes\". Assim não é preciso escolher sempre.",
+      "Escolher um lugar até onde é possível ir hoje: \"Consigo ir\", \"Parte do caminho\", \"Sala separada\" ou \"Ficar em casa\".\nTodas as escolhas são anotadas com o mesmo tamanho. Para mudar, tocar em \"Escolher de novo\".\nOs dias aparecem por data em \"Anotações anteriores\". Nada é contado nem comparado.",
+      "Ao escolher \"Ficar em casa\" ou tocar em \"Criar mensagem\", fica pronta uma mensagem para a escola ou o trabalho.\nBasta escolher \"Destinatário\", \"Quem escreve\" e \"Assunto\" para a mensagem mudar. O nome pode ficar vazio.\nA mensagem pode ser editada. Tocar em \"Copiar\" e colar em um e-mail ou em um chat.\nNos dispositivos que mostram \"Compartilhar\", também é possível escolher ali por onde enviar.",
+      "Escrever um plano de hoje e tocar em \"Adicionar\".\nEm cada plano, escolher um nível em Pessoas, Barulho e Fazer o papel de \"normal\": as marcas de \"Bateria agora\" vão descendo. Não são mostrados números.\nPara apagar, tocar em \"Apagar\" e depois em \"Apagar mesmo\".\n\"Abrir os passos\" abre, em outra ferramenta («Um de cada vez - SOYOGI»), os passos para quando o cansaço se acumula.",
+      "Escrever em uma linha uma pequena coisa feita e tocar em \"Anotar\". As anotações ficam por data.\nCom \"Rever uma\", uma delas aparece em tamanho grande. \"Outra\" mostra uma diferente e \"Fechar\" volta atrás.\nPara apagar, tocar em \"Apagar\" e depois em \"Apagar mesmo\".",
+      "Tudo o que se escreve fica guardado apenas neste dispositivo. Nada é enviado para fora dele e não é preciso criar conta.\nAo mudar para um smartphone novo, tocar em \"Exportar\" em \"Ajustes\" para guardar uma cópia dos dados e, no smartphone novo, tocar em \"Importar\".",
+      "Em \"Ajustes\", \"Tamanho da letra\" aumenta o texto e \"Cor\" muda as cores. O idioma é escolhido bem no alto, em \"Language\".\nEsta ferramenta não substitui cuidados médicos. Em caso de perigo, ligar para o 119 (ambulância) ou o 110 (polícia) no Japão, ou para um serviço de apoio. É possível procurar um serviço de apoio no fim de \"Início\", em \"Aviso importante\".\nEste guia pode ser visto de novo em \"Ajustes\", com \"Ver de novo\" na linha \"Como usar\"."
+    ]
   },
   "screen": {
     "home": {
@@ -1551,6 +1729,32 @@ TBL.nl = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "privacy": "Privacybeleid",
     "credit": "App-ontwikkeling: SOYOGI, adviespunt voor zorg en ondersteuning"
   },
+  "guide": {
+    "title": "Uitleg",
+    "step": "{n} / {m}",
+    "start": "Beginnen",
+    "again": "Opnieuw bekijken",
+    "heads": [
+      "Welkom bij Logboek van vandaag",
+      "Eerst doen",
+      "Afstand vanochtend",
+      "Bericht maken",
+      "Energie over",
+      "Wat is gelukt",
+      "Alleen op dit apparaat",
+      "Goed leesbaar, en als het moeilijk is"
+    ],
+    "bodies": [
+      "Een klein boekje om iets over vandaag op te schrijven: de afstand vanochtend, de energie die u over hebt en wat is gelukt.\nHet is een hulpmiddel voor periodes waarin naar school of werk gaan moeilijk is, en voor dagen waarop u snel moe bent.\nEr zijn geen scores en geen grafieken. Niets wordt vergeleken of beoordeeld.\nDagen waarop u niets schrijft, zijn ook prima.",
+      "Niets bijzonders. Tik op een grote knop bij \"Start\" of op een tab onderaan, en u kunt meteen schrijven.\nLogboeken die u niet gebruikt, zet u op \"UIT\" bij \"Opties\", onder \"Welke logboeken u gebruikt\". Ze verdwijnen dan van \"Start\" en uit de tabs onderaan.\nWilt u het bericht gebruiken? Kies dan eerst \"Ontvanger van het bericht\" en \"Over wie u schrijft\" bij \"Opties\". Dan hoeft u dat niet elke keer te kiezen.",
+      "Kies één plek waar u vandaag naartoe kunt: \"Ik kan gaan\", \"Tot halverwege\", \"Aparte ruimte\" of \"Thuis blijven\".\nWelke u ook kiest, alles wordt even groot vastgelegd. Om te wijzigen tikt u op \"Opnieuw kiezen\".\nOnder \"Eerdere aantekeningen\" staan uw dagen op datum. Er wordt niets geteld of vergeleken.",
+      "Kies \"Thuis blijven\" of tik op \"Bericht maken\", dan ontstaat er een tekst voor school of werk.\nKies alleen \"Aan\", \"Geschreven door\" en \"Onderwerp\", en de tekst past zich aan. De naam mag leeg blijven.\nU mag de tekst aanpassen. Tik op \"Kopiëren\" en plak hem in een e-mail of chat.\nOp apparaten die \"Delen\" tonen, kunt u daar ook een app kiezen om hem te versturen.",
+      "Schrijf een plan voor vandaag en tik op \"Toevoegen\".\nKies bij elk plan een niveau voor Mensen, Geluid en Zich \"normaal\" voordoen: de meter \"Batterij nu\" loopt dan terug. Er worden geen cijfers getoond.\nOm te wissen tikt u op \"Wissen\" en daarna op \"Echt wissen\".\n\"Stappen openen\" opent de stappen voor als vermoeidheid zich opstapelt, in een aparte app: “Eén voor één - SOYOGI”.",
+      "Schrijf in één regel iets kleins dat is gelukt en tik op \"Bewaren\". De aantekeningen staan op datum.\nMet \"Eén terugkijken\" verschijnt er één in grote letters. \"Een andere\" toont een andere, en met \"Sluiten\" gaat u terug.\nOm te wissen tikt u op \"Wissen\" en daarna op \"Echt wissen\".",
+      "Alles wat u schrijft, blijft alleen op dit apparaat. Er wordt niets verstuurd en u hebt geen account nodig.\nGaat u over op een nieuwe telefoon? Tik dan bij \"Opties\" op \"Exporteren\" om een bestand op te slaan, en tik op de nieuwe telefoon op \"Importeren\".",
+      "Bij \"Opties\" maakt \"Tekstgrootte\" de letters groter en verandert \"Kleur\" de kleuren van het scherm. De taal kiest u helemaal bovenaan bij \"Language\".\nDeze app vervangt geen medische zorg. Bel bij gevaar 119 (ambulance, Japan), 110 (politie, Japan) of een hulplijn. Een hulplijn zoekt u onderaan \"Start\", bij \"Belangrijke mededeling\".\nU kunt deze uitleg opnieuw bekijken bij \"Opties\", met \"Opnieuw bekijken\" naast \"Uitleg\"."
+    ]
+  },
   "screen": {
     "home": {
       "title": "Logboek van vandaag",
@@ -1791,6 +1995,32 @@ TBL.sv = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "note": "Allt du skriver sparas bara på den här enheten. Inget skickas någonstans.",
     "privacy": "Integritetspolicy",
     "credit": "Utvecklad av SOYOGI, en rådgivningstjänst för omsorg och stöd"
+  },
+  "guide": {
+    "title": "Så fungerar appen",
+    "step": "{n} / {m}",
+    "start": "Börja",
+    "again": "Visa igen",
+    "heads": [
+      "Välkommen till Dagens logg",
+      "Det första du gör",
+      "Morgonens avstånd",
+      "Skriv ett meddelande",
+      "Energi kvar",
+      "Det jag klarat",
+      "Bara på den här enheten",
+      "Lättare att läsa, och när det är svårt"
+    ],
+    "bodies": [
+      "En liten anteckningsbok där du skriver ner lite om dagen: morgonens avstånd, energin du har kvar och det du klarat.\nDen är ett verktyg för perioder när det är svårt att gå till skolan eller jobbet, och för dagar när du lätt blir trött.\nDet finns inga poäng och inga diagram. Inget jämförs eller bedöms.\nDet är okej att inte skriva vissa dagar.",
+      "Inget särskilt. Tryck på en stor knapp på ”Hem” eller på en flik längst ner, så kan du börja skriva.\nLoggar som du inte använder kan du ställa på ”AV” under ”Loggar att använda” i ”Anpassa”. De försvinner då från Hem och från flikarna längst ner.\nOm du ska använda meddelandet, välj först ”Meddelandet går till” och ”Du skriver om” i ”Anpassa”. Då behöver du inte välja varje gång.",
+      "Välj ett ställe som du kan ta dig till i dag: ”Kan ta mig dit”, ”En bit på vägen”, ”Separat rum” eller ”Stanna hemma”.\nVad du än väljer sparas det med samma vikt. Tryck på ”Välj igen” för att ändra.\nUnder ”Tidigare anteckningar” visas dina dagar efter datum. Inget räknas eller jämförs.",
+      "Välj ”Stanna hemma” eller tryck på ”Skriv ett meddelande”, så skapas en text till skolan eller jobbet.\nVälj bara ”Till”, ”Vem skriver” och ”Ärende”, så ändras texten. Namnet får vara tomt.\nDu kan ändra i texten. Tryck på ”Kopiera” och klistra in den i ett mejl eller en chatt.\nPå enheter som visar ”Dela” kan du också välja en app att skicka med där.",
+      "Skriv en av dagens planer och tryck på ”Lägg till”.\nVälj för varje plan en nivå för Människor, Ljudnivå och Spelade ”normal”, så går ”Batteriet nu” ner. Inga siffror visas.\nFör att ta bort trycker du på ”Ta bort” och sedan på ”Ja, ta bort”.\n”Öppna stegen” öppnar stegen för när tröttheten har hopat sig, i en egen app: ”En i taget - SOYOGI”.",
+      "Skriv en liten sak som du klarat på en rad och tryck på ”Spara”. Anteckningarna visas efter datum.\nMed ”Titta tillbaka på en” visas en av dem i stor text. ”En annan” visar en annan, och ”Stäng” tar dig tillbaka.\nFör att ta bort trycker du på ”Ta bort” och sedan på ”Ja, ta bort”.",
+      "Allt du skriver sparas bara på den här enheten. Inget skickas någonstans, och du behöver inget konto.\nNär du byter till en ny telefon: tryck på ”Exportera” i ”Anpassa” för att spara en fil, och tryck sedan på ”Importera” på den nya telefonen.",
+      "I ”Anpassa” gör ”Textstorlek” texten större och ”Färg” ändrar skärmens färger. Språket väljer du längst upp vid ”Language”.\nDen här appen ersätter inte sjukvård. Om det är farligt, kontakta 119 (ambulans) eller 110 (polis) i Japan, eller en stödlinje. En stödlinje hittar du längst ner på ”Hem”, under ”Viktigt att veta”.\nDu kan se den här guiden igen i ”Anpassa”, med ”Visa igen” vid ”Så fungerar appen”."
+    ]
   },
   "screen": {
     "home": {
@@ -2033,6 +2263,32 @@ TBL.ko = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "privacy": "개인정보 처리방침",
     "credit": "앱 개발: 돌봄과 지원 상담소 SOYOGI"
   },
+  "guide": {
+    "title": "사용법",
+    "step": "{n} / {m}",
+    "start": "시작하기",
+    "again": "다시 보기",
+    "heads": [
+      "오늘의 기록장에 어서 오세요",
+      "처음에 할 일",
+      "아침의 거리",
+      "연락문 만들기",
+      "남은 기운",
+      "해낸 일",
+      "이 기기 안에만 남아요",
+      "보기 편하게, 그리고 힘들 때"
+    ],
+    "bodies": [
+      "오늘 있었던 일을 조금만 적어 두는 공책이에요. 아침의 거리, 남은 기운, 해낸 일을 적을 수 있어요.\n학교나 일터에 가기 힘든 시기, 쉽게 지치는 날을 위한 도구예요.\n점수나 그래프는 없어요. 비교하거나 좋고 나쁨을 판정하지도 않아요.\n쓰지 않는 날이 있어도 괜찮아요.",
+      "특별히 할 일은 없어요. '홈'의 큰 버튼이나 아래쪽 탭을 누르면 바로 쓸 수 있어요.\n쓰지 않는 기록은 '설정'의 '사용할 기록'에서 OFF로 할 수 있어요. 홈과 아래쪽 탭에서 사라져요.\n연락문을 쓸 때는 '설정'에서 '연락할 상대'와 '누구에 대해 쓰나요'를 미리 골라 두면 매번 고르지 않아도 돼요.",
+      "오늘 갈 수 있는 곳을 '갈 수 있어요', '중간까지', '별실', '집에서 지내요' 중에서 하나 골라요.\n어느 것을 골라도 같은 크기로 기록해요. 바꾸려면 '다시 고르기'를 눌러요.\n'지금까지의 기록'에 날짜별로 나와요. 세거나 비교하지 않아요.",
+      "'집에서 지내요'를 고르거나 '연락문 만들기'를 누르면 학교나 직장에 보낼 문장이 만들어져요.\n'상대', '쓰는 사람', '용건'만 고르면 문장이 바뀌어요. 이름은 비워도 돼요.\n문장은 고쳐서 쓸 수 있어요. '복사'를 누르고 메일이나 메시지에 붙여 넣어 주세요.\n'공유'가 보이는 기기에서는 거기서 보낼 앱을 고를 수도 있어요.",
+      "오늘의 일정을 한 줄 쓰고 '추가'를 눌러요.\n일정마다 세 가지(사람 / 소음 / '보통'인 척했어요)를 고르면 '지금 배터리' 눈금이 줄어들어요. 숫자는 보여 주지 않아요.\n지울 때는 '지우기'를 누르고, 이어서 '정말 지우기'를 눌러요.\n'순서 열기'를 누르면 피로가 쌓였을 때의 순서가 다른 앱 “하나씩 - SOYOGI”에서 열려요.",
+      "작은 '해냈어요'를 한 줄 쓰고 '남기기'를 눌러요. 날짜별로 나와요.\n'하나 되돌아보기'를 누르면 남긴 것 중 하나가 크게 나와요. '다른 하나'로 바뀌고, '닫기'로 돌아가요.\n지울 때는 '지우기'를 누르고, 이어서 '정말 지우기'를 눌러요.",
+      "쓴 내용은 모두 이 기기 안에만 저장돼요. 어디에도 보내지 않고, 가입도 필요 없어요.\n새 스마트폰으로 옮길 때는 '설정'의 '내보내기'로 파일을 저장하고, 새 스마트폰에서 '가져오기'를 눌러 주세요.",
+      "'설정'의 '글자 크기'로 글자를 크게, '색'으로 화면 색을 바꿀 수 있어요. 언어는 화면 맨 위의 'Language'에서 골라요.\n이 앱은 의료를 대신하지 않아요. 위급할 때는 일본의 119(구급)나 110(경찰), 또는 상담 창구로 연락해 주세요. 상담 창구는 '홈' 맨 아래의 '중요한 안내'에서 찾을 수 있어요.\n이 안내는 '설정'의 '사용법'에서 '다시 보기'를 누르면 다시 볼 수 있어요."
+    ]
+  },
   "screen": {
     "home": {
       "title": "오늘의 기록장",
@@ -2274,6 +2530,32 @@ TBL.zh = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "privacy": "隐私政策",
     "credit": "应用开发：照护与支援咨询处 SOYOGI"
   },
+  "guide": {
+    "title": "使用方法",
+    "step": "{n} / {m}",
+    "start": "开始",
+    "again": "再看一次",
+    "heads": [
+      "欢迎使用今日记录本",
+      "首先要做的事",
+      "早上的距离",
+      "写一条联络信息",
+      "剩余精力",
+      "做到的事",
+      "只保存在这台设备里",
+      "看得更清楚，以及困难的时候"
+    ],
+    "bodies": [
+      "这是一本把今天的事稍微记一下的小本子，可以记下早上的距离、剩余精力和做到的事。\n它是为上学或上班很难的时期、容易疲劳的日子准备的工具。\n没有分数，也没有图表。不比较，也不评判好坏。\n有不写的日子，也没关系。",
+      "没有特别要做的。点“首页”的大按钮或下方的标签，就能马上开始写。\n不用的记录，可以在“设置”的“使用的记录”里设为“关”。它会从首页和下方的标签中消失。\n要用联络信息的话，先在“设置”里选好“联络的对象”和“写谁的事”，就不用每次都选了。",
+      "从“能去”“到中途”“别的房间”“在家度过”中，选一个今天能去的地方。\n无论选哪一个，都以同样的分量记录。要改的话，点“重新选择”。\n“以往的记录”里按日期排列。不计数，也不比较。",
+      "选择“在家度过”，或点“写一条联络信息”，就会生成给学校或单位的文字。\n只要选“对象”“写的人”“事由”，文字就会跟着变。姓名可以留空。\n文字可以修改后再用。点“复制”，然后粘贴到邮件或聊天里。\n在显示“分享”的设备上，也可以从那里选择用来发送的应用。",
+      "写一行今天的安排，然后点“添加”。\n为每个安排选择人数、吵闹程度和装作“正常”的程度，“现在的电量”的刻度就会减少。不显示数字。\n删除时，先点“删除”，再点“真的删除”。\n点“打开步骤”，会在另一个应用“一个一个来 - SOYOGI”中打开疲劳累积时的步骤。",
+      "用一行写下一件小小的做到的事，然后点“留下”。会按日期排列。\n点“回看一条”，会从留下的内容中大大地显示一条。点“换一条”换成别的，点“关闭”返回。\n删除时，先点“删除”，再点“真的删除”。",
+      "写下的内容全部只保存在这台设备里，不会发送到任何地方，也不需要注册。\n换新手机时，请先在“设置”里点“导出”保存文件，再在新手机上点“导入”。",
+      "在“设置”里，用“文字大小”把字放大，用“颜色”改变画面的颜色。语言可以在画面最上方的“Language”中选择。\n这个应用不能代替医疗。遇到危险时，请联系119(日本急救)、110(日本警察)或咨询窗口。咨询窗口可以在“首页”最下方的“重要提示”里查找。\n这份说明可以在“设置”的“使用方法”里点“再看一次”重新查看。"
+    ]
+  },
   "screen": {
     "home": {
       "title": "今日记录本",
@@ -2514,6 +2796,32 @@ TBL.ar = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "note": "كل ما تكتبه يُحفظ في هذا الجهاز فقط، ولا يُرسل إلى أي مكان.",
     "privacy": "سياسة الخصوصية",
     "credit": "تطوير التطبيق: SOYOGI، مركز استشارات الرعاية والدعم"
+  },
+  "guide": {
+    "title": "طريقة الاستخدام",
+    "step": "{n} / {m}",
+    "start": "ابدأ",
+    "again": "عرض مرة أخرى",
+    "heads": [
+      "مرحبًا بك في سجل اليوم",
+      "أول ما تفعله",
+      "مسافة الصباح",
+      "إنشاء رسالة",
+      "الطاقة المتبقية",
+      "ما أنجزته",
+      "في هذا الجهاز فقط",
+      "لقراءة أسهل، وعند الحاجة إلى المساعدة"
+    ],
+    "bodies": [
+      "دفتر صغير لتدوين شيء بسيط عن يومك: مسافة الصباح، والطاقة المتبقية، وما أنجزته.\nهو أداة للفترات التي يصعب فيها الذهاب إلى المدرسة أو العمل، وللأيام التي تتعب فيها بسرعة.\nلا توجد نقاط ولا رسوم بيانية. لا شيء يُقارَن ولا يُحكَم عليه.\nولا بأس إن مرّت أيام دون كتابة.",
+      "لا شيء خاص. اضغط زرًّا كبيرًا في «الرئيسية» أو تبويبًا في الأسفل، وابدأ الكتابة مباشرة.\nيمكنك جعل السجلات التي لا تستخدمها على «إيقاف» من «الإعدادات» في «السجلات المستخدمة»، فتختفي من الرئيسية ومن التبويبات في الأسفل.\nإن كنت ستستخدم الرسالة، فاختر مسبقًا «جهة الرسالة» و«عمّن تكتب» في «الإعدادات»، فلا تحتاج إلى اختيارهما كل مرة.",
+      "اختر مكانًا واحدًا يمكنك الذهاب إليه اليوم: «أستطيع الذهاب» أو «حتى منتصف الطريق» أو «غرفة منفصلة» أو «أبقى في البيت».\nكل الخيارات تُسجَّل بالقدر نفسه. للتغيير، اضغط «إعادة الاختيار».\nتظهر أيامك حسب التاريخ في «السجلات السابقة». لا شيء يُعَدّ ولا يُقارَن.",
+      "عند اختيار «أبقى في البيت» أو الضغط على «إنشاء رسالة»، تُنشأ رسالة إلى المدرسة أو مكان العمل.\nيكفي أن تختار «إلى» و«من يكتب» و«الموضوع» لتتغير الرسالة. يمكن ترك الاسم فارغًا.\nيمكنك تعديل الرسالة. اضغط «نسخ» ثم الصقها في بريد إلكتروني أو محادثة.\nفي الأجهزة التي يظهر فيها «مشاركة»، يمكنك أيضًا اختيار تطبيق للإرسال من هناك.",
+      "اكتب خطة من خطط اليوم ثم اضغط «إضافة».\nاختر لكل خطة مستوى الناس والضجيج وأداء دور «العادي»، فينخفض مؤشّر «البطارية الآن». لا تُعرض أي أرقام.\nللحذف، اضغط «حذف» ثم «حذف فعلًا».\nيفتح «فتح الخطوات» خطوات ما يمكن فعله عندما يتراكم التعب، في تطبيق آخر: «واحدة تلو الأخرى - SOYOGI».",
+      "اكتب في سطر واحد شيئًا صغيرًا أنجزته، ثم اضغط «تدوين». تظهر المدوَّنات حسب التاريخ.\nاضغط «مراجعة واحد» ليظهر واحد منها بخط كبير. «واحد آخر» يعرض غيره، و«إغلاق» يعيدك.\nللحذف، اضغط «حذف» ثم «حذف فعلًا».",
+      "كل ما تكتبه يُحفظ في هذا الجهاز فقط، ولا يُرسل إلى أي مكان، ولا تحتاج إلى حساب.\nعند الانتقال إلى هاتف جديد، اضغط «تصدير» في «الإعدادات» لحفظ ملف، ثم اضغط «استيراد» على الهاتف الجديد.",
+      "في «الإعدادات»، يكبّر «حجم الخط» الكتابة، ويغيّر «اللون» ألوان الشاشة. تُختار اللغة من «Language» في أعلى الشاشة.\nهذا التطبيق ليس بديلًا عن الرعاية الطبية. في حالات الخطر، اتصل بالرقم 119 (الإسعاف) أو 110 (الشرطة) في اليابان، أو بأحد مراكز الاستشارة. يمكنك البحث عن جهة استشارة من «تنبيه مهم» في أسفل «الرئيسية».\nيمكنك عرض هذا الدليل مرة أخرى من «الإعدادات»، بالضغط على «عرض مرة أخرى» بجانب «طريقة الاستخدام»."
+    ]
   },
   "screen": {
     "home": {
