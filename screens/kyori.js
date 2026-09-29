@@ -6,7 +6,9 @@
      あいて(学校/職場)・書く人(本人/家族)・ようけん(遅れる/きょう休む/数日/しばらく)を選ぶだけで文ができ、
      コピー(navigator.clipboard → だめなら execCommand → それでもだめなら欄を全部選んで長押しを案内)と
      共有(Play版=ネイティブの共有プラグイン @capacitor/share / Web版=navigator.share がある端末だけ。どちらも無ければボタンを出さない)
-   ・これまでの記録は日付ごとの一覧だけ(数える・比べる表示はしない) */
+   ・これまでの記録は日付ごとの一覧だけ(数える・比べる表示はしない)
+   ・Android の戻るボタン(Play版・2026-09-29): 連絡文の欄を なおしたまま(コピー・共有の前)なら確かめを出す。
+     コピーできた・送り先を選べた・文を作り直した(あいて等を選び直した)ら出さない。名前の欄は入れるたびに保存なので数えない */
 (function(){
   var KEY = 'kyori.v1';
   var HOME = 3;   // 「家で過ごす」の添字
@@ -70,7 +72,7 @@
     var T = api.T, text = out.value;
     function done(ok){
       help.classList.toggle('hidden', ok);
-      if(ok){ api.toast(T('screen.kyori.copied')); return; }
+      if(ok){ if(api.markSaved) api.markSaved(); api.toast(T('screen.kyori.copied')); return; }   // コピーできた=戻るボタンで確かめを出さない
       try{ out.focus(); out.select(); }catch(_){}
       api.toast(T('screen.kyori.copyFail'));
     }
@@ -102,10 +104,11 @@
   function shareText(api, text){
     var T = api.T;
     function failed(err){ if(!shareQuiet(err)) api.toast(T('screen.kyori.shareFail')); }
+    function shared(){ if(api.markSaved) api.markSaved(); }   // 送り先を選べた=戻るボタンで確かめを出さない(閉じた・失敗は そのまま)
     try{
       var ns = nativeShare();
-      if(ns){ Promise.resolve(ns.share({ text:text, dialogTitle:T('screen.kyori.share') })).catch(failed); return; }
-      if(typeof navigator !== 'undefined' && typeof navigator.share === 'function'){ navigator.share({ text:text }).catch(failed); return; }
+      if(ns){ Promise.resolve(ns.share({ text:text, dialogTitle:T('screen.kyori.share') })).then(shared, failed); return; }
+      if(typeof navigator !== 'undefined' && typeof navigator.share === 'function'){ navigator.share({ text:text }).then(shared, failed); return; }
     }catch(err){ failed(err); return; }
     api.toast(T('screen.kyori.shareNone'));
   }
@@ -189,7 +192,8 @@
         var out = api.el('textarea', 'letter-out');
         out.setAttribute('id', 'kyori-letter-out');
         out.rows = 7;
-        function refresh(){ out.value = buildLetter(api, o); }
+        /* 文を作り直すと、なおした文は消える(今までどおり)。消えたあとは書きかけ無し=戻るボタンで確かめを出さない */
+        function refresh(){ out.value = buildLetter(api, o); if(api.markSaved) api.markSaved(); }
 
         function chipField(label, labels, key){
           var f = api.el('div', 'field');
@@ -208,6 +212,7 @@
         letterBox.appendChild(chipField(T('screen.kyori.kind'), T('screen.kyori.kinds'), 'kind'));
 
         var nf = api.el('div', 'field');
+        nf.setAttribute('data-nodirty', '');   // 名前は入れるたびに保存(setExtra)=戻るボタンの書きかけに数えない
         var nl = api.el('label', null, T('screen.kyori.name'));
         nl.setAttribute('for', 'kyori-name');
         nf.appendChild(nl);

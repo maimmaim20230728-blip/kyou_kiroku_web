@@ -107,10 +107,13 @@
         plans.push({ t:t, f:[0,0,0] });
         if(!persist()){ plans.pop(); return; }
         inp.value = '';
+        if(api.markSaved) api.markSaved();   // 足せた=戻るボタンで「まだ保存していません」を出さない(2026-09-29)
         drawList(); drawBatt();
       }
       api.Tap.bind(addBtn, addPlan);
       K.onEnter(inp, addPlan);   // 完了キーでも足せる(変換の確定では足さない)
+      /* 欄を空にしたら書きかけ無し(戻るボタンの確かめを出さない) */
+      inp.addEventListener('input', function(){ if(!String(inp.value || '').trim() && api.markSaved) api.markSaved(); });
       addRow.appendChild(inp); addRow.appendChild(addBtn);
       c.appendChild(addRow);
 

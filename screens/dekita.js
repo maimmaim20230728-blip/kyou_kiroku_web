@@ -42,11 +42,14 @@
         items.push(it);
         if(!persist()){ items.pop(); return; }
         inp.value = '';
+        if(api.markSaved) api.markSaved();   // のこせた=戻るボタンで「まだ保存していません」を出さない(2026-09-29)
         drawList();
         api.toast(T('common.saved'));
       }
       api.Tap.bind(addBtn, addItem);
       K.onEnter(inp, addItem);   // 完了キーでも のこせる(変換の確定では のこさない)
+      /* 欄を空にしたら書きかけ無し(戻るボタンの確かめを出さない) */
+      inp.addEventListener('input', function(){ if(!String(inp.value || '').trim() && api.markSaved) api.markSaved(); });
       addRow.appendChild(inp); addRow.appendChild(addBtn);
       c.appendChild(addRow);
 
