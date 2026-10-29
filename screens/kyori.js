@@ -117,7 +117,7 @@
     render: function(c, api){
       var K = window.KIROKU_KINDS;   // 読み込み順に依らないよう描くときに参照
       var T = api.T;
-      var today = K.dateKey();
+      var today = api.today();   // 記録の日付(app.js と同じ決め方・せっていの よなかの扱いも見る)
       var all = loadAll(api);
       var opts = T('screen.kyori.opts');
       var letterOpen = false;

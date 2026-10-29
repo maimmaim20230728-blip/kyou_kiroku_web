@@ -5,7 +5,7 @@
    ・保存: api.save('genki.v1', { 'YYYY-MM-DD': [ { t:'予定', f:[0,0,0] } ] })(日付ごとに残る。きょうの分だけを書き換える)
    ・「登録したサインが重なっています」の判定は作らない。「手順を開く」のリンクだけ置く(新1「ひとつずつ・そよぎ」の公開Web版へ)
    ・画面の下に「きのうの よてい」を読むだけで小さく出す(0時を過ぎても前の日の予定と電池が見える・書き換えない・無ければ出さない。
-     点検 kiroku-13 案a・2026-09-29。日付の切り替えは今までどおり0時) */
+     点検 kiroku-13 案a・2026-09-29。日付の切り替えは はじめは0時。せっていで よなか0時〜4時を前の日に入れられる・2026-10-30) */
 (function(){
   var KEY = 'genki.v1';
   var STEPS_URL = 'https://maimmaim20230728-blip.github.io/soyogi_anshin_web/';   // 新1「ひとつずつ・そよぎ」の公開Web版(2026-09-28 HTTP 200 確認)
@@ -44,9 +44,10 @@
   }
 
   /* きのうの よてい(読むだけ): 予定の1行と小さな電池。ボタンも入力欄も置かない */
-  function drawPrev(c, api, K, all){
-    var d = new Date(); d.setDate(d.getDate() - 1);
-    var key = K.dateKey(d);
+  function drawPrev(c, api, K, all, today){
+    /* 「きのう」は いまの記録の日付(today)の前の日(よなかを前の日に入れる設定でも、ずれない・2026-10-30) */
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(today);
+    var key = K.dateKey(new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]) - 1));
     var plans = Array.isArray(all[key]) ? all[key] : [];
     if(!plans.length) return;
     var T = api.T;
@@ -69,7 +70,7 @@
     render: function(c, api){
       var K = window.KIROKU_KINDS;   // 読み込み順に依らないよう描くときに参照
       var T = api.T;
-      var today = K.dateKey();
+      var today = api.today();   // 記録の日付(app.js と同じ決め方・せっていの よなかの扱いも見る)
       var all = loadAll(api);
       var plans = Array.isArray(all[today]) ? all[today] : [];
 
@@ -129,16 +130,16 @@
           var card = api.el('div', 'card plan');
           var head = api.el('div', 'row between');
           head.appendChild(api.el('div', 'plan-t grow', p.t));
-          /* けすは2回タップ(できたことと同じ。1回目は「ほんとうに けす」を出すだけ) */
+          /* けすは2回タップ(できたことと同じ。1回目は「ほんとうに けす」を出すだけ・数秒で元に戻る=K.armDelete) */
           var del = api.el('button', 'btn small', T('screen.genki.del'));
           del.setAttribute('type', 'button');
-          var armed = false;
-          api.Tap.bind(del, function(){
-            if(!armed){ armed = true; del.textContent = T('screen.dekita.delSure'); del.classList.add('danger'); return; }
+          K.armDelete(api, del, function(){
             if(api.dayGuard(today)) return;
             var i = plans.indexOf(p);
-            if(i >= 0) plans.splice(i, 1);
-            persist(); drawList(); drawBatt();
+            if(i < 0) return;
+            plans.splice(i, 1);
+            if(!persist()){ plans.splice(i, 0, p); return; }   // 保存できなければ消さない(「けしました」も出さない)
+            drawList(); drawBatt();
             api.toast(T('common.deleted'));
           });
           head.appendChild(del);
@@ -149,7 +150,13 @@
             var row;
             function draw(){
               if(row) f.removeChild(row);
-              row = K.chipRow(api, T('screen.genki.f' + n + 'v'), p.f[fi], function(i){ if(api.dayGuard(today)) return; p.f[fi] = i; persist(); draw(); drawBatt(); });
+              row = K.chipRow(api, T('screen.genki.f' + n + 'v'), p.f[fi], function(i){
+                if(api.dayGuard(today)) return;
+                var old = p.f[fi];
+                p.f[fi] = i;
+                if(!persist()){ p.f[fi] = old; return; }   // 保存できなければ選んだ印も動かさない
+                draw(); drawBatt();
+              });
               f.appendChild(row);
             }
             draw();
@@ -170,7 +177,7 @@
       st.setAttribute('rel', 'noopener');
       c.appendChild(st);
 
-      drawPrev(c, api, K, all);
+      drawPrev(c, api, K, all, today);
     }
   });
 })();

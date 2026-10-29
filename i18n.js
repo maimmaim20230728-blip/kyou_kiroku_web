@@ -154,7 +154,8 @@ var ja = {
       h:'つかう きろく',
       kinds:['あさの きょり','のこり元気','できたこと'],
       target:'れんらくの あいて', targets:['学校','職場'],
-      writer:'だれのことを 書く', writers:['本人','家族']
+      writer:'だれのことを 書く', writers:['本人','家族'],
+      night:'よなか 0時〜4時の きろく', nights:['その日に 入れる','まえの日に 入れる']
     }
   }
 };
@@ -298,7 +299,8 @@ var en = {
       h:'Logs to use',
       kinds:['Morning distance','Energy left','Things done'],
       target:'Message goes to', targets:['School','Workplace'],
-      writer:'Writing about', writers:['Myself','Family']
+      writer:'Writing about', writers:['Myself','Family'],
+      night:'Logs from midnight to 4 a.m.', nights:['Count as that day','Count as the day before']
     }
   }
 };
@@ -569,6 +571,11 @@ TBL.de = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "writers": [
         "Ich selbst",
         "Familie"
+      ],
+      "night": "Einträge von 0 bis 4 Uhr",
+      "nights": [
+        "Zum selben Tag",
+        "Zum Vortag"
       ]
     }
   }
@@ -837,6 +844,11 @@ TBL.fr = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "writers": [
         "Moi-même",
         "La famille"
+      ],
+      "night": "Notes de minuit à 4 h",
+      "nights": [
+        "Le jour même",
+        "La veille"
       ]
     }
   }
@@ -1105,6 +1117,11 @@ TBL.es = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "writers": [
         "La propia persona",
         "La familia"
+      ],
+      "night": "Registros de 0:00 a 4:00",
+      "nights": [
+        "Ese mismo día",
+        "El día anterior"
       ]
     }
   }
@@ -1373,6 +1390,11 @@ TBL.it = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "writers": [
         "Di me",
         "Di un familiare"
+      ],
+      "night": "Registri da mezzanotte alle 4",
+      "nights": [
+        "Lo stesso giorno",
+        "Il giorno prima"
       ]
     }
   }
@@ -1641,6 +1663,11 @@ TBL.pt = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "writers": [
         "A própria pessoa",
         "Família"
+      ],
+      "night": "Anotações da meia-noite às 4h",
+      "nights": [
+        "No mesmo dia",
+        "No dia anterior"
       ]
     }
   }
@@ -1909,6 +1936,11 @@ TBL.nl = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "writers": [
         "Uzelf",
         "Familie"
+      ],
+      "night": "Logboek van middernacht tot 4 uur",
+      "nights": [
+        "Dezelfde dag",
+        "De dag ervoor"
       ]
     }
   }
@@ -2177,6 +2209,11 @@ TBL.sv = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "writers": [
         "Mig själv",
         "Någon i familjen"
+      ],
+      "night": "Loggar från midnatt till kl. 4",
+      "nights": [
+        "Samma dag",
+        "Dagen före"
       ]
     }
   }
@@ -2445,6 +2482,11 @@ TBL.ko = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "writers": [
         "본인",
         "가족"
+      ],
+      "night": "밤 0시~4시의 기록",
+      "nights": [
+        "그날로 넣기",
+        "전날로 넣기"
       ]
     }
   }
@@ -2713,6 +2755,11 @@ TBL.zh = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "writers": [
         "本人",
         "家人"
+      ],
+      "night": "深夜0点到4点的记录",
+      "nights": [
+        "算作当天",
+        "算作前一天"
       ]
     }
   }
@@ -2981,6 +3028,11 @@ TBL.ar = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "writers": [
         "عن نفسي",
         "عن فرد من العائلة"
+      ],
+      "night": "السجلات من منتصف الليل حتى الساعة 4",
+      "nights": [
+        "في اليوم نفسه",
+        "في اليوم السابق"
       ]
     }
   }

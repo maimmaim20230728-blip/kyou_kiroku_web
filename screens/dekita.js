@@ -18,7 +18,7 @@
     render: function(c, api){
       var K = window.KIROKU_KINDS;   // 読み込み順に依らないよう描くときに参照
       var T = api.T;
-      var today = K.dateKey();
+      var today = api.today();   // 記録の日付(app.js と同じ決め方・せっていの よなかの扱いも見る)
       var items = loadAll(api);
       function persist(){ if(!api.save(KEY, items)){ api.toast(T('common.storageFull')); return false; } return true; }
 
@@ -108,12 +108,13 @@
             li.appendChild(api.el('span', 'grow', it.t));
             var del = api.el('button', 'btn small', T('screen.dekita.del'));
             del.setAttribute('type', 'button');
-            var armed = false;
-            api.Tap.bind(del, function(){
-              if(!armed){ armed = true; del.textContent = T('screen.dekita.delSure'); del.classList.add('danger'); return; }
+            /* 2回タップ・数秒で元に戻る(K.armDelete・2026-10-30) */
+            K.armDelete(api, del, function(){
               var i = items.indexOf(it);
-              if(i >= 0) items.splice(i, 1);
-              persist(); drawList();
+              if(i < 0) return;
+              items.splice(i, 1);
+              if(!persist()){ items.splice(i, 0, it); return; }   // 保存できなければ消さない(「けしました」も出さない)
+              drawList();
               api.toast(T('common.deleted'));
             });
             li.appendChild(del);

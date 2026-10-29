@@ -2,7 +2,8 @@
 /* 共通の小道具(画面をまたいで使う・登録はしない)
    ・記録の種類3つ(kyori / genki / dekita)の ON/OFF は api.getExtra('kind_<id>')(既定=ON)
    ・OFF の種類はホームに出さず、下ナビからも隠す(.nav-btn.hidden)
-   ・日付キーは端末の現地時刻で 'YYYY-MM-DD' */
+   ・日付キーは端末の現地時刻で 'YYYY-MM-DD'。dateKey(d) は d の暦の日付をそのまま形にするだけ。
+     「きょう」の記録の日付は api.today()(app.js。せっていの「よなか 0時〜4時の きろく」を見る・2026-10-30)を使う */
 (function(){
   var KINDS = ['kyori', 'genki', 'dekita'];
 
@@ -58,5 +59,25 @@
     return wrap;
   }
 
-  window.KIROKU_KINDS = { list: KINDS, isOn: isOn, setOn: setOn, applyNav: applyNav, dateKey: dateKey, isDateKey: isDateKey, onEnter: onEnter, dateLabel: dateLabel, fill: fill, chipRow: chipRow };
+  /* 「けす」は2回タップ: 1回目は「ほんとうに けす」に変えるだけ。DEL_WAIT ミリ秒 何もしなければ元の「けす」に戻る
+     (1回目のまま残ると、あとで何気なく触っただけで消えていた・2026-10-30。ひとつずつ・そよぎ の bindDelete と同じ4秒) */
+  var DEL_WAIT = 4000;
+  function armDelete(api, btn, doDelete){
+    var armed = false, timer = 0, label = btn.textContent;
+    function disarm(){ armed = false; clearTimeout(timer); btn.textContent = label; btn.classList.remove('danger'); }
+    api.Tap.bind(btn, function(){
+      if(!armed){
+        armed = true;
+        btn.textContent = api.T('screen.dekita.delSure');
+        btn.classList.add('danger');
+        clearTimeout(timer);
+        timer = setTimeout(disarm, DEL_WAIT);
+        return;
+      }
+      disarm();
+      doDelete();
+    });
+  }
+
+  window.KIROKU_KINDS = { list: KINDS, isOn: isOn, setOn: setOn, applyNav: applyNav, dateKey: dateKey, isDateKey: isDateKey, onEnter: onEnter, dateLabel: dateLabel, fill: fill, chipRow: chipRow, armDelete: armDelete, DEL_WAIT: DEL_WAIT };
 })();

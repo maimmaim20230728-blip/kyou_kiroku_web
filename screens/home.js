@@ -20,7 +20,7 @@
 
       c.appendChild(api.el('h1', 'scr-title', T('screen.home.title')));
       c.appendChild(api.el('p', 'tagline', T('app.tagline')));
-      c.appendChild(api.el('p', 'hint', K.dateLabel(K.dateKey(), api.lang)));
+      c.appendChild(api.el('p', 'hint', K.dateLabel(api.today(), api.lang)));
       c.appendChild(api.el('p', 'note', T('screen.home.intro')));
 
       var shown = 0;

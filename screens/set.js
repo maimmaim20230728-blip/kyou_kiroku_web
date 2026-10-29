@@ -2,6 +2,7 @@
 /* 画面: せってい のアプリ固有の行(#set-app-rows に描く。共通シェルの他の行は app.js が持つ)
    ・つかう きろく: 3種類の ON/OFF(api.setExtra('kind_<id>'))。OFF はホームと下ナビから消える
    ・れんらくの あいて(学校/職場)・だれのことを 書く(本人/家族)=連絡文の既定値
+   ・よなか 0時〜4時の きろく(その日に入れる/まえの日に入れる)= api.setExtra('night', 0|1)。app.js の todayKey が見る
    ・app.js は id='set' の登録を #set-app-rows に描く(README「シェルの変更点」参照) */
 (function(){
   window.SCREENS.register('set', {
@@ -42,6 +43,9 @@
       }
       cycleRow(T('screen.set.target'), T('screen.set.targets'), 'target');
       cycleRow(T('screen.set.writer'), T('screen.set.writers'), 'writer');
+      /* よなか0時〜4時の記録を まえの日に入れるか(はじめは 0=その日=今までどおり0時で区切る・2026-10-30)。
+         日付の決め方は app.js の todayKey(api.today・dayGuard・前面に戻ったときの描き直し)の1か所だけ */
+      cycleRow(T('screen.set.night'), T('screen.set.nights'), 'night');
     }
   });
 })();

@@ -4,12 +4,12 @@
    ・click禁止: 操作は全て Tap.bind(tap.js)。select / file input だけはネイティブイベント
    ・画面は screens/<id>.js が window.SCREENS.register('<id>', { render(container, api) }) で登録する
      (会話補助ノートと同じ取り決め。画面同士・シェルの内部状態は共有しない)
-   ・api = { T, el, pref, toast, go, Tap, Photo, load, save, remove, getExtra, setExtra, speak, stopSpeak, vibrate, lang, rtl, dayGuard, ver, appKey }
+   ・api = { T, el, pref, toast, go, Tap, Photo, load, save, remove, getExtra, setExtra, speak, stopSpeak, vibrate, lang, rtl, today, dayGuard, ver, appKey }
    ・🔴 BUILDER: アプリ固有の処理は screens/*.js に書く。このファイルは共通部分なので最小限の変更にとどめ、
      変えたら README の「シェルの変更点」に書く */
 (function(){
 
-var VER = '0.4.9';              // 🔴 更新のたびに上げる(build.gradle の versionName / sw.js の CACHE と一緒に)
+var VER = '0.4.10';              // 🔴 更新のたびに上げる(build.gradle の versionName / sw.js の CACHE と一緒に)
 var APP_KEY = 'kyou_kiroku';        // バックアップの識別(別アプリのファイルを読まない)
 var LS = 'kiroku.';
 var LS_PREF = LS + 'pref.v1';
@@ -131,6 +131,27 @@ function watchBarSpace(){
   try{ new ResizeObserver(applyBarSpace).observe(bar); return true; }catch(_){ return false; }
 }
 
+/* ---- button でない押す場所を、キーボード・スイッチ操作でも押せるように(2026-10-30) ----
+   role="button" と tabindex="0" を付け、Enter / Space で click() を出す(Tap は click も拾うので、押した処理はそのまま Tap.bind の1つ)。
+   label があれば aria-label(見えている字が名前にならないとき) */
+function keyable(e, label){
+  if(!e || !e.setAttribute) return e;
+  e.setAttribute('role', 'button');
+  e.setAttribute('tabindex', '0');
+  if(label) e.setAttribute('aria-label', label);
+  if(!e._keyable && e.addEventListener){
+    e._keyable = true;
+    e.addEventListener('keydown', function(ev){
+      if(ev.target !== e || ev.isComposing) return;
+      if(ev.key === 'Enter' || ev.key === ' ' || ev.key === 'Spacebar'){
+        if(ev.preventDefault) ev.preventDefault();
+        e.click();
+      }
+    });
+  }
+  return e;
+}
+
 /* ---- 小さなDOMヘルパー(画面側にも渡す) ---- */
 function el(tag, cls, txt){
   var e = document.createElement(tag);
@@ -213,6 +234,7 @@ function screenApi(){
     speak: speak, stopSpeak: stopSpeak, canSpeak: canSpeak, vibrate: vibrate,
     lang: pref.lang,
     rtl: RTL_LANGS.indexOf(pref.lang) >= 0,
+    today: todayKey,                    // いまの記録の日付 'YYYY-MM-DD'(せっていの よなかの扱いを見る・2026-10-30)。画面はこれで today を決める
     dayGuard: function(day){ if(todayKey() === day) return false; newDay(); return true; },   // 保存の直前に呼ぶ。日付が変わっていたら true(=保存せず、いまの画面を今日の日付で描き直した)
     markSaved: markSaved,               // 保存したら呼ぶ(戻るボタンの書きかけの確かめを出さない・2026-09-29)
     ask: askBox,                        // 確かめの窓(Play版はアプリの中・Web版は confirm)。ask(文, function(はい){...}, confirmが無いときの答え)
@@ -226,11 +248,15 @@ function screenApi(){
    前の日の日付で保存して前の日の記録を上書きしていた。
    ①保存の直前に画面側が api.dayGuard(today) を呼ぶ。日付が変わっていたら true(=保存しない)。そのとき いまの画面を今日の日付で描き直してお知らせを出す
    ②前面に戻ったとき(visibilitychange / pageshow / Play版は Capacitor の resume)に、描いた日と今日が違えば描き直す
-   日付の区切りは今までどおり0時(端末の現地時刻・screens/kinds.js の dateKey と同じ決め方)。
+   日付の区切りは はじめは0時(端末の現地時刻・screens/kinds.js の dateKey と同じ形)。
+   せっていの「よなか 0時〜4時の きろく」を「まえの日に 入れる」(pref.extra.night === 1)にすると、0時〜4時(3時59分まで)は前の日の日付になる(2026-10-30)。
+   🔴 記録の日付の決め方は この todayKey の1か所だけ。画面は api.today()、保存の直前は api.dayGuard、前面に戻ったときは checkNewDay が使う(ずれない)。
    描き直しても、書きかけの1行入力(input)は欄に残す(消えるのは保存していない連絡文の編集だけ) */
 var DATED_SCREENS = ['home', 'kyori', 'genki', 'dekita'];   // 日付を握っている画面(せっていは握らない)
+var NIGHT_END = 4;            // 「まえの日に 入れる」とき、この時(4時)より前は前の日
 function todayKey(){
   var d = new Date();
+  if(pref.extra && pref.extra.night === 1 && d.getHours() < NIGHT_END) d = new Date(d.getFullYear(), d.getMonth(), d.getDate() - 1);
   function p(n){ return (n < 10 ? '0' : '') + n; }
   return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate());
 }
@@ -650,6 +676,7 @@ function init(){
     (function(b){ Tap.bind(b, function(){ showScreen(b.getAttribute('data-scr'), 'tab'); }); })(navs[i]);
   }
   Tap.bind($('hd-title'), function(){ showScreen('home'); });   // 名前タップ=いつでもホームへ
+  keyable($('hd-title'));                                         // キーボード・スイッチでも(名前は見えている字のまま・2026-10-30)
 
   Tap.bind($('btn-fs'), function(){ pref.fs = (pref.fs + 1) % 3; applyBodyClass(); savePref(); applyI18n(); });
   Tap.bind($('btn-theme'), function(){ pref.theme = next(THEMES, pref.theme); applyTheme(); savePref(); applyI18n(); });
