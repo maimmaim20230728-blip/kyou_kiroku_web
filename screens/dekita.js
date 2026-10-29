@@ -38,6 +38,7 @@
       function addItem(){
         var t = String(inp.value || '').trim();
         if(!t) return;
+        if(api.dayGuard(today)) return;   // 日をまたいでいたらのこさず、今日の日付で描き直す(入れた文字は欄に残る・2026-10-30)
         var it = { id: Date.now(), d: today, t: t };
         items.push(it);
         if(!persist()){ items.pop(); return; }

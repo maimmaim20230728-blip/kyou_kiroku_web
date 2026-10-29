@@ -141,6 +141,7 @@
         var clr = api.el('button', 'btn', T('screen.kyori.clear'));
         clr.setAttribute('type', 'button');
         api.Tap.bind(clr, function(){
+          if(api.dayGuard(today)) return;   // 日をまたいでいたら消さない(前の日の記録を守る・2026-10-30)
           delete all[today];
           if(!api.save(KEY, all)) api.toast(T('common.saveFail'));
           api.go('kyori');
@@ -154,6 +155,7 @@
         b.setAttribute('aria-pressed', all[today] === i ? 'true' : 'false');
         b.appendChild(api.el('span', 'lbl', lb));
         api.Tap.bind(b, function(){
+          if(api.dayGuard(today)) return;   // 日をまたいでいたら保存せず、今日の日付で描き直す(前の日の記録を上書きしない・2026-10-30)
           all[today] = i;
           if(!api.save(KEY, all)){ api.toast(T('common.storageFull')); delete all[today]; return; }
           var btns = grid.querySelectorAll('.kyori-opt');

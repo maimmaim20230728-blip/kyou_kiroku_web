@@ -4,12 +4,12 @@
    ・click禁止: 操作は全て Tap.bind(tap.js)。select / file input だけはネイティブイベント
    ・画面は screens/<id>.js が window.SCREENS.register('<id>', { render(container, api) }) で登録する
      (会話補助ノートと同じ取り決め。画面同士・シェルの内部状態は共有しない)
-   ・api = { T, el, pref, toast, go, Tap, Photo, load, save, remove, getExtra, setExtra, speak, stopSpeak, vibrate, lang, rtl, ver, appKey }
+   ・api = { T, el, pref, toast, go, Tap, Photo, load, save, remove, getExtra, setExtra, speak, stopSpeak, vibrate, lang, rtl, dayGuard, ver, appKey }
    ・🔴 BUILDER: アプリ固有の処理は screens/*.js に書く。このファイルは共通部分なので最小限の変更にとどめ、
      変えたら README の「シェルの変更点」に書く */
 (function(){
 
-var VER = '0.4.8';              // 🔴 更新のたびに上げる(build.gradle の versionName / sw.js の CACHE と一緒に)
+var VER = '0.4.9';              // 🔴 更新のたびに上げる(build.gradle の versionName / sw.js の CACHE と一緒に)
 var APP_KEY = 'kyou_kiroku';        // バックアップの識別(別アプリのファイルを読まない)
 var LS = 'kiroku.';
 var LS_PREF = LS + 'pref.v1';
@@ -213,6 +213,7 @@ function screenApi(){
     speak: speak, stopSpeak: stopSpeak, canSpeak: canSpeak, vibrate: vibrate,
     lang: pref.lang,
     rtl: RTL_LANGS.indexOf(pref.lang) >= 0,
+    dayGuard: function(day){ if(todayKey() === day) return false; newDay(); return true; },   // 保存の直前に呼ぶ。日付が変わっていたら true(=保存せず、いまの画面を今日の日付で描き直した)
     markSaved: markSaved,               // 保存したら呼ぶ(戻るボタンの書きかけの確かめを出さない・2026-09-29)
     ask: askBox,                        // 確かめの窓(Play版はアプリの中・Web版は confirm)。ask(文, function(はい){...}, confirmが無いときの答え)
     backDefault: backDefault,           // 画面の back() が確かめのあとで「来た画面へ」を続けるとき
@@ -220,7 +221,57 @@ function screenApi(){
     appKey: APP_KEY
   };
 }
+/* ---- 日をまたいだとき(2026-10-30) ----
+   各画面は描いた時の日付(today)を握ったまま保存する。夜に画面を開いたまま裏に回し、翌朝 前面に戻して押すと、
+   前の日の日付で保存して前の日の記録を上書きしていた。
+   ①保存の直前に画面側が api.dayGuard(today) を呼ぶ。日付が変わっていたら true(=保存しない)。そのとき いまの画面を今日の日付で描き直してお知らせを出す
+   ②前面に戻ったとき(visibilitychange / pageshow / Play版は Capacitor の resume)に、描いた日と今日が違えば描き直す
+   日付の区切りは今までどおり0時(端末の現地時刻・screens/kinds.js の dateKey と同じ決め方)。
+   描き直しても、書きかけの1行入力(input)は欄に残す(消えるのは保存していない連絡文の編集だけ) */
+var DATED_SCREENS = ['home', 'kyori', 'genki', 'dekita'];   // 日付を握っている画面(せっていは握らない)
+function todayKey(){
+  var d = new Date();
+  function p(n){ return (n < 10 ? '0' : '') + n; }
+  return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate());
+}
+var shownDay = todayKey();   // いちばん最近 画面を描いた日
+function newDay(){
+  var id = current, scr = $('scr-' + id), keep = [];
+  if(DATED_SCREENS.indexOf(id) >= 0){
+    try{
+      var ins = scr && scr.querySelectorAll ? scr.querySelectorAll('input') : [];
+      for(var i = 0; i < ins.length; i++){
+        var tp = String(ins[i].type || 'text').toLowerCase();
+        if(ins[i].id && ins[i].value && (tp === 'text' || tp === '')) keep.push({ id:ins[i].id, value:ins[i].value });
+      }
+    }catch(_){}
+    renderScreen(id);   // shownDay もここで今日になる
+    keep.forEach(function(k){
+      try{ var e = scr.querySelector('#' + k.id); if(e && !e.value) e.value = k.value; }catch(_){}
+    });
+    toast(T('common.newDay'));
+  } else {
+    shownDay = todayKey();   // せってい: 描き直さない(次に画面を開いたとき今日で描かれる)
+  }
+}
+function checkNewDay(){
+  if(todayKey() === shownDay) return false;
+  newDay();
+  return true;
+}
+/* 前面に戻ったとき(ブラウザ/WebView) */
+function watchDay(){
+  try{
+    if(document.addEventListener) document.addEventListener('visibilitychange', function(){ if(document.visibilityState === 'visible') checkNewDay(); });
+    if(typeof window !== 'undefined' && window.addEventListener) window.addEventListener('pageshow', function(){ checkNewDay(); });
+  }catch(_){}
+  /* Play版: アプリに戻ったとき(@capacitor/app の resume) */
+  var ap = isNativeApp() ? nativePlugin('App', 'addListener') : null;
+  if(ap){ try{ var r = ap.addListener('resume', function(){ checkNewDay(); }); if(r && r.catch) r.catch(function(){}); }catch(_){} }
+}
+
 function renderScreen(id){
+  shownDay = todayKey();   // 各画面の today(dateKey)は、この描く瞬間に決まる
   if(dirtyIn && dirtyIn.classList && dirtyIn.classList.contains('screen')) dirtyIn = null;   // 描き直し=書きかけは消えた(戻るボタン)
   /* せってい: 共通行は静的。アプリ固有の行だけ、登録があれば #set-app-rows に描く(このアプリでの追加) */
   if(id === 'set'){
@@ -616,6 +667,7 @@ function init(){
   if(!guideDone()) openGuide(true);   // はじめての つかいかた(読み終えるまで毎回・2026-09-30)
 
   watchBack();                        // Android の戻るボタン(Play版だけ)
+  watchDay();                         // 前面に戻ったとき 日付が変わっていれば描き直す(2026-10-30)
   applyBarSpace();
   watchBarSpace();
   if(typeof window !== 'undefined' && window.addEventListener){

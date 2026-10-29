@@ -104,6 +104,7 @@
       function addPlan(){
         var t = String(inp.value || '').trim();
         if(!t) return;
+        if(api.dayGuard(today)) return;   // 日をまたいでいたら足さず、今日の日付で描き直す(入れた文字は欄に残る・2026-10-30)
         plans.push({ t:t, f:[0,0,0] });
         if(!persist()){ plans.pop(); return; }
         inp.value = '';
@@ -134,6 +135,7 @@
           var armed = false;
           api.Tap.bind(del, function(){
             if(!armed){ armed = true; del.textContent = T('screen.dekita.delSure'); del.classList.add('danger'); return; }
+            if(api.dayGuard(today)) return;
             var i = plans.indexOf(p);
             if(i >= 0) plans.splice(i, 1);
             persist(); drawList(); drawBatt();
@@ -147,7 +149,7 @@
             var row;
             function draw(){
               if(row) f.removeChild(row);
-              row = K.chipRow(api, T('screen.genki.f' + n + 'v'), p.f[fi], function(i){ p.f[fi] = i; persist(); draw(); drawBatt(); });
+              row = K.chipRow(api, T('screen.genki.f' + n + 'v'), p.f[fi], function(i){ if(api.dayGuard(today)) return; p.f[fi] = i; persist(); draw(); drawBatt(); });
               f.appendChild(row);
             }
             draw();
