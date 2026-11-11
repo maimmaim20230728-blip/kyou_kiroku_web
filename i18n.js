@@ -2456,7 +2456,7 @@ mergeDeep(TBL.sv, {
         "Nästan tomt",
         "Lite",
         "Ungefär hälften",
-        "Gott om"
+        "Mycket"
       ]
     }
   }

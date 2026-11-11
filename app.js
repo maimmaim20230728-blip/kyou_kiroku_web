@@ -601,7 +601,10 @@ function noteExported(){
   drawLastExport();
 }
 function exportBackup(){
-  var data = { app: APP_KEY, ver: 1, exported: Date.now(), pref: pref, data: {} };
+  /* さいごに かきだした日(extra.lastExport)は この端末だけの印なので、かきだすファイルには入れない(2回目からも・2026-11-11) */
+  var outPref = pref;
+  try{ outPref = JSON.parse(JSON.stringify(pref)); if(outPref.extra) delete outPref.extra.lastExport; }catch(_){ outPref = pref; }
+  var data = { app: APP_KEY, ver: 1, exported: Date.now(), pref: outPref, data: {} };
   try{
     for(var i = 0; i < localStorage.length; i++){
       var k = localStorage.key(i);
