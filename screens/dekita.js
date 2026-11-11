@@ -1,10 +1,12 @@
 'use strict';
 /* 画面: できたこと
    ・1行入力(写真なし)・日付ごとの一覧・「ひとつ 見かえす」でランダムに1件を大きく表示(.ov)
+   ・「むかしの ひとつ」: 30日より前の記録だけからランダムに1件(気分が落ちた日に前向きな記録を思い出せるように・2026-11-11)。点数化・日数の表示はしない
    ・保存: api.save('dekita.v1', [ { id, d:'YYYY-MM-DD', t:'本文' } ])(新しい順に並べて見せる)
    ・比べる表示・グラフ・達成率・日数の集計は出さない */
 (function(){
   var KEY = 'dekita.v1';
+  var OLD_DAYS = 30;   // 「むかしの ひとつ」は、いまの記録の日付からこの日数より前の記録だけ
 
   /* 正しい形のものだけ残す(壊れたバックアップを読んでも画面が落ちないように)。d が日付の形で t が文字列のものだけ */
   function loadAll(api){
@@ -63,14 +65,35 @@
       api.Tap.bind(pick, function(){ if(items.length) showOne(); else api.toast(T('screen.dekita.empty')); });
       c.appendChild(pick);
 
-      function showOne(){
+      /* むかしの ひとつ(30日より前の記録から・無ければ ひとことだけ) */
+      var old = api.el('button', 'big-btn');
+      old.setAttribute('type', 'button');
+      old.setAttribute('id', 'dekita-pick-old');
+      old.appendChild(api.el('span', 'ico', '🌿'));
+      old.appendChild(api.el('span', 'lbl', T('screen.dekita.pickOld')));
+      api.Tap.bind(old, function(){
+        var pool = oldItems();
+        if(pool.length) showOne(pool, T('screen.dekita.pickOldTitle')); else api.toast(T('screen.dekita.pickOldNone'));
+      });
+      c.appendChild(old);
+
+      /* むかしの記録だけ(日付の文字列は YYYY-MM-DD なので、そのまま比べられる) */
+      function oldItems(){
+        var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(today);
+        if(!m) return [];
+        var cut = K.dateKey(new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]) - OLD_DAYS));
+        return items.filter(function(it){ return it.d < cut; });
+      }
+
+      function showOne(pool, title){
+        pool = pool || items;
         var ov = api.el('div', 'ov');
         ov.setAttribute('id', 'dekita-ov');
-        var head = api.el('div', 'show-head', T('screen.dekita.pickTitle'));
+        var head = api.el('div', 'show-head', title || T('screen.dekita.pickTitle'));
         var d = api.el('div', 'show-label');
         var v = api.el('div', 'step-text');
         function roll(){
-          var it = items[Math.floor(Math.random() * items.length)];
+          var it = pool[Math.floor(Math.random() * pool.length)];
           d.textContent = K.dateLabel(it.d, api.lang);
           v.textContent = it.t;
         }

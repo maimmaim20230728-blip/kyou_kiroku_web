@@ -34,11 +34,21 @@
     return Math.max(0, SEG - Math.round(total / 3));
   }
 
-  /* 電池の目盛りを描く(数字は出さない) */
-  function fillBatt(api, batt, plans){
+  /* 電池の目盛りの意味を読み上げに伝える(2026-11-11)。目盛りは span の並びで何も読まれないので、
+     role=img と aria-label に「ことば」(ほとんど ない/すこし/半分くらい/たっぷり)を付ける。数字は見せない方針なので数字は使わない */
+  function battWord(api, r){
+    var w = api.T('screen.genki.battLevels');
+    if(!Array.isArray(w) || w.length < 4) return '';
+    return w[r <= 0 ? 0 : r <= 2 ? 1 : r === 3 ? 2 : 3];
+  }
+
+  /* 電池の目盛りを描く(数字は出さない)。labelKey=読み上げの見出し(いまの 電池 / きのうの 電池) */
+  function fillBatt(api, batt, plans, labelKey){
     batt.textContent = '';
     var r = remainSegments(plans);
     batt.setAttribute('data-remain', String(r));
+    batt.setAttribute('role', 'img');
+    batt.setAttribute('aria-label', api.T(labelKey || 'screen.genki.battLabel') + ': ' + battWord(api, r));
     for(var i = 0; i < SEG; i++) batt.appendChild(api.el('span', 'seg' + (i < r ? ' on' : '')));
     batt.appendChild(api.el('span', 'cap'));
   }
@@ -58,7 +68,7 @@
     box.appendChild(api.el('div', 'batt-label', T('screen.genki.prevBatt')));
     var batt = api.el('div', 'batt small');
     batt.setAttribute('id', 'genki-prev-batt');
-    fillBatt(api, batt, plans);
+    fillBatt(api, batt, plans, 'screen.genki.prevBatt');
     box.appendChild(batt);
     var ul = api.el('ul', 'prev-list');
     plans.forEach(function(p){ ul.appendChild(api.el('li', 'prev-item', p.t)); });

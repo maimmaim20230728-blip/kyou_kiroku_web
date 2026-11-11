@@ -9,7 +9,7 @@
      変えたら README の「シェルの変更点」に書く */
 (function(){
 
-var VER = '0.4.11';              // 🔴 更新のたびに上げる(build.gradle の versionName / sw.js の CACHE と一緒に)
+var VER = '0.4.12';              // 🔴 更新のたびに上げる(build.gradle の versionName / sw.js の CACHE と一緒に)
 var APP_KEY = 'kyou_kiroku';        // バックアップの識別(別アプリのファイルを読まない)
 var LS = 'kiroku.';
 var LS_PREF = LS + 'pref.v1';
@@ -85,7 +85,9 @@ function applyI18n(){
   if($('about-ver')) $('about-ver').textContent = 'v' + VER;
   document.title = T('app.name');
   fitTitle();
-  renderScreen(current);   // 表示中の画面も訳し直す(set はアプリ固有の行だけ)
+  drawLastExport();
+  reRendering = true;
+  try{ renderScreen(current); }finally{ reRendering = false; }   // 表示中の画面も訳し直す(set はアプリ固有の行だけ)
   var gov = document.querySelector && document.querySelector('.guide-ov');
   if(gov && gov._draw) gov._draw();               // はじめての つかいかた も訳し直す
   applyBarSpace();
@@ -217,6 +219,7 @@ function vibrate(pattern){
 
 /* ---- 画面(screens/*.js が登録) ---- */
 var current = 'home';
+var reRendering = false;   // applyI18n(言語・もじの大きさ・いろ などを変えた)の描き直し中だけ true。画面は開いていた連絡文の欄を引き継げる(2026-11-11)
 function screenApi(){
   return {
     T: T,
@@ -239,6 +242,7 @@ function screenApi(){
     markSaved: markSaved,               // 保存したら呼ぶ(戻るボタンの書きかけの確かめを出さない・2026-09-29)
     ask: askBox,                        // 確かめの窓(Play版はアプリの中・Web版は confirm)。ask(文, function(はい){...}, confirmが無いときの答え)
     backDefault: backDefault,           // 画面の back() が確かめのあとで「来た画面へ」を続けるとき
+    rerender: reRendering,              // true=言語などを変えた描き直し(画面を開き直したのではない)
     ver: VER,
     appKey: APP_KEY
   };
@@ -584,6 +588,18 @@ function openGuide(first){
 }
 
 /* ---- 機種変更(バックアップ): このアプリの保存キー全部を1ファイルに ---- */
+/* さいごに かきだした日(日付だけ・警告にしない・2026-11-11)。pref.extra.lastExport に日付キーで持つ(かきだしたファイルには入らない) */
+function drawLastExport(){
+  var e = $('bk-last'); if(!e) return;
+  var K = window.KIROKU_KINDS, d = pref.extra && pref.extra.lastExport;
+  if(typeof d === 'string' && K && K.isDateKey(d)) e.textContent = String(T('set.lastExport')).replace('{date}', K.dateLabel(d, pref.lang));
+  else e.textContent = T('set.lastExportNone');
+}
+function noteExported(){
+  var K = window.KIROKU_KINDS;
+  try{ if(K){ pref.extra.lastExport = K.dateKey(new Date()); savePref(); } }catch(_){}
+  drawLastExport();
+}
 function exportBackup(){
   var data = { app: APP_KEY, ver: 1, exported: Date.now(), pref: pref, data: {} };
   try{
@@ -597,7 +613,7 @@ function exportBackup(){
   /* Play版(2026-09-29): 一時フォルダに書いて共有の画面へ。選べたら「かきだしました」・閉じたら何も出さない・書けなければ「ほぞんできませんでした」 */
   if(isNativeApp()){
     nativeSaveFile(fname, JSON.stringify(data), true, T('set.bkExport'), function(r){
-      if(r === 'ok') toast(T('set.exported'));
+      if(r === 'ok'){ noteExported(); toast(T('set.exported')); }
       else if(r === 'fail') toast(T('common.saveFail'));
     });
     return;
@@ -608,6 +624,7 @@ function exportBackup(){
   a.download = fname;
   a.click();
   setTimeout(function(){ URL.revokeObjectURL(a.href); }, 3000);
+  noteExported();
   toast(T('set.exported'));
 }
 /* よみこむ(このアプリで変更 2026-09-29): 形を確かめてから、置き換えてよいかを askBox で聞く

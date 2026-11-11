@@ -6,6 +6,10 @@
      あいて(学校/職場)・書く人(本人/家族)・ようけん(遅れる/きょう休む/数日/しばらく)を選ぶだけで文ができ、
      コピー(navigator.clipboard → だめなら execCommand → それでもだめなら欄を全部選んで長押しを案内)と
      共有(Play版=ネイティブの共有プラグイン @capacitor/share / Web版=navigator.share がある端末だけ。どちらも無ければボタンを出さない)
+   ・コピーできたときだけ、欄の下に「メールやメッセージにはりつけてください」を残す(トーストは1.8秒で消えるので・2026-11-11)
+   ・「家で過ごす」を押して欄が開いたら、欄の先頭へ画面を寄せる(動きを抑える設定のときは即移動・2026-11-11)
+   ・言語・もじの大きさ などを変えて描き直したとき(api.rerender)は、開いていた欄を開いたまま あいて・書く人・ようけん・書類の一言の選びを引き継ぐ(なおした文は引き継がない・2026-11-11)
+   ・書類の一言: 「必要な書類があれば、教えてください。」を末尾に入れる/入れないをチップで選ぶ(はじめは入れない・2026-11-11)
    ・これまでの記録は日付ごとの一覧だけ(数える・比べる表示はしない)
    ・Android の戻るボタン(Play版・2026-09-29): 連絡文の欄を なおしたまま(コピー・共有の前)なら確かめを出す。
      コピーできた・送り先を選べた・文を作り直した(あいて等を選び直した)ら出さない。名前の欄は入れるたびに保存なので数えない */
@@ -13,6 +17,7 @@
   var KEY = 'kyori.v1';
   var HOME = 3;   // 「家で過ごす」の添字
   var KIND_ID = ['late', 'today', 'days', 'long'];
+  var keep = null;   // 描き直しをまたいで持つ連絡文の欄の状態 { open, target, writer, kind, docs }(画面を開き直したら捨てる)
 
   /* 正しい形のものだけ残す(壊れたバックアップを読んでも画面が落ちないように)。日付キーで値が 0〜3 のものだけ */
   function loadAll(api){
@@ -49,6 +54,7 @@
       if(name) lines.push(K.fill(tpl.self, { name:name }));
       lines.push(tpl[id]);
     }
+    if(o.docs === 1 && tpl.docs) lines.push(tpl.docs);   // 書類の一言(入れると選んだときだけ・末尾のあいさつの前)
     lines.push(tpl.close);
     return lines.join('\n');
   }
@@ -68,10 +74,11 @@
     }catch(_){ return false; }
   }
   /* それでもだめなら、連絡文の欄を全部選んでおき、長押しでコピーできることを欄の下に出す(トーストは消えるので残る文で) */
-  function copyText(api, out, help){
+  function copyText(api, out, help, next){
     var T = api.T, text = out.value;
     function done(ok){
       help.classList.toggle('hidden', ok);
+      if(next) next.classList.toggle('hidden', !ok);   // コピーできたときだけ、次の行き先を残す(トーストは消えるので・2026-11-11)
       if(ok){ if(api.markSaved) api.markSaved(); api.toast(T('screen.kyori.copied')); return; }   // コピーできた=戻るボタンで確かめを出さない
       try{ out.focus(); out.select(); }catch(_){}
       api.toast(T('screen.kyori.copyFail'));
@@ -121,6 +128,8 @@
       var all = loadAll(api);
       var opts = T('screen.kyori.opts');
       var letterOpen = false;
+      var restore = (api.rerender && keep && keep.open) ? keep : null;   // 言語などを変えた描き直しなら、開いていた欄を引き継ぐ
+      keep = null;
 
       c.appendChild(api.el('h1', 'scr-title', T('screen.kyori.title')));
       c.appendChild(api.el('p', 'hint', K.dateLabel(today, api.lang)));
@@ -161,7 +170,7 @@
           var btns = grid.querySelectorAll('.kyori-opt');
           for(var k = 0; k < btns.length; k++){ btns[k].classList.toggle('on', k === i); btns[k].setAttribute('aria-pressed', k === i ? 'true' : 'false'); }
           drawState();
-          if(i === HOME) openLetter();
+          if(i === HOME){ openLetter(); scrollToLetter(); }
           api.toast(T('common.saved'));
         });
         grid.appendChild(b);
@@ -178,6 +187,15 @@
       c.appendChild(lb);
       c.appendChild(letterBox);
 
+      /* 連絡文の欄が開いたことに気づけるよう、欄の先頭へ画面を寄せる(動きを抑える設定のときは即移動) */
+      function scrollToLetter(){
+        try{
+          if(typeof letterBox.scrollIntoView !== 'function') return;
+          var calm = typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          letterBox.scrollIntoView({ block:'start', behavior: calm ? 'auto' : 'smooth' });
+        }catch(_){}
+      }
+
       function openLetter(){
         if(letterOpen){ letterBox.classList.remove('hidden'); return; }
         letterOpen = true;
@@ -186,8 +204,16 @@
           target: api.getExtra('target', 0) === 1 ? 1 : 0,
           writer: api.getExtra('writer', 0) === 1 ? 1 : 0,
           kind: 1,
+          docs: 0,
           name: String(api.getExtra('name', '') || '')
         };
+        if(restore){
+          if(restore.target === 0 || restore.target === 1) o.target = restore.target;
+          if(restore.writer === 0 || restore.writer === 1) o.writer = restore.writer;
+          if(restore.kind >= 0 && restore.kind <= 3) o.kind = restore.kind;
+          if(restore.docs === 0 || restore.docs === 1) o.docs = restore.docs;
+        }
+        keep = { open:true, target:o.target, writer:o.writer, kind:o.kind, docs:o.docs };
         letterBox.appendChild(api.el('h2', 'sec-h', T('screen.kyori.letterTitle')));
         letterBox.appendChild(api.el('p', 'hint', T('screen.kyori.letterHint')));
 
@@ -195,7 +221,12 @@
         out.setAttribute('id', 'kyori-letter-out');
         out.rows = 7;
         /* 文を作り直すと、なおした文は消える(今までどおり)。消えたあとは書きかけ無し=戻るボタンで確かめを出さない */
-        function refresh(){ out.value = buildLetter(api, o); if(api.markSaved) api.markSaved(); }
+        var next;   // コピーできたときだけ出す「はりつけてください」(下で作る)
+        function refresh(){
+          out.value = buildLetter(api, o); if(api.markSaved) api.markSaved();
+          if(next) next.classList.add('hidden');   // 文が変わったら、コピーずみの案内は消す
+          keep = { open:true, target:o.target, writer:o.writer, kind:o.kind, docs:o.docs };
+        }
 
         function chipField(label, labels, key){
           var f = api.el('div', 'field');
@@ -212,6 +243,7 @@
         letterBox.appendChild(chipField(T('screen.kyori.target'), T('screen.kyori.targets'), 'target'));
         letterBox.appendChild(chipField(T('screen.kyori.writer'), T('screen.kyori.writers'), 'writer'));
         letterBox.appendChild(chipField(T('screen.kyori.kind'), T('screen.kyori.kinds'), 'kind'));
+        letterBox.appendChild(chipField(T('screen.kyori.docs'), T('screen.kyori.docsOpts'), 'docs'));
 
         var nf = api.el('div', 'field');
         nf.setAttribute('data-nodirty', '');   // 名前は入れるたびに保存(setExtra)=戻るボタンの書きかけに数えない
@@ -240,7 +272,9 @@
         help.setAttribute('id', 'kyori-copy-help');
         var cp = api.el('button', 'btn primary', T('screen.kyori.copy'));
         cp.setAttribute('type', 'button'); cp.setAttribute('id', 'kyori-copy');
-        api.Tap.bind(cp, function(){ copyText(api, out, help); });
+        next = api.el('p', 'hint hidden', T('screen.kyori.copyNext'));   // コピーできたときだけ出す
+        next.setAttribute('id', 'kyori-copy-next');
+        api.Tap.bind(cp, function(){ copyText(api, out, help, next); });
         row.appendChild(cp);
         /* 共有は ネイティブの共有プラグインか navigator.share がある端末だけ(無い端末ではコピーが横いっぱいになる) */
         if(canShare()){
@@ -251,8 +285,9 @@
         }
         letterBox.appendChild(row);
         letterBox.appendChild(help);
+        letterBox.appendChild(next);
       }
-      if(all[today] === HOME) openLetter();
+      if(all[today] === HOME || restore) openLetter();
 
       /* これまでの記録(日付ごと・数えない) */
       c.appendChild(api.el('h2', 'sec-h', T('screen.kyori.histTitle')));

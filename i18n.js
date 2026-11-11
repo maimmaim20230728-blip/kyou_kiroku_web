@@ -41,6 +41,7 @@ var ja = {
     exported:'かきだしました ✓', imported:'よみこみました ✓', importFail:'よみこめませんでした',
     importConfirm:'いまの ないようは、ファイルの ないように おきかわります。よみこみますか?',
     note:'書いたことは すべて この端末の中だけに ほぞんされます。どこにも 送られません。',
+    lastExport:'さいごに かきだした日: {date}', lastExportNone:'まだ かきだして いません。',
     privacy:'プライバシーポリシー',
     credit:'アプリ開発：介護と支援の相談どころ そよぎ'
   },
@@ -96,11 +97,13 @@ var ja = {
       target:'あいて', targets:['学校','職場'],
       writer:'書く人', writers:['本人','家族'],
       kind:'ようけん', kinds:['きょう おくれて 行く','きょう やすむ','数日 やすむ','しばらく やすむ'],
+      docs:'書類の ひとこと', docsOpts:['入れない','入れる'],
       name:'なまえ(空でも よい)', namePh:'例: 山田',
       result:'できた 文',
       copy:'コピー', share:'きょうゆう(共有)',
       copied:'コピーしました ✓', copyFail:'コピーできませんでした', shareNone:'この端末では 共有が つかえません', shareFail:'共有できませんでした',
       copyHelp:'文を えらんで おきました。ながおしで コピーできます。',
+      copyNext:'メールや メッセージに はりつけて ください。',   // コピーできたときだけ欄の下に出す
       histTitle:'これまでの きろく',
       histEmpty:'まだ きろくは ありません。',
       /* 相手に見せる文(漢字) */
@@ -111,6 +114,7 @@ var ja = {
         todaySchool:'本日は体調の都合で、お休みします。', todayWork:'本日は体調の都合で、お休みをいただきます。',
         daysSchool:'体調の都合で、数日お休みします。様子を見て、改めてご連絡します。', daysWork:'体調の都合で、数日お休みをいただきます。様子を見て、改めてご連絡します。',
         longSchool:'体調の都合で、しばらくの間お休みします。様子を見て、改めてご連絡します。', longWork:'体調の都合で、しばらくの間お休みをいただきたく、ご相談したいです。改めてご連絡します。',
+        docs:'必要な書類があれば、教えてください。',   // 書類の一言(入れるを選んだときだけ末尾に)
         close:'ご迷惑をおかけしますが、よろしくお願いいたします。',
         /* 家族が書くとき: 休む/遅れる人({name}=名前、空なら noName)を主語に。{nameWa} は韓国語の 은/는 つき */
         fam: {
@@ -137,7 +141,8 @@ var ja = {
       steps:'手順を開く',
       /* 画面の下に読むだけで出す、前の日の分 */
       prevTitle:'きのうの よてい',
-      prevBatt:'きのうの 電池'
+      prevBatt:'きのうの 電池',
+      battLevels:['ほとんど ない','すこし','半分くらい','たっぷり']   // 電池の絵の読み上げ(数字は使わない)
     },
     dekita: {
       title:'できたこと',
@@ -148,7 +153,8 @@ var ja = {
       empty:'まだ ありません。ちいさな ことで だいじょうぶです。',
       del:'けす', delSure:'ほんとうに けす',
       pickTitle:'できたこと',
-      pickAgain:'べつの ひとつ'
+      pickAgain:'べつの ひとつ',
+      pickOld:'むかしの ひとつ', pickOldTitle:'むかしの できたこと', pickOldNone:'まだ むかしの ものは ありません。'
     },
     set: {
       h:'つかう きろく',
@@ -191,6 +197,7 @@ var en = {
     exported:'Exported ✓', imported:'Imported ✓', importFail:'Could not import',
     importConfirm:'Your current entries will be replaced with the file\'s contents. Import it?',
     note:'Everything you write is stored only on this device. Nothing is sent anywhere.',
+    lastExport:'Last exported: {date}', lastExportNone:'Not exported yet.',
     privacy:'Privacy policy',
     credit:'Developed by SOYOGI, a care and support consultation service'
   },
@@ -249,6 +256,8 @@ var en = {
       copy:'Copy', share:'Share',
       copied:'Copied ✓', copyFail:'Could not copy', shareNone:'Sharing is not available on this device', shareFail:'Could not share',
       copyHelp:'The message is selected. You can copy it with a long press.',
+      copyNext:'Paste it into an email or a message.',
+      docs:'Note about documents', docsOpts:['Leave out','Add'],
       histTitle:'Past days',
       histEmpty:'No records yet.',
       tpl: {
@@ -259,6 +268,7 @@ var en = {
         daysSchool:'Due to health reasons, I will be absent for a few days. I will contact you again later.', daysWork:'Due to health reasons, I will take a few days off. I will contact you again later.',
         longSchool:'Due to health reasons, I will be absent for a while. I will contact you again later.', longWork:'Due to health reasons, I would like to discuss taking some time off. I will contact you again later.',
         close:'I am sorry for the inconvenience. Thank you for your understanding.',
+        docs:'Please let me know if any documents are needed.',
         fam: {
           lateSchool:'{name} will arrive late at school today due to health reasons.', lateWork:'{name} will arrive late at work today due to health reasons.',
           todaySchool:'{name} will be absent from school today due to health reasons.', todayWork:'{name} will take the day off today due to health reasons.',
@@ -282,7 +292,8 @@ var en = {
       stepsHint:'The steps for when tiredness piles up open in a separate app, "One by One - SOYOGI".',
       steps:'Open the steps',
       prevTitle:'Yesterday\'s plans',
-      prevBatt:'Yesterday\'s battery'
+      prevBatt:'Yesterday\'s battery',
+      battLevels:['Almost empty','A little','About half','Plenty']
     },
     dekita: {
       title:'Things done',
@@ -293,7 +304,8 @@ var en = {
       empty:'Nothing yet. Small things are fine.',
       del:'Delete', delSure:'Really delete',
       pickTitle:'Done',
-      pickAgain:'Another one'
+      pickAgain:'Another one',
+      pickOld:'One from long ago', pickOldTitle:'From long ago', pickOldNone:'Nothing from long ago yet.'
     },
     set: {
       h:'Logs to use',
@@ -580,6 +592,39 @@ TBL.de = mergeDeep(JSON.parse(JSON.stringify(en)), {
     }
   }
 });
+/* 2026-11-11 追加の文言(連絡文のあとの案内・書類の一言・むかしの ひとつ・電池の読み上げ・さいごに かきだした日) */
+mergeDeep(TBL.de, {
+  "set": {
+    "lastExport": "Zuletzt exportiert: {date}",
+    "lastExportNone": "Noch nicht exportiert."
+  },
+  "screen": {
+    "kyori": {
+      "copyNext": "Fügen Sie den Text in eine E-Mail oder Nachricht ein.",
+      "docs": "Hinweis zu Unterlagen",
+      "docsOpts": [
+        "Weglassen",
+        "Hinzufügen"
+      ],
+      "tpl": {
+        "docs": "Bitte geben Sie Bescheid, falls Unterlagen nötig sind."
+      }
+    },
+    "dekita": {
+      "pickOld": "Eines von früher",
+      "pickOldTitle": "Geschafft, von früher",
+      "pickOldNone": "Noch nichts von früher da."
+    },
+    "genki": {
+      "battLevels": [
+        "Fast leer",
+        "Wenig",
+        "Etwa halb",
+        "Reichlich"
+      ]
+    }
+  }
+});
 /* ---- /de ---- */
 /* ---- fr: 翻訳 ---- */
 TBL.fr = mergeDeep(JSON.parse(JSON.stringify(en)), {
@@ -849,6 +894,39 @@ TBL.fr = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "nights": [
         "Le jour même",
         "La veille"
+      ]
+    }
+  }
+});
+/* 2026-11-11 追加の文言(連絡文のあとの案内・書類の一言・むかしの ひとつ・電池の読み上げ・さいごに かきだした日) */
+mergeDeep(TBL.fr, {
+  "set": {
+    "lastExport": "Dernière exportation : {date}",
+    "lastExportNone": "Pas encore exporté."
+  },
+  "screen": {
+    "kyori": {
+      "copyNext": "Collez le texte dans un e-mail ou un message.",
+      "docs": "Mention des documents",
+      "docsOpts": [
+        "Ne pas ajouter",
+        "Ajouter"
+      ],
+      "tpl": {
+        "docs": "Merci de m’indiquer si des documents sont nécessaires."
+      }
+    },
+    "dekita": {
+      "pickOld": "Un souvenir ancien",
+      "pickOldTitle": "Réussi il y a longtemps",
+      "pickOldNone": "Rien d’ancien pour le moment."
+    },
+    "genki": {
+      "battLevels": [
+        "Presque vide",
+        "Un peu",
+        "À moitié",
+        "Bien remplie"
       ]
     }
   }
@@ -1126,6 +1204,39 @@ TBL.es = mergeDeep(JSON.parse(JSON.stringify(en)), {
     }
   }
 });
+/* 2026-11-11 追加の文言(連絡文のあとの案内・書類の一言・むかしの ひとつ・電池の読み上げ・さいごに かきだした日) */
+mergeDeep(TBL.es, {
+  "set": {
+    "lastExport": "Última exportación: {date}",
+    "lastExportNone": "Aún no se ha exportado."
+  },
+  "screen": {
+    "kyori": {
+      "copyNext": "Se puede pegar en un correo o en un mensaje.",
+      "docs": "Nota sobre documentos",
+      "docsOpts": [
+        "No incluir",
+        "Incluir"
+      ],
+      "tpl": {
+        "docs": "Si hace falta algún documento, por favor avíseme."
+      }
+    },
+    "dekita": {
+      "pickOld": "Uno de hace tiempo",
+      "pickOldTitle": "Logrado hace tiempo",
+      "pickOldNone": "Todavía no hay nada de hace tiempo."
+    },
+    "genki": {
+      "battLevels": [
+        "Casi vacía",
+        "Poca",
+        "Más o menos la mitad",
+        "Mucha"
+      ]
+    }
+  }
+});
 /* ---- /es ---- */
 /* ---- it: 翻訳 ---- */
 TBL.it = mergeDeep(JSON.parse(JSON.stringify(en)), {
@@ -1395,6 +1506,39 @@ TBL.it = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "nights": [
         "Lo stesso giorno",
         "Il giorno prima"
+      ]
+    }
+  }
+});
+/* 2026-11-11 追加の文言(連絡文のあとの案内・書類の一言・むかしの ひとつ・電池の読み上げ・さいごに かきだした日) */
+mergeDeep(TBL.it, {
+  "set": {
+    "lastExport": "Ultima esportazione: {date}",
+    "lastExportNone": "Non ancora esportato."
+  },
+  "screen": {
+    "kyori": {
+      "copyNext": "Si può incollare in un’e-mail o in un messaggio.",
+      "docs": "Nota sui documenti",
+      "docsOpts": [
+        "Non inserire",
+        "Inserisci"
+      ],
+      "tpl": {
+        "docs": "Se servono dei documenti, per favore mi avvisi."
+      }
+    },
+    "dekita": {
+      "pickOld": "Uno di tanto tempo fa",
+      "pickOldTitle": "Fatto tanto tempo fa",
+      "pickOldNone": "Non c’è ancora nulla di tanto tempo fa."
+    },
+    "genki": {
+      "battLevels": [
+        "Quasi scarica",
+        "Poca",
+        "Circa metà",
+        "Molta"
       ]
     }
   }
@@ -1672,6 +1816,39 @@ TBL.pt = mergeDeep(JSON.parse(JSON.stringify(en)), {
     }
   }
 });
+/* 2026-11-11 追加の文言(連絡文のあとの案内・書類の一言・むかしの ひとつ・電池の読み上げ・さいごに かきだした日) */
+mergeDeep(TBL.pt, {
+  "set": {
+    "lastExport": "Última exportação: {date}",
+    "lastExportNone": "Ainda não exportado."
+  },
+  "screen": {
+    "kyori": {
+      "copyNext": "Cole o texto em um e-mail ou em uma mensagem.",
+      "docs": "Nota sobre documentos",
+      "docsOpts": [
+        "Não incluir",
+        "Incluir"
+      ],
+      "tpl": {
+        "docs": "Se for preciso algum documento, por favor me avise."
+      }
+    },
+    "dekita": {
+      "pickOld": "Um de muito tempo atrás",
+      "pickOldTitle": "Feito há muito tempo",
+      "pickOldNone": "Ainda não há nada de muito tempo atrás."
+    },
+    "genki": {
+      "battLevels": [
+        "Quase vazia",
+        "Pouca",
+        "Cerca de metade",
+        "Bastante"
+      ]
+    }
+  }
+});
 /* ---- /pt ---- */
 /* ---- nl: 翻訳 ---- */
 TBL.nl = mergeDeep(JSON.parse(JSON.stringify(en)), {
@@ -1941,6 +2118,39 @@ TBL.nl = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "nights": [
         "Dezelfde dag",
         "De dag ervoor"
+      ]
+    }
+  }
+});
+/* 2026-11-11 追加の文言(連絡文のあとの案内・書類の一言・むかしの ひとつ・電池の読み上げ・さいごに かきだした日) */
+mergeDeep(TBL.nl, {
+  "set": {
+    "lastExport": "Laatst geëxporteerd: {date}",
+    "lastExportNone": "Nog niet geëxporteerd."
+  },
+  "screen": {
+    "kyori": {
+      "copyNext": "Plak de tekst in een e-mail of bericht.",
+      "docs": "Opmerking over documenten",
+      "docsOpts": [
+        "Niet toevoegen",
+        "Toevoegen"
+      ],
+      "tpl": {
+        "docs": "Laat het me weten als er documenten nodig zijn."
+      }
+    },
+    "dekita": {
+      "pickOld": "Eentje van lang geleden",
+      "pickOldTitle": "Gelukt, lang geleden",
+      "pickOldNone": "Nog niets van lang geleden."
+    },
+    "genki": {
+      "battLevels": [
+        "Bijna leeg",
+        "Een beetje",
+        "Ongeveer half",
+        "Ruim voldoende"
       ]
     }
   }
@@ -2218,6 +2428,39 @@ TBL.sv = mergeDeep(JSON.parse(JSON.stringify(en)), {
     }
   }
 });
+/* 2026-11-11 追加の文言(連絡文のあとの案内・書類の一言・むかしの ひとつ・電池の読み上げ・さいごに かきだした日) */
+mergeDeep(TBL.sv, {
+  "set": {
+    "lastExport": "Senast exporterat: {date}",
+    "lastExportNone": "Inte exporterat ännu."
+  },
+  "screen": {
+    "kyori": {
+      "copyNext": "Klistra in texten i ett e-postmeddelande eller ett meddelande.",
+      "docs": "Notering om dokument",
+      "docsOpts": [
+        "Ta inte med",
+        "Ta med"
+      ],
+      "tpl": {
+        "docs": "Om några dokument behövs, säg gärna till."
+      }
+    },
+    "dekita": {
+      "pickOld": "En från länge sedan",
+      "pickOldTitle": "Gjort för länge sedan",
+      "pickOldNone": "Inget från länge sedan ännu."
+    },
+    "genki": {
+      "battLevels": [
+        "Nästan tomt",
+        "Lite",
+        "Ungefär hälften",
+        "Gott om"
+      ]
+    }
+  }
+});
 /* ---- /sv ---- */
 /* ---- ko: 翻訳 ---- */
 TBL.ko = mergeDeep(JSON.parse(JSON.stringify(en)), {
@@ -2487,6 +2730,39 @@ TBL.ko = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "nights": [
         "그날로 넣기",
         "전날로 넣기"
+      ]
+    }
+  }
+});
+/* 2026-11-11 追加の文言(連絡文のあとの案内・書類の一言・むかしの ひとつ・電池の読み上げ・さいごに かきだした日) */
+mergeDeep(TBL.ko, {
+  "set": {
+    "lastExport": "마지막으로 내보낸 날: {date}",
+    "lastExportNone": "아직 내보내지 않았어요."
+  },
+  "screen": {
+    "kyori": {
+      "copyNext": "이메일이나 메시지에 붙여 넣어 주세요.",
+      "docs": "서류 안내 문장",
+      "docsOpts": [
+        "넣지 않기",
+        "넣기"
+      ],
+      "tpl": {
+        "docs": "필요한 서류가 있으면 알려 주세요."
+      }
+    },
+    "dekita": {
+      "pickOld": "오래전 하나",
+      "pickOldTitle": "오래전에 해낸 일",
+      "pickOldNone": "아직 오래전 기록이 없어요."
+    },
+    "genki": {
+      "battLevels": [
+        "거의 없음",
+        "조금",
+        "절반 정도",
+        "넉넉함"
       ]
     }
   }
@@ -2764,6 +3040,39 @@ TBL.zh = mergeDeep(JSON.parse(JSON.stringify(en)), {
     }
   }
 });
+/* 2026-11-11 追加の文言(連絡文のあとの案内・書類の一言・むかしの ひとつ・電池の読み上げ・さいごに かきだした日) */
+mergeDeep(TBL.zh, {
+  "set": {
+    "lastExport": "上次导出的日期：{date}",
+    "lastExportNone": "还没有导出过。"
+  },
+  "screen": {
+    "kyori": {
+      "copyNext": "请粘贴到邮件或消息里。",
+      "docs": "关于材料的一句话",
+      "docsOpts": [
+        "不加",
+        "加上"
+      ],
+      "tpl": {
+        "docs": "如需提交材料，请告知。"
+      }
+    },
+    "dekita": {
+      "pickOld": "很久以前的一条",
+      "pickOldTitle": "很久以前做到的事",
+      "pickOldNone": "还没有很久以前的记录。"
+    },
+    "genki": {
+      "battLevels": [
+        "几乎没有",
+        "一点点",
+        "一半左右",
+        "很充足"
+      ]
+    }
+  }
+});
 /* ---- /zh ---- */
 /* ---- ar: 翻訳 ---- */
 TBL.ar = mergeDeep(JSON.parse(JSON.stringify(en)), {
@@ -3033,6 +3342,39 @@ TBL.ar = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "nights": [
         "في اليوم نفسه",
         "في اليوم السابق"
+      ]
+    }
+  }
+});
+/* 2026-11-11 追加の文言(連絡文のあとの案内・書類の一言・むかしの ひとつ・電池の読み上げ・さいごに かきだした日) */
+mergeDeep(TBL.ar, {
+  "set": {
+    "lastExport": "آخر تصدير: {date}",
+    "lastExportNone": "لم يتم التصدير بعد."
+  },
+  "screen": {
+    "kyori": {
+      "copyNext": "الصقها في بريد إلكتروني أو رسالة.",
+      "docs": "جملة عن المستندات",
+      "docsOpts": [
+        "بدون",
+        "إضافة"
+      ],
+      "tpl": {
+        "docs": "إذا كانت هناك مستندات مطلوبة، فيرجى إبلاغي."
+      }
+    },
+    "dekita": {
+      "pickOld": "واحد من زمن بعيد",
+      "pickOldTitle": "ما أنجزته قديمًا",
+      "pickOldNone": "لا يوجد شيء قديم بعد."
+    },
+    "genki": {
+      "battLevels": [
+        "شبه فارغة",
+        "قليلة",
+        "نحو النصف",
+        "وفيرة"
       ]
     }
   }
